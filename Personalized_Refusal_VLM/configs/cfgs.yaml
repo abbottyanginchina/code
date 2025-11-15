@@ -4,7 +4,7 @@ training:
   lr: 1e-4
 pos: -1
 model_name: "llava-1.5-7b-hf"
-model_path: "/root/autodl-tmp"
+model_path: "/gpu02home/jmy5701/gpu/models"
 seed: 42
 max_new_tokens: 40
 alpha_text: 1.8
