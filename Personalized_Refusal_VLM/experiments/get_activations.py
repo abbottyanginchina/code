@@ -11,8 +11,8 @@ import matplotlib.pyplot as plt
 
 from PIL import Image
 from transformers import (set_seed, 
-                          InstructBlipProcessor, 
-                          InstructBlipForConditionalGeneration, 
+                        #   InstructBlipProcessor, 
+                        #   InstructBlipForConditionalGeneration, 
                           AutoModelForCausalLM, 
                           Qwen2_5_VLForConditionalGeneration, 
                           Qwen2VLForConditionalGeneration, 
