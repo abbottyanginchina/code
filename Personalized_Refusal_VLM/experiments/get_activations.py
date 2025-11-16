@@ -53,7 +53,7 @@ def eval_model(args):
             device_map="auto",
             # low_cpu_mem_usage=True, 
         )
-        model = model.to(device)
+        # model = model.to(device)
     elif 'qwen2.5-' in model_path.lower():
         model = Qwen2_5_VLForConditionalGeneration.from_pretrained(
             model_path, 
