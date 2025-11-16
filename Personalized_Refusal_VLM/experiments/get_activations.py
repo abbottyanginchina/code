@@ -50,7 +50,7 @@ def eval_model(args):
         model = LlavaForConditionalGeneration.from_pretrained(
             model_path, 
             dtype=torch.float16, 
-            device_map="auto",
+            # device_map="auto",
             # low_cpu_mem_usage=True, 
         )
     elif 'qwen2.5-' in model_path.lower():
