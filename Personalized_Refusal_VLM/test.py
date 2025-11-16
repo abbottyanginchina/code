@@ -9,6 +9,7 @@ model = LlavaForConditionalGeneration.from_pretrained(
     model_id, 
     torch_dtype=torch.float16, 
     low_cpu_mem_usage=True, 
+    device_map="auto",
 ).to(0)
 
 processor = AutoProcessor.from_pretrained(model_id)
