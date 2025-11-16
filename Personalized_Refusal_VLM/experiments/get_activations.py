@@ -50,10 +50,9 @@ def eval_model(args):
         model = LlavaForConditionalGeneration.from_pretrained(
             model_path, 
             dtype=torch.float16, 
-            # device_map="auto",
+            device_map="auto",
             # low_cpu_mem_usage=True, 
-        )
-        model = model.to("cuda")
+        ).to(device)
     elif 'qwen2.5-' in model_path.lower():
         model = Qwen2_5_VLForConditionalGeneration.from_pretrained(
             model_path, 
@@ -98,7 +97,7 @@ def eval_model(args):
     elif 'blip2-' in model_path.lower():
         processor = Blip2Processor.from_pretrained(model_path)
     else:
-        processor = AutoProcessor.from_pretrained(model_path)
+        processor = AutoProcessor.from_pretrained(model_path, use_fast=False)
 
     
     # original_data = get_all_datasets(args)
