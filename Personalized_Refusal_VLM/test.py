@@ -33,7 +33,7 @@ processed = processor(
     images=raw_image,
     text=prompt,
     return_tensors='pt',
-    
+    torch_dtype=torch.float16,
 )
 
 print("processed dtypes:")
