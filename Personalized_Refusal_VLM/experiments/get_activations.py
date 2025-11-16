@@ -150,7 +150,7 @@ def eval_model(args):
         in_test_activations = process(get_activations(cfg, model, in_test_text, in_test_images, processor, system_prompt=False))
         out_test_activations = process(get_activations(cfg, model, out_test_text, out_test_images, processor, system_prompt=False))
 
-    save_path = "./output/activations/"
+    save_path = "../../output/activations/"
     if not os.path.exists(save_path):
         os.makedirs(save_path)
     torch.save(with_sys_in_train_activations, f"{save_path}/with_sys_in_train_activations_{cfg.model_name}.pt")
