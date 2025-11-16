@@ -35,6 +35,11 @@ processed = processor(
     return_tensors='pt'
 )
 
+print("processed dtypes:")
+for k, v in processed.items():
+    print(k, v.dtype)
+import pdb; pdb.set_trace()
+
 inputs = {}
 for k, v in processed.items():
     if k == "pixel_values":
