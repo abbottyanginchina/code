@@ -133,8 +133,8 @@ def eval_model(args):
 
     else:
         with_sys_in_train_activations = process(get_activations(cfg, model, with_sys_in_train_text, in_train_images, processor, system_prompt=False))
-        import pdb; pdb.set_trace()
-        # with_sys_out_train_activations = process(get_activations(cfg, model, with_sys_out_train_text, out_train_images, processor, system_prompt=False))
+        torch.save(with_sys_in_train_activations, f"{save_path}/with_sys_in_train_activations_{cfg.model_name}.pt")
+        with_sys_out_train_activations = process(get_activations(cfg, model, with_sys_out_train_text, out_train_images, processor, system_prompt=False))
         # without_sys_in_train_activations = process(get_activations(cfg, model, without_sys_in_train_text, in_train_images, processor, system_prompt=False))
         # without_sys_out_train_activations = process(get_activations(cfg, model, without_sys_out_train_text, out_train_images, processor, system_prompt=False))
 
