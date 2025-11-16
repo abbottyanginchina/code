@@ -29,17 +29,17 @@ prompt = processor.apply_chat_template(conversation, add_generation_prompt=True)
 image_url = "http://images.cocodataset.org/val2017/000000039769.jpg"
 raw_image = Image.open(requests.get(image_url, stream=True).raw).convert("RGB")
 
-# 🔥🔥🔥 必须 resize，否则 H100 直接 driver-error oom
-raw_image = raw_image.resize((336, 336))
-
 processed = processor(
     images=raw_image,
     text=prompt,
-    return_tensors="pt"
+    return_tensors='pt'
 )
 
-inputs = {k: v.to("cuda", dtype=torch.float16, non_blocking=True)
-          for k, v in processed.items()}
-
-output = model.generate(**inputs, max_new_tokens=200, do_sample=False)
-print(processor.decode(output[0][2:], skip_special_tokens=True))
+inputs = {}
+for k, v in processed.items():
+    if k == "pixel_values":
+        # 图片才转成 fp16
+        inputs[k] = v.to("cuda", dtype=torch.float16, non_blocking=True)
+    else:
+        # input_ids & attention_mask 保持 long / int 类型，不要转 dtype
+        inputs[k] = v.to("cuda", non_blocking=True)
