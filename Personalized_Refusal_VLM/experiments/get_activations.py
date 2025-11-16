@@ -164,9 +164,7 @@ def eval_model(args):
     # torch.save(with_sys_image_others_activations, f"{save_path}/with_sys_image_others_activations_{cfg.model_name}.pt")
     # torch.save(without_sys_image_biology_activations, f"{save_path}/without_sys_image_biology_activations_{cfg.model_name}.pt")
 
-    pbar = tqdm(range(-5, 0), total=5, desc="Saving activations at different positions")
-    for i in pbar:
-        pbar.set_description(f"Saving activations at position {i}")
+    for i in tqdm(range(-5,0), desc=f"Saving activations", total=5):
         with_sys_out_train_activations = process(get_activations(cfg, model, with_sys_out_train_text, out_train_images, processor, system_prompt=False, pos=i))
         torch.save(with_sys_out_train_activations, f"{save_path}/with_sys_out_train_activations_{cfg.model_name}_pos_{i}.pt")
 
