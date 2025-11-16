@@ -32,7 +32,8 @@ raw_image = Image.open(requests.get(image_url, stream=True).raw).convert("RGB")
 processed = processor(
     images=raw_image,
     text=prompt,
-    return_tensors='pt'
+    return_tensors='pt',
+    torch_dtype=torch.float16,
 )
 
 print("processed dtypes:")
