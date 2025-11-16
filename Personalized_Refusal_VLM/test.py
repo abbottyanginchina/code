@@ -22,7 +22,7 @@ messages = [
     }
 ]
 prompt = processor.apply_chat_template(messages, add_generation_prompt=True, tokenize=False)
-import pdb; pdb.set_trace()
+# import pdb; pdb.set_trace()
 inputs = processor(text=prompt, images=[image1], return_tensors="pt")
 inputs = {k: v.to('cuda') for k, v in inputs.items()}
 
