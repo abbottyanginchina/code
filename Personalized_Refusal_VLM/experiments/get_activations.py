@@ -122,6 +122,9 @@ def eval_model(args):
     # test_img_tensors = processor(images=out_train_images[0], return_tensors="pt").to('cuda')
     # get_visual_hiddenstates(model, [test_img_tensors], model_is_llaval=False)
 
+    save_path = "../../output/activations/"
+    if not os.path.exists(save_path):
+        os.makedirs(save_path)
     if 'instructblip-' in model_path.lower() or 'blip2-' in model_path.lower():
         with_sys_in_train_activations = process(get_activations_blip(model, with_sys_in_train_text, in_train_images, processor))
         with_sys_out_train_activations = process(get_activations_blip(model, with_sys_out_train_text, out_train_images, processor))
@@ -135,6 +138,7 @@ def eval_model(args):
         with_sys_in_train_activations = process(get_activations(cfg, model, with_sys_in_train_text, in_train_images, processor, system_prompt=False))
         torch.save(with_sys_in_train_activations, f"{save_path}/with_sys_in_train_activations_{cfg.model_name}.pt")
         with_sys_out_train_activations = process(get_activations(cfg, model, with_sys_out_train_text, out_train_images, processor, system_prompt=False))
+        torch.save(with_sys_out_train_activations, f"{save_path}/with_sys_out_train_activations_{cfg.model_name}.pt")
         # without_sys_in_train_activations = process(get_activations(cfg, model, without_sys_in_train_text, in_train_images, processor, system_prompt=False))
         # without_sys_out_train_activations = process(get_activations(cfg, model, without_sys_out_train_text, out_train_images, processor, system_prompt=False))
 
@@ -151,9 +155,7 @@ def eval_model(args):
         # in_test_activations = process(get_activations(cfg, model, in_test_text, in_test_images, processor, system_prompt=False))
         # out_test_activations = process(get_activations(cfg, model, out_test_text, out_test_images, processor, system_prompt=False))
 
-    save_path = "../../output/activations/"
-    if not os.path.exists(save_path):
-        os.makedirs(save_path)
+    
     # torch.save(with_sys_in_train_activations, f"{save_path}/with_sys_in_train_activations_{cfg.model_name}.pt")
     # torch.save(with_sys_out_train_activations, f"{save_path}/with_sys_out_train_activations_{cfg.model_name}.pt")
     # torch.save(without_sys_in_train_activations, f"{save_path}/without_sys_in_train_activations_{cfg.model_name}.pt")
