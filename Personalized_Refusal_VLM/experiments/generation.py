@@ -136,6 +136,7 @@ def eval_model(args):
 
     oth_target = torch.load(f"./output/activations/with_sys_out_train_activations_{cfg.model_name}.pt", weights_only=False).double()
     oth_x = torch.load(f"./output/activations/without_sys_out_train_activations_{cfg.model_name}.pt", weights_only=False).double()
+    import pdb; pdb.set_trace()
     refusal_vector = oth_target - oth_x
     refusal_vector = refusal_vector.mean(dim=0)[1:]
 
