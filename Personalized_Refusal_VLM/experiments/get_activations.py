@@ -51,7 +51,7 @@ def eval_model(args):
             model_path, 
             dtype=torch.float16, 
             device_map="cuda",
-            low_cpu_mem_usage=True, 
+            # low_cpu_mem_usage=True, 
         )
     elif 'qwen2.5-' in model_path.lower():
         model = Qwen2_5_VLForConditionalGeneration.from_pretrained(
