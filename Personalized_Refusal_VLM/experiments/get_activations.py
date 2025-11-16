@@ -164,8 +164,8 @@ def eval_model(args):
     torch.save(without_sys_image_biology_activations, f"{save_path}/without_sys_image_biology_activations_{cfg.model_name}.pt")
 
     for i in range(-5,0):
-        with_sys_in_train_activations = process(get_activations(cfg, model, with_sys_in_train_text, in_train_images, processor, system_prompt=False, pos=i))
-        torch.save(with_sys_in_train_activations, f"{save_path}/with_sys_in_train_activations_{cfg.model_name}_pos_{i}.pt")
+        with_sys_out_train_activations = process(get_activations(cfg, model, with_sys_out_train_text, out_train_images, processor, system_prompt=False))
+        torch.save(with_sys_out_train_activations, f"{save_path}/with_sys_out_train_activations_{cfg.model_name}_pos_{i}.pt")
 
     print("Activations saved.")
 
