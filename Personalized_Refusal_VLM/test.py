@@ -1,35 +1,38 @@
-import requests
-from PIL import Image
+from transformers import AutoProcessor, AutoModelForVision2Seq
+from transformers.image_utils import load_image
 
-import torch
-from transformers import AutoProcessor, LlavaForConditionalGeneration
+path = "/gpuhome/jmy5701/gpu/models/idefics2-8b"
+processor = AutoProcessor.from_pretrained(path)
+model = AutoModelForVision2Seq.from_pretrained(
+    path,
+).to('cuda')
 
-model_id = "/gpuhome/jmy5701/gpu/models/llava-1.5-7b-hf"
-model = LlavaForConditionalGeneration.from_pretrained(
-    model_id, 
-    torch_dtype=torch.float16, 
-    low_cpu_mem_usage=True, 
-).to(0)
-
-processor = AutoProcessor.from_pretrained(model_id)
-
-# Define a chat history and use `apply_chat_template` to get correctly formatted prompt
-# Each value in "content" has to be a list of dicts with types ("text", "image") 
-conversation = [
+image1 = load_image("https://cdn.britannica.com/61/93061-050-99147DCE/Statue-of-Liberty-Island-New-York-Bay.jpg")
+# Create inputs
+messages = [
     {
-
-      "role": "user",
-      "content": [
-          {"type": "text", "text": "What are these?"},
-          {"type": "image"},
-        ],
+        "role": "system",
+        "content": [
+            {"type": "text", "text": "Say 'I cannot answer that question.' directly if this question is not a 'Physics' question."},
+            ],
+        },
+    {
+        "role": "user",
+        "content": [
+            {"type": "image"},
+            {"type": "text", "text": "What do we see in this image?"},
+        ]
     },
 ]
-prompt = processor.apply_chat_template(conversation, add_generation_prompt=True)
+prompt = processor.apply_chat_template(messages, add_generation_prompt=True, tokenize=False)
+import pdb; pdb.set_trace()
+inputs = processor(text=prompt, images=[image1], return_tensors="pt")
+inputs = {k: v.to('cuda') for k, v in inputs.items()}
 
-image_file = "http://images.cocodataset.org/val2017/000000039769.jpg"
-raw_image = Image.open(requests.get(image_file, stream=True).raw)
-inputs = processor(images=raw_image, text=prompt, return_tensors='pt').to(0, torch.float16)
 
-output = model.generate(**inputs, max_new_tokens=200, do_sample=False)
-print(processor.decode(output[0][2:], skip_special_tokens=True))
+# Generate
+generated_ids = model.generate(**inputs, max_new_tokens=500)
+generated_texts = processor.batch_decode(generated_ids, skip_special_tokens=True)
+
+print(generated_texts)
+# ['User: What do we see in this image? \nAssistant: In this image, we can see the city of New York, and more specifically the Statue of Liberty. \nUser: And how about this image? \nAssistant: In this image we can see buildings, trees, lights, water and sky.']
