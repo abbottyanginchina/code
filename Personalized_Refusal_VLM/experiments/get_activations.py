@@ -30,6 +30,8 @@ DEFAULT_IMAGE_TOKEN = "<image>"
 DEFAULT_IM_START_TOKEN = "<im_start>"
 DEFAULT_IM_END_TOKEN = "<im_end>"
 
+
+
 def process(activations):
     newactivations = [x[0] for x in activations] 
     activations_tensor = torch.stack(newactivations)
@@ -38,6 +40,9 @@ def process(activations):
 def eval_model(args):
     model_path = os.path.join(args.model_path, args.model_name)
     device = "cuda" if torch.cuda.is_available() else "cpu"
+
+    # Load datasets
+    original_data = get_all_datasets_filter(args)
     # import pdb; pdb.set_trace()
 
     if 'llava' in model_path.lower():
@@ -94,8 +99,7 @@ def eval_model(args):
     else:
         processor = AutoProcessor.from_pretrained(model_path, use_fast=False)
 
-    # Load datasets
-    original_data = get_all_datasets_filter(args)
+    
     # original_data = get_all_datasets(args)
     with_sys_in_train_text = original_data["with_sys_in_train_text"]
     with_sys_out_train_text = original_data["with_sys_out_train_text"]
