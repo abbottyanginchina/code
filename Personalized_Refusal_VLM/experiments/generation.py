@@ -144,8 +144,8 @@ def eval_model(args):
     #     print(name, type(module))
     
     # 生成拒绝测试集
-    if not os.path.exists("./output/results/"):
-        os.makedirs("./output/results/")
+    if not os.path.exists("../../output/results/"):
+        os.makedirs("../../output/results/")
 
     answers_file = f"./output/results/nonbiology_answer_{cfg.model_name}.jsonl"
     os.makedirs(os.path.dirname(answers_file), exist_ok=True)
