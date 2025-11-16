@@ -50,7 +50,7 @@ def eval_model(args):
         model = LlavaForConditionalGeneration.from_pretrained(
             model_path, 
             dtype=torch.float16, 
-            device_map="auto",
+            device_map="cuda",
             low_cpu_mem_usage=True, 
         )
     elif 'qwen2.5-' in model_path.lower():
@@ -64,7 +64,7 @@ def eval_model(args):
         model = Qwen2VLForConditionalGeneration.from_pretrained(
         model_path, 
         torch_dtype=torch.float16, 
-        device_map="cuda"
+        device_map="auto"
         ).to(device)
     elif 'qwen-' in model_path.lower():
         model = AutoModelForCausalLM.from_pretrained(
