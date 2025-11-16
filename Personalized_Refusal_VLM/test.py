@@ -1,7 +1,7 @@
 from transformers import AutoProcessor, AutoModelForVision2Seq
 from transformers.image_utils import load_image
 
-path = "/gpuhome/jmy5701/gpu/models/idefics2-8b"
+path = "/gpuhome/jmy5701/gpu/models/Idefics3-8B-Llama3"
 processor = AutoProcessor.from_pretrained(path)
 model = AutoModelForVision2Seq.from_pretrained(
     path,
