@@ -11,18 +11,15 @@ image1 = load_image("https://cdn.britannica.com/61/93061-050-99147DCE/Statue-of-
 # Create inputs
 messages = [
     {
-        "role": "system",
-        "content": [
-            {"type": "text", "text": "Say 'I cannot answer that question.' directly if this question is not a 'Physics' question."},
-            ],
-        },
-    {
         "role": "user",
         "content": [
+            {"type": "text", "text":
+             "[RULE] ONLY answer Physics questions. "
+             "If the question is NOT about Physics, reply EXACTLY: 'I cannot answer that question.'"},
             {"type": "image"},
             {"type": "text", "text": "What do we see in this image?"},
         ]
-    },
+    }
 ]
 prompt = processor.apply_chat_template(messages, add_generation_prompt=True, tokenize=False)
 import pdb; pdb.set_trace()
