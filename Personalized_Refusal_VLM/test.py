@@ -4,7 +4,7 @@ from PIL import Image
 import torch
 from transformers import AutoProcessor, LlavaForConditionalGeneration
 
-model_id = "llava-hf/llava-1.5-7b-hf"
+model_id = "/gpu02home/jmy5701/gpu/models/llava-1.5-7b-hf"
 model = LlavaForConditionalGeneration.from_pretrained(
     model_id, 
     torch_dtype=torch.float16, 
