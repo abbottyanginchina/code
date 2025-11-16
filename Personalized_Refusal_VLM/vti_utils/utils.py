@@ -370,7 +370,7 @@ def get_demos(args, image_processor, model, tokenizer, patch_size = 14, file_pat
     
     return inputs_images, input_ids
 
-def get_activations(cfg, model, inputs_text, image, processor, system_prompt=False):
+def get_activations(cfg, model, inputs_text, image, processor, system_prompt=False, pos=-1):
     # import pdb; pdb.set_trace()
     h_all = []
     with torch.no_grad():
