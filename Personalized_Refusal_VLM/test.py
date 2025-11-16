@@ -1,3 +1,7 @@
+from transformers import AutoProcessor, AutoModelForVision2Seq
+from transformers.image_utils import load_image
+
+path = "/gpuhome/jmy5701/gpu/models/Idefics3-8B-Llama3"
 import requests
 import torch
 from PIL import Image
@@ -13,9 +17,9 @@ image1 = load_image("https://cdn.britannica.com/61/93061-050-99147DCE/Statue-of-
 image2 = load_image("https://cdn.britannica.com/59/94459-050-DBA42467/Skyline-Chicago.jpg")
 image3 = load_image("https://cdn.britannica.com/68/170868-050-8DDE8263/Golden-Gate-Bridge-San-Francisco.jpg")
 
-processor = AutoProcessor.from_pretrained("HuggingFaceM4/Idefics3-8B-Llama3")
+processor = AutoProcessor.from_pretrained(path)
 model = AutoModelForVision2Seq.from_pretrained(
-    "HuggingFaceM4/Idefics3-8B-Llama3", torch_dtype=torch.bfloat16
+    path, torch_dtype=torch.bfloat16
 ).to(DEVICE)
 
 # Create inputs
