@@ -234,6 +234,7 @@ def get_all_datasets_filter(args):
 
     dataset = load_dataset(f"/gpu02home/jmy5701/gpu/data/ScienceQA", streaming=True)["train"].filter(lambda e: e["image"] is not None)
     # dataset = load_dataset(f"/root/autodl-fs/ScienceQA")["train"].filter(lambda e: e["image"] is not None)
+    import pdb; pdb.set_trace()
 
     in_train = dataset.filter(lambda example: example["topic"] in in_domain)
     out_train = dataset.filter(lambda example: example["topic"] in out_of_domain)
