@@ -169,7 +169,7 @@ def get_prompts(args, model, tokenizer, data_demos, model_is_llaval=True):
 def get_all_datasets(args):
     in_domain = ['physics']
     out_of_domain = ['biology', 'geography', 'writing-strategies', 'figurative-language', 'economics', 'earth-science']
-    dataset = load_dataset(f"{args.model_path}/ScienceQA")["train"].filter(lambda e: e["image"] is not None)
+    dataset = load_dataset(f"/gpuhome/jmy5701/gpu/data/ScienceQA")["train"].filter(lambda e: e["image"] is not None)
     in_train = dataset.filter(lambda example: example["topic"] in in_domain)
     out_train = dataset.filter(lambda example: example["topic"] in out_of_domain)
     sample_in = in_train.shuffle(seed=args.seed).select([i for i in list(range(args.num_train+args.num_test))])
