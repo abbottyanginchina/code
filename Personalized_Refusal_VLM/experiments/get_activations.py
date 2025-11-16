@@ -50,7 +50,7 @@ def eval_model(args):
         model = LlavaForConditionalGeneration.from_pretrained(
             model_path, 
             dtype=torch.float16, 
-            device_map="auto",
+            device_map="cuda",
             # low_cpu_mem_usage=True, 
         )
         # model = model.to(device)
