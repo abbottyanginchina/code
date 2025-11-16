@@ -232,8 +232,7 @@ def get_all_datasets_filter(args):
     in_domain = ['physics']
     out_of_domain = ['biology', 'geography', 'writing-strategies', 'figurative-language', 'economics', 'earth-science']
 
-    dataset = load_dataset("lmms-lab/ScienceQA", "ScienceQA-FULL")["train"].filter(lambda e: e["image"] is not None)
-    # dataset = load_dataset(f"/gpu02home/jmy5701/gpu/data/ScienceQA")["train"].filter(lambda e: e["image"] is not None)
+    dataset = load_dataset(f"/gpu02home/jmy5701/gpu/data/ScienceQA")["train"].filter(lambda e: e["image"] is not None)
     # dataset = load_dataset(f"/root/autodl-fs/ScienceQA")["train"].filter(lambda e: e["image"] is not None)
     import pdb; pdb.set_trace()
 
