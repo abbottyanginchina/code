@@ -139,8 +139,10 @@ def eval_model(args):
         torch.save(with_sys_in_train_activations, f"{save_path}/with_sys_in_train_activations_{cfg.model_name}.pt")
         with_sys_out_train_activations = process(get_activations(cfg, model, with_sys_out_train_text, out_train_images, processor, system_prompt=False))
         torch.save(with_sys_out_train_activations, f"{save_path}/with_sys_out_train_activations_{cfg.model_name}.pt")
-        # without_sys_in_train_activations = process(get_activations(cfg, model, without_sys_in_train_text, in_train_images, processor, system_prompt=False))
-        # without_sys_out_train_activations = process(get_activations(cfg, model, without_sys_out_train_text, out_train_images, processor, system_prompt=False))
+        without_sys_in_train_activations = process(get_activations(cfg, model, without_sys_in_train_text, in_train_images, processor, system_prompt=False))
+        torch.save(without_sys_in_train_activations, f"{save_path}/without_sys_in_train_activations_{cfg.model_name}.pt")
+        without_sys_out_train_activations = process(get_activations(cfg, model, without_sys_out_train_text, out_train_images, processor, system_prompt=False))
+        torch.save(without_sys_out_train_activations, f"{save_path}/without_sys_out_train_activations_{cfg.model_name}.pt")
 
         # # 1. 加 system prompt 的 others（对应 h_c(Image_{others} + system_prompt)）
         # with_sys_image_others_activations = process(
