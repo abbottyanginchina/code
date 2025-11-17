@@ -207,7 +207,7 @@ def add_multiple_layers(model: PreTrainedModel, vti_directions: Tensor, alpha: l
         mlp_keywords = ["mlp", "feedforward", "ffn"]
         # assert len(vti_directions) == len(layers)
         # for idx in layer_indices:
-        for idx in [28, 29, 30, 31]:   # only for llava-1.5-7b
+        # for idx in [28, 29, 30, 31]:   # only for llava-1.5-7b
             layer = layers[idx]
             original_mlp = find_module(layer, mlp_keywords)
             layer.mlp = nn.Sequential(original_mlp, VTILayer(vti_directions[idx], alpha))
