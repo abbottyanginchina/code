@@ -35,7 +35,7 @@ class VTILayer(nn.Module):
 
         # === 保持原 norm ===
         x_new = F.normalize(x_new, dim=-1) * norm
-        import pdb; pdb.set_trace()
+        # import pdb; pdb.set_trace()
 
         return x_new.half()
     '''
