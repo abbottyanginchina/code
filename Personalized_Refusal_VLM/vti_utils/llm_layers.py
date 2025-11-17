@@ -27,7 +27,7 @@ class VTILayer(nn.Module):
             y = y/len(self.vti_direction)
             # y_expanded = y.unsqueeze(0).expand(x.size(0), -1, -1)
             # y = y_expanded[:, -1:, :]
-            import pdb; pdb.set_trace()
+            # import pdb; pdb.set_trace()
             # x: torch.Size([1, 595, 4096]) y: torch.Size([4096]) norm: torch.Size([1, 595, 1])
             x = F.normalize(F.normalize(x.float(),dim=-1) +  0.1 * y, dim=-1) * norm    
                 
