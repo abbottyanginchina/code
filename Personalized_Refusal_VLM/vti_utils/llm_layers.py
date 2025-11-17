@@ -21,22 +21,14 @@ class VTILayer(nn.Module):
         x_float = x.float()
         norm = torch.norm(x_float, dim=-1, keepdim=True)   # [B, T, 1]
 
-        # v: either [1,H], [K,H], or [1,K,H]
+        y = 0
+        lambda_sim = 1.0
+        y += self.lam[0] * lambda_sim * F.normalize(self.vti_direction[:, -1, :], dim=-1)
+
         v = self.vti_direction.to(x.device)
-        # import pdb; pdb.set_trace()
-        # if v.dim() == 3:
-        #     v = v.squeeze(0)
+        v_global = v[:, -1, :]  
 
-        # ========== 🔵 Part 1：全局 steering（前 T-K 个 token）==========
-        # 你的 v 有可能是 [K,H]，所以我们需要一个全局方向
-        # if v.size(0) == 1:
-        #     v_global = v[-1]      # 本来就是一个方向
-        # else:
-        #     v_global = v.mean(dim=0)  # 多个方向 → 求平均，作为全局方向
-        v_global = v[:, -1, :]  # 取最后一个位置的 steering 作为全局方向
-        # import pdb; pdb.set_trace()
-
-        v_global = F.normalize(v_global, dim=-1).view(1, 1, H)
+        v_global = F.normalize(v[:, -1, :], dim=-1).view(1, 1, H)
 
         # 先对所有 token 注入全局 steering
         x_new = F.normalize(x_float, dim=-1) + 0.1 * v_global    # [B,T,H]
@@ -89,7 +81,6 @@ class VTILayer(nn.Module):
         if self.vti_direction is not None:
             norm = torch.norm(x.float(),dim=-1).unsqueeze(-1)            
             y = 0
-
             lambda_sim = 1.0
             y += self.lam[0] * lambda_sim * F.normalize(self.vti_direction[:, -1, :], dim=-1)
             # for i in range(len(self.vti_direction)):
