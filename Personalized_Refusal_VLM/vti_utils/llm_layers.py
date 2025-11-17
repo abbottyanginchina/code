@@ -21,8 +21,7 @@ class VTILayer(nn.Module):
         x_float = x.float()
         norm = torch.norm(x_float, dim=-1, keepdim=True)   # [B, T, 1]
 
-        # v = self.vti_direction.to(x.device)
-        v_global = v[:, -1, :]  
+        # v = self.vti_direction.to(x.device)  # shape = [K, H] 
 
         v_global = self.lam[0] * F.normalize(v[:, -1, :], dim=-1)
 
