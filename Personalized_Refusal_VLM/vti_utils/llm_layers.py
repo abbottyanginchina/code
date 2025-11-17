@@ -23,7 +23,7 @@ class VTILayer(nn.Module):
 
         # v = self.vti_direction.to(x.device)  # shape = [K, H] 
 
-        v_global = self.lam[0] * F.normalize(v[:, -1, :], dim=-1)
+        v_global = self.lam[0] * F.normalize(self.vti_direction[:, -1, :], dim=-1)
 
         # 先对所有 token 注入全局 steering
         x_new = F.normalize(x_float, dim=-1) + 0.1 * v_global    # [B,T,H]
