@@ -27,7 +27,6 @@ class VTILayer(nn.Module):
             # import pdb; pdb.set_trace()
             y = y/len(self.vti_direction)
 
-
             x = F.normalize(F.normalize(x[:, x.size(1)-10:x.size(1), :].float(),dim=-1) +  0.1 * y, dim=-1) 
             import pdb; pdb.set_trace()
             x = x * norm[:, -10:, :]
