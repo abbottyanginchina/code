@@ -150,7 +150,7 @@ def eval_model(args):
     if not os.path.exists("../../output/results/"):
         os.makedirs("../../output/results/")
 
-    answers_file = f"./output/results/nonbiology_answer_{cfg.model_name}.jsonl"
+    answers_file = f"../../output/results/nonbiology_answer_{cfg.model_name}.jsonl"
     os.makedirs(os.path.dirname(answers_file), exist_ok=True)
     ans_file = open(answers_file, "w")
     for img_id in range(len(out_test_images)):
