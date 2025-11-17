@@ -13,6 +13,46 @@ class VTILayer(nn.Module):
         self.vti_direction = vti_direction
         self.lam = lam
 
+    def forward(self, x):
+        if self.vti_direction is None:
+            return x
+
+        B, T, H = x.shape
+        x_float = x.float()
+        norm = torch.norm(x_float, dim=-1, keepdim=True)   # [B, T, 1]
+
+        # v: either [1,H], [K,H], or [1,K,H]
+        v = self.vti_direction.to(x.device)
+        if v.dim() == 3:
+            v = v.squeeze(0)
+
+        # ========== 🔵 Part 1：全局 steering（前 T-K 个 token）==========
+        # 你的 v 有可能是 [K,H]，所以我们需要一个全局方向
+        if v.size(0) == 1:
+            v_global = v[0]      # 本来就是一个方向
+        else:
+            v_global = v.mean(dim=0)  # 多个方向 → 求平均，作为全局方向
+
+        v_global = F.normalize(v_global, dim=-1).view(1, 1, H)
+
+        # 先对所有 token 注入全局 steering
+        x_new = x_float + 0.1 * v_global    # [B,T,H]
+
+        # ========== 🔥 Part 2：最后 K 个 token 覆盖：用 position-specific steering ==========
+        K = v.size(0)
+        K = min(K, T)
+
+        for i in range(K):
+            pos = T - K + i                 # 最后 K 个 token 的位置
+            steer = F.normalize(v[i], dim=-1).view(1, 1, H)
+            x_new[:, pos, :] = x_float[:, pos, :] + 0.1 * steer
+            # ⚠️ 注意：这里不加到 x_new，而是直接覆盖（用 x_float 原来的）
+
+        # ========== 保持原 norm ==========
+        x_new = F.normalize(x_new, dim=-1) * norm
+
+        return x_new.half()
+
     # def forward(self, x):
     #     B, T, H = x.shape
     #     x_float = x.float()
