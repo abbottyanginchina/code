@@ -37,7 +37,7 @@ class VTILayer(nn.Module):
         x_new = F.normalize(x_new, dim=-1) * norm
 
         return x_new.half()
-
+    '''
     def forward(self, x):
         if self.vti_direction is not None:
             norm = torch.norm(x.float(),dim=-1).unsqueeze(-1)            
@@ -62,6 +62,7 @@ class VTILayer(nn.Module):
             return x.half()
         else:
             return x
+    '''
 
 
 def get_nested_attr(obj, attr_path):
