@@ -40,6 +40,7 @@ class VTILayer(nn.Module):
 
         # 先对所有 token 注入全局 steering
         # x_new = F.normalize(x_float, dim=-1) + 0.1 * v_global    # [B,T,H]
+        x_new = F.normalize(x_float, dim=-1)
 
         # ========== 🔥 Part 2：最后 K 个 token 覆盖：用 position-specific steering ==========
         # K = v.size(0)
