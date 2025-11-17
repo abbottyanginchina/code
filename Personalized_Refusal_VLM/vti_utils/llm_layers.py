@@ -30,19 +30,6 @@ class VTILayer(nn.Module):
 
             x = F.normalize(F.normalize(x[:, x.size(1)-10:x.size(1), :].float(),dim=-1) +  0.1 * y, dim=-1) 
             x = x * norm
-            # 取最后10个token
-            x_last = x[:, x.size(1)-10:x.size(1), :]        # [1,10,4096]
-            norm_last = norm[:, -10:, :]                    # [1,10,1]
-
-            x_last = F.normalize(
-                        F.normalize(x_last.float(), dim=-1) + 0.1 * y,
-                        dim=-1
-                    ) * norm_last
-
-            # 写回去
-            x = x.clone()
-            
-            x[:, -10:, :] = x_last.to(x.dtype)
                 
             return x.half()
         else:
