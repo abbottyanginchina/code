@@ -143,7 +143,7 @@ def eval_model(args):
     for i in range(oth_x.size(2)):
         steer_vec = oth_target[:, :, i].mean(dim=0) - oth_x[:, :, i].mean(dim=0)
         steer_vecs.append(steer_vec)
-    import pdb; pdb.set_trace()
+    # import pdb; pdb.set_trace()
 
 
     # for name, module in model.named_modules():
