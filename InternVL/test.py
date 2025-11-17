@@ -18,6 +18,7 @@ image = Image.open("../jiaxi.jpg").convert("RGB")
 
 inputs = tokenizer(
     text,
+    images=image
     return_tensors="pt"
 ).to(model.device)
 
