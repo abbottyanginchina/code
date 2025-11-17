@@ -140,7 +140,7 @@ def eval_model(args):
     refusal_vector = oth_target - oth_x
     # refusal_vector = refusal_vector.mean(dim=0)[1:]
 
-    steer_vecs = oth_target.mean(dim=0) - oth_x.mean(dim=0)
+    refusal_vector = oth_target.mean(dim=0) - oth_x.mean(dim=0)
 
     # for name, module in model.named_modules():
     #     print(name, type(module))
