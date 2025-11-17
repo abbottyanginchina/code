@@ -29,7 +29,9 @@ class VTILayer(nn.Module):
             # y = y_expanded[:, -1:, :]
             import pdb; pdb.set_trace()
             # x: torch.Size([1, 595, 4096]) y: torch.Size([4096]) norm: torch.Size([1, 595, 1])
-            x = F.normalize(F.normalize(x.float(),dim=-1) +  0.1 * y, dim=-1) * norm    
+            x = F.normalize(F.normalize(x.float(),dim=-1) +  0.1 * y, dim=-1) * norm 
+
+            import pdb; pdb.set_trace()   
                 
             return x.half()
         else:
