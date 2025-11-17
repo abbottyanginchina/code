@@ -12,7 +12,7 @@ model = AutoModel.from_pretrained(
 
 # ===== 准备输入 =====
 text = "Describe the image."
-image = Image.open("your_image.jpg").convert("RGB")
+image = Image.open("../jiaxi.jpg").convert("RGB")
 
 inputs = tokenizer(
     text,
