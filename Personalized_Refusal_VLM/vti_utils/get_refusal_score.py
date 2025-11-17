@@ -136,6 +136,7 @@ def filter_data(cfg, model, processor, tokenizer, with_sys_out_train_text, witho
     
         with torch.no_grad():
             scores = get_refusal_scores_llava(
+                cfg,
                 model,
                 processor,
                 [image, image],
