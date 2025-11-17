@@ -8,7 +8,7 @@ num_test=100
 model_name="llava-1.5-7b-hf"
 inter_start_layer=12
 inter_end_layer=32
-alpha_text=1.8
+alpha_text=1.2
 
 # echo "🚀 Step 1: Extracting activations..."
 # python -m experiments.get_activations --model_name $model_name --num_test $num_test --num_train $num_train
