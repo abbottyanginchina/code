@@ -210,7 +210,6 @@ def add_multiple_layers(model: PreTrainedModel, vti_directions: Tensor, alpha: l
             layer = layers[idx]
             original_mlp = find_module(layer, mlp_keywords)
             layer.mlp = nn.Sequential(original_mlp, VTILayer(vti_directions[idx], alpha))
-            import pdb; pdb.set_trace()
             print(idx, "layer added vti") 
         
 
