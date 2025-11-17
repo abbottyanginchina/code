@@ -13,49 +13,49 @@ class VTILayer(nn.Module):
         self.vti_direction = vti_direction
         self.lam = lam
 
-        def forward(self, x):
-            if self.vti_direction is not None:
-                B, T, H = x.shape
-                norm = torch.norm(x.float(), dim=-1, keepdim=True)
+    def forward(self, x):
+        if self.vti_direction is not None:
+            B, T, H = x.shape
+            norm = torch.norm(x.float(), dim=-1, keepdim=True)
 
-                y = 0
-                for i in range(len(self.vti_direction)):
-                    if x.size(1) < 2:
-                        lambda_sim = 1.0
-                        y += self.lam[i] * lambda_sim * F.normalize(
-                            self.vti_direction[i], dim=-1
-                        ).repeat(1, x.shape[1], 1)
-                    else:
-                        lambda_sim = 1.0
-                        y += self.lam[i] * lambda_sim * F.normalize(
-                            self.vti_direction[i], dim=-1
-                        )
+            y = 0
+            for i in range(len(self.vti_direction)):
+                if x.size(1) < 2:
+                    lambda_sim = 1.0
+                    y += self.lam[i] * lambda_sim * F.normalize(
+                        self.vti_direction[i], dim=-1
+                    ).repeat(1, x.shape[1], 1)
+                else:
+                    lambda_sim = 1.0
+                    y += self.lam[i] * lambda_sim * F.normalize(
+                        self.vti_direction[i], dim=-1
+                    )
 
-                y = y / len(self.vti_direction)      # y: [10, 4096]
-                if y.dim() == 2:
-                    y = y.unsqueeze(0)               # → [1,10,4096]
+            y = y / len(self.vti_direction)      # y: [10, 4096]
+            if y.dim() == 2:
+                y = y.unsqueeze(0)               # → [1,10,4096]
 
-                # ---- 只操作最后 10 个 token ----
-                N = 10
-                x_last = x[:, T-N:T, :]              # [1,10,4096]
+            # ---- 只操作最后 10 个 token ----
+            N = 10
+            x_last = x[:, T-N:T, :]              # [1,10,4096]
 
-                x_last = F.normalize(
-                    F.normalize(x_last.float(), dim=-1) + 0.1 * y,
-                    dim=-1
-                )
+            x_last = F.normalize(
+                F.normalize(x_last.float(), dim=-1) + 0.1 * y,
+                dim=-1
+            )
 
-                norm_last = norm[:, -N:, :]          # [1,10,1]
-                x_last = x_last * norm_last          # 仍然 [1,10,4096]
+            norm_last = norm[:, -N:, :]          # [1,10,1]
+            x_last = x_last * norm_last          # 仍然 [1,10,4096]
 
-                # 🔒 关键：强制 reshape 成 [B, N, H]，防止广播吃掉某个维度
-                x_last = x_last.view(B, N, H)
+            # 🔒 关键：强制 reshape 成 [B, N, H]，防止广播吃掉某个维度
+            x_last = x_last.view(B, N, H)
 
-                x = x.clone()
-                x[:, -N:, :] = x_last.to(x.dtype)
+            x = x.clone()
+            x[:, -N:, :] = x_last.to(x.dtype)
 
-                return x.half()
-            else:
-                return x
+            return x.half()
+        else:
+            return x
 
     # def forward(self, x):
     #     if self.vti_direction is not None:
