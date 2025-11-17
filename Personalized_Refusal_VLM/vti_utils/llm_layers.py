@@ -37,7 +37,7 @@ class VTILayer(nn.Module):
         for i in range(-K, 0):
             pos = i                 # 最后 K 个 token 的位置
             # import pdb; pdb.set_trace()
-            steer = F.normalize(self.vti_direction[:, i, :], dim=-1)
+            steer = self.lam[0] * F.normalize(self.vti_direction[:, i, :], dim=-1)
             x_new[:, pos, :] = x_float[:, pos, :] + 0.1 * steer
             # ⚠️ 注意：这里不加到 x_new，而是直接覆盖（用 x_float 原来的）
 
