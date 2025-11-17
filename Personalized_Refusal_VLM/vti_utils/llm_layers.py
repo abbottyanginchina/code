@@ -31,7 +31,7 @@ class VTILayer(nn.Module):
         for i in range(K):
             pos = T - K + i               # 倒数 K 个位置
             steer = F.normalize(v[i], dim=-1).view(1, 1, H)   # [1,1,H]
-            x_new[:, pos, :] = x_new[:, pos, :] + 0.1 * steer
+            x_new[:, pos, :] = x_new[:, pos, :] + 1 * steer
 
         # === 保持原 norm ===
         x_new = F.normalize(x_new, dim=-1) * norm
