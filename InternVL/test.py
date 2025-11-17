@@ -1,4 +1,5 @@
 import torch
+from PIL import Image
 from transformers import AutoTokenizer, AutoModel
 
 path = "/gpuhome/jmy5701/gpu/models/InternVL2-8B"
