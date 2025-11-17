@@ -21,14 +21,10 @@ class VTILayer(nn.Module):
         x_float = x.float()
         norm = torch.norm(x_float, dim=-1, keepdim=True)   # [B, T, 1]
 
-        y = 0
-        lambda_sim = 1.0
-        y += self.lam[0] * lambda_sim * F.normalize(self.vti_direction[:, -1, :], dim=-1)
-
-        v = self.vti_direction.to(x.device)
+        # v = self.vti_direction.to(x.device)
         v_global = v[:, -1, :]  
 
-        v_global = F.normalize(v[:, -1, :], dim=-1).view(1, 1, H)
+        v_global = self.lam[0] * F.normalize(v[:, -1, :], dim=-1)
 
         # 先对所有 token 注入全局 steering
         x_new = F.normalize(x_float, dim=-1) + 0.1 * v_global    # [B,T,H]
