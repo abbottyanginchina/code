@@ -32,8 +32,8 @@ class VTILayer(nn.Module):
         # ========== 🔥 Part 2：最后 K 个 token 覆盖：用 position-specific steering ==========
         # K = v.size(0)
         # K = min(K, T)
-
-        K=1
+        K = self.vti_direction.size(1)
+        K = min(K, T)
         for i in range(-K, 0):
             pos = i                 # 最后 K 个 token 的位置
             # import pdb; pdb.set_trace()
