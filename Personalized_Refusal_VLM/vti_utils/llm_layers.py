@@ -205,7 +205,8 @@ def add_multiple_layers(model: PreTrainedModel, vti_directions: Tensor, alpha: l
         # import pdb; pdb.set_trace()
         mlp_keywords = ["mlp", "feedforward", "ffn"]
         # assert len(vti_directions) == len(layers)
-        for idx in layer_indices:
+        # for idx in layer_indices:
+        for idx in [28]:
             layer = layers[idx]
             original_mlp = find_module(layer, mlp_keywords)
             layer.mlp = nn.Sequential(original_mlp, VTILayer(vti_directions[idx], alpha))
