@@ -25,6 +25,7 @@ class VTILayer(nn.Module):
                     lambda_sim = 1.0
                     y += self.lam[i] * lambda_sim * F.normalize(self.vti_direction[i], dim=-1)
             y = y/len(self.vti_direction)
+            import pdb; pdb.set_trace()
             x = F.normalize(F.normalize(x.float(),dim=-1) +  0.1 * y, dim=-1) * norm
                 
             return x.half()
