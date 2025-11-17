@@ -10,26 +10,26 @@ model = AutoModel.from_pretrained(
     trust_remote_code=True
 ).eval().cuda()
 
-# 用于保存 activation
-activations = {}
+# ===== 准备输入 =====
+text = "Describe the image."
+image = Image.open("your_image.jpg").convert("RGB")
 
-def hook_fn(module, input, output):
-    activations['hidden_state'] = output
+inputs = tokenizer(
+    text,
+    return_tensors="pt"
+).to(model.device)
 
-# 以 Bert 为例，假设你要 hook encoder 的第 0 层
-# 具体层名请根据你的模型结构调整
-layer = model.encoder.layer[0]
-handle = layer.register_forward_hook(hook_fn)
-
-# 输入示例
-tokenizer = AutoTokenizer.from_pretrained(path, trust_remote_code=True)
-inputs = tokenizer("Hello world!", return_tensors="pt").to('cuda')
-
+# ===== forward ================
 with torch.no_grad():
-    outputs = model(**inputs)
+    out = model(
+        **inputs,
+        output_hidden_states=True,
+        return_dict=True
+    )
 
-# 现在 activations['hidden_state'] 就是你要的 hidden state
-print(activations['hidden_state'].shape)
+# ===== hidden states ===========
+hidden_states = out.hidden_states   # list: length = num_layers + embedding
+print(len(hidden_states))           # e.g. 33 layers (depends on variant)
+print(hidden_states[-1].shape)      # 最后一层 hidden state shape
 
-# 记得移除 hook
-handle.remove()
+
