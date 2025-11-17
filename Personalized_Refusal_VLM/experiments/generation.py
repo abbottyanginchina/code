@@ -141,8 +141,8 @@ def eval_model(args):
     # refusal_vector = refusal_vector.mean(dim=0)[1:]
     import pdb; pdb.set_trace()
     steer_vecs = []
-    for i in range(oth_x.size(2)):
-        steer_vec = oth_target[:, :, i].mean(dim=0) - oth_x[:, :, i].mean(dim=0)
+
+    steer_vec = oth_target.mean(dim=0) - oth_x.mean(dim=0)
         steer_vecs.append(steer_vec)
 
     # for name, module in model.named_modules():
