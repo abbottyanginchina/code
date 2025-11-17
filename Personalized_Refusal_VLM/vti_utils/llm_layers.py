@@ -33,7 +33,7 @@ class VTILayer(nn.Module):
                         F.normalize(x_last.float(), dim=-1) + 0.1 * y,
                         dim=-1
                     )
-            import pdb; pdb.set_trace()
+            # import pdb; pdb.set_trace()
             x_last = x_last * norm[:, -10:, :]                 # [B,10,1]
 
             # ---- 写回原 x ----
