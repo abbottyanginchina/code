@@ -44,4 +44,4 @@ echo "🎯 Step 3: Generating responses with steering vectors applied..."
 
 echo "🎉 All steps completed!"
 
-done
+# done
