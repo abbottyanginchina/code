@@ -14,6 +14,31 @@ class VTILayer(nn.Module):
         self.lam = lam
 
     def forward(self, x):
+        B, T, H = x.shape
+        x_float = x.float()
+
+        norm = torch.norm(x_float, dim=-1, keepdim=True)   # [B, T, 1]
+        v = self.vti_direction.to(x.device)  # shape = [K, H]
+        if v.dim() == 3:
+            v = v.squeeze(0)  # if [1, K, H]
+
+        K = v.size(0)
+        K = min(K, T)
+
+        x_new = x_float.clone()
+
+        # === 🔥 核心：倒数 K 个 token，各加对应的 steering vector ===
+        for i in range(K):
+            pos = T - K + i               # 倒数 K 个位置
+            steer = F.normalize(v[i], dim=-1).view(1, 1, H)   # [1,1,H]
+            x_new[:, pos, :] = x_new[:, pos, :] + 0.1 * steer
+
+        # === 保持原 norm ===
+        x_new = F.normalize(x_new, dim=-1) * norm
+
+        return x_new.half()
+
+    def forward(self, x):
         if self.vti_direction is not None:
             norm = torch.norm(x.float(),dim=-1).unsqueeze(-1)            
             y = 0
