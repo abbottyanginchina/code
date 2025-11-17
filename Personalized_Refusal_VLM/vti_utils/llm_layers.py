@@ -35,7 +35,7 @@ class VTILayer(nn.Module):
 
         K=1
         for i in range(-x.size(1),0):
-            pos = T - K + i                 # 最后 K 个 token 的位置
+            pos = i                 # 最后 K 个 token 的位置
             steer = F.normalize(self.vti_direction[:, i, :], dim=-1)
             x_new[:, pos, :] = x_float[:, pos, :] + 0.1 * steer
             # ⚠️ 注意：这里不加到 x_new，而是直接覆盖（用 x_float 原来的）
