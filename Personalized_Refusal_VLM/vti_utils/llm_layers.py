@@ -33,7 +33,7 @@ class VTILayer(nn.Module):
         #     v_global = v[-1]      # 本来就是一个方向
         # else:
         #     v_global = v.mean(dim=0)  # 多个方向 → 求平均，作为全局方向
-        v_global = v[-1]
+        v_global = v[:, -1, :]  # 取最后一个位置的 steering 作为全局方向
 
         v_global = F.normalize(v_global, dim=-1).view(1, 1, H)
 
