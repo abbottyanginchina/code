@@ -24,8 +24,8 @@ class VTILayer(nn.Module):
         # v: either [1,H], [K,H], or [1,K,H]
         v = self.vti_direction.to(x.device)
         import pdb; pdb.set_trace()
-        if v.dim() == 3:
-            v = v.squeeze(0)
+        # if v.dim() == 3:
+        #     v = v.squeeze(0)
 
         # ========== 🔵 Part 1：全局 steering（前 T-K 个 token）==========
         # 你的 v 有可能是 [K,H]，所以我们需要一个全局方向
