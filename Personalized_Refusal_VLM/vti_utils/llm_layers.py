@@ -33,7 +33,7 @@ class VTILayer(nn.Module):
         # K = v.size(0)
         # K = min(K, T)
 
-        K=1
+        K=0
         for i in range(-K, 0):
             pos = i                 # 最后 K 个 token 的位置
             # import pdb; pdb.set_trace()
