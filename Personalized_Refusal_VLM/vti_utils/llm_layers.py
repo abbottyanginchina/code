@@ -26,7 +26,7 @@ class VTILayer(nn.Module):
         v_global = self.lam[0] * F.normalize(self.vti_direction[:, -1, :], dim=-1)
 
         # 先对所有 token 注入全局 steering
-        x_new = F.normalize(x_float, dim=-1) + 0.1 * v_global    # [B,T,H]
+        # x_new = F.normalize(x_float, dim=-1) + 0.1 * v_global    # [B,T,H]
         # x_new = F.normalize(x_float, dim=-1)
 
         # ========== 🔥 Part 2：最后 K 个 token 覆盖：用 position-specific steering ==========
