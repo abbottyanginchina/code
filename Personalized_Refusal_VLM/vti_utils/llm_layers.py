@@ -28,10 +28,11 @@ class VTILayer(nn.Module):
 
         # ========== 🔵 Part 1：全局 steering（前 T-K 个 token）==========
         # 你的 v 有可能是 [K,H]，所以我们需要一个全局方向
-        if v.size(0) == 1:
-            v_global = v[-1]      # 本来就是一个方向
-        else:
-            v_global = v.mean(dim=0)  # 多个方向 → 求平均，作为全局方向
+        # if v.size(0) == 1:
+        #     v_global = v[-1]      # 本来就是一个方向
+        # else:
+        #     v_global = v.mean(dim=0)  # 多个方向 → 求平均，作为全局方向
+        v_global = v[-1]
 
         v_global = F.normalize(v_global, dim=-1).view(1, 1, H)
 
