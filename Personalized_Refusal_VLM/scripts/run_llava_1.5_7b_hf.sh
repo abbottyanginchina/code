@@ -7,7 +7,7 @@ num_train=200
 num_test=100
 model_name="llava-1.5-7b-hf"
 inter_start_layer=12
-inter_end_layer=32
+inter_end_layer=31
 alpha_text=1.8
 
 # echo "🚀 Step 1: Extracting activations..."
