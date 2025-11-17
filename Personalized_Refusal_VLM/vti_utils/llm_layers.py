@@ -101,6 +101,7 @@ class VTILayer(nn.Module):
             #         lambda_sim = 1.0
             #         y += self.lam[i] * lambda_sim * F.normalize(self.vti_direction[i], dim=-1)
 
+            # x: torch.Size([1, 595, 4096]) y: torch.Size([4096]) norm: torch.Size([1, 595, 1])
             x = F.normalize(F.normalize(x.float(),dim=-1) +  0.1 * y, dim=-1) * norm 
 
             # x: torch.Size([1, 595, 4096])
