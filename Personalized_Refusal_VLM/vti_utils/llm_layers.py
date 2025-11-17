@@ -41,7 +41,7 @@ class VTILayer(nn.Module):
             x_new[:, pos, :] = x_float[:, pos, :] + 0.1 * steer
             # ⚠️ 注意：这里不加到 x_new，而是直接覆盖（用 x_float 原来的）
 
-        import pdb; pdb.set_trace()
+        # import pdb; pdb.set_trace()
         # ========== 保持原 norm ==========
         x_new = F.normalize(x_new, dim=-1) * norm
 
