@@ -136,9 +136,15 @@ def eval_model(args):
 
     oth_target = torch.load(f"../../output/activations/with_sys_out_train_activations_{cfg.model_name}.pt", weights_only=False).double()
     oth_x = torch.load(f"../../output/activations/without_sys_out_train_activations_{cfg.model_name}.pt", weights_only=False).double()
-    import pdb; pdb.set_trace()
+
     refusal_vector = oth_target - oth_x
-    refusal_vector = refusal_vector.mean(dim=0)[1:]
+    # refusal_vector = refusal_vector.mean(dim=0)[1:]
+    steer_vecs = []
+    for i in range(oth_x.size(2)):
+        steer_vec = oth_target[:, :, i].mean(dim=0) - oth_x[:, :, i].mean(dim=0)
+        steer_vecs.append(steer_vec)
+    import pdb; pdb.set_trace()
+
 
     # for name, module in model.named_modules():
     #     print(name, type(module))
