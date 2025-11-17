@@ -115,7 +115,7 @@ def eval_model(args):
     torch.cuda.empty_cache()
 
     # Filter data based on model scores
-    # without_sys_out_train_text, with_sys_out_train_text, out_train_images = filter_data(cfg, model, processor, processor.tokenizer, with_sys_out_train_text, without_sys_out_train_text, out_train_images)
+    without_sys_out_train_text, with_sys_out_train_text, out_train_images = filter_data(cfg, model, processor, processor.tokenizer, with_sys_out_train_text, without_sys_out_train_text, out_train_images)
 
     print('Obtaining direction\n')
 
