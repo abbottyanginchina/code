@@ -214,6 +214,7 @@ def eval_model(args):
         # remove_one_layer(model, layer_idx = layer)
     ans_file.close()
 
+    import pdb; pdb.set_trace()
     # 生成in-domain测试集
     answers_file = f"./output/results/biology_answer_{cfg.model_name}.jsonl"
     os.makedirs(os.path.dirname(answers_file), exist_ok=True)
