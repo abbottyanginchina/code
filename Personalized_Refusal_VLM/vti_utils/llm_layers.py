@@ -25,6 +25,7 @@ class VTILayer(nn.Module):
                     lambda_sim = 1.0
                     y += self.lam[i] * lambda_sim * F.normalize(self.vti_direction[i], dim=-1)
             y = y/len(self.vti_direction)
+            y = y.view(1, -1, x.size(-1))
 
             # ---- 只操作最后10个position ----
             x_last = x[:, x.size(1)-10:x.size(1), :]            # [B,10,H]
