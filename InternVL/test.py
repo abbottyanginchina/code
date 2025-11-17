@@ -11,7 +11,7 @@ model = AutoModel.from_pretrained(
     torch_dtype=torch.bfloat16,
     low_cpu_mem_usage=True,
     use_flash_attn=True,
-    trust_remote_code=True
+    # trust_remote_code=True
 ).eval().cuda()
 
 # ====== 2. 加载图像 → pixel_values ======
