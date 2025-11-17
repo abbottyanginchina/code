@@ -6,7 +6,7 @@ step=3
 num_train=200
 num_test=100
 model_name="Qwen2.5-VL-7B-Instruct"
-inter_start_layer=15
+inter_start_layer=20
 inter_end_layer=28
 alpha_text=2.0
 
