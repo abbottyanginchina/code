@@ -1,6 +1,6 @@
 import torch
 from transformers import AutoTokenizer, AutoModel
-path = "OpenGVLab/InternVL2-8B"
+path = "/gpuhome/jmy5701/gpu/models/InternVL2-8B"
 model = AutoModel.from_pretrained(
     path,
     torch_dtype=torch.bfloat16,
