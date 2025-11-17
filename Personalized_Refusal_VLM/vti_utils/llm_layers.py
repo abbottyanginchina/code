@@ -15,79 +15,21 @@ class VTILayer(nn.Module):
 
     def forward(self, x):
         if self.vti_direction is not None:
-            B, T, H = x.shape
-            norm = torch.norm(x.float(), dim=-1, keepdim=True)
-
+            norm = torch.norm(x.float(),dim=-1).unsqueeze(-1)            
             y = 0
             for i in range(len(self.vti_direction)):
                 if x.size(1) < 2:
-                    lambda_sim = 1.0
-                    y += self.lam[i] * lambda_sim * F.normalize(
-                        self.vti_direction[i], dim=-1
-                    ).repeat(1, x.shape[1], 1)
+                    lambda_sim = 1.0 #+ torch.max(torch.tensor([0.]).to(x.device), F.cosine_similarity(x.float(), -self.vti_direction[i][None,None,:], dim=-1)).unsqueeze(-1)
+                    y += self.lam[i] * lambda_sim * F.normalize(self.vti_direction[i], dim=-1).repeat(1,x.shape[1],1)
                 else:
                     lambda_sim = 1.0
-                    y += self.lam[i] * lambda_sim * F.normalize(
-                        self.vti_direction[i], dim=-1
-                    )
-
-            y = y / len(self.vti_direction)      # y: [10, 4096]
-            if y.dim() == 2:
-                y = y.unsqueeze(0)               # → [1,10,4096]
-
-            # ---- 只操作最后 10 个 token ----
-            N = 10
-            x_last = x[:, T-N:T, :]              # [1,10,4096]
-
-            x_last = F.normalize(
-                F.normalize(x_last.float(), dim=-1) + 0.1 * y,
-                dim=-1
-            )
-
-            norm_last = norm[:, -N:, :]          # [1,10,1]
-            x_last = x_last * norm_last          # 仍然 [1,10,4096]
-
-            # 🔒 关键：强制 reshape 成 [B, N, H]，防止广播吃掉某个维度
-            x_last = x_last.view(B, N, H)
-
-            x = x.clone()
-            x[:, -N:, :] = x_last.to(x.dtype)
-
+                    y += self.lam[i] * lambda_sim * F.normalize(self.vti_direction[i], dim=-1)
+            y = y/len(self.vti_direction)
+            x = F.normalize(F.normalize(x.float(),dim=-1) +  0.1 * y, dim=-1) * norm
+                
             return x.half()
         else:
             return x
-
-    # def forward(self, x):
-    #     if self.vti_direction is not None:
-    #         norm = torch.norm(x.float(),dim=-1).unsqueeze(-1)            
-    #         y = 0
-    #         for i in range(len(self.vti_direction)):
-    #             if x.size(1) < 2:
-    #                 lambda_sim = 1.0 #+ torch.max(torch.tensor([0.]).to(x.device), F.cosine_similarity(x.float(), -self.vti_direction[i][None,None,:], dim=-1)).unsqueeze(-1)
-    #                 y += self.lam[i] * lambda_sim * F.normalize(self.vti_direction[i], dim=-1).repeat(1,x.shape[1],1)
-    #             else:
-    #                 lambda_sim = 1.0
-    #                 y += self.lam[i] * lambda_sim * F.normalize(self.vti_direction[i], dim=-1)
-    #         y = y/len(self.vti_direction)
-    #         y = y.unsqueeze(0)
-
-    #         # ---- 只操作最后10个position ----
-    #         x_last = x[:, x.size(1)-10:x.size(1), :]            # [B,10,H]
-
-    #         x_last = F.normalize(
-    #                     F.normalize(x_last.float(), dim=-1) + 0.1 * y,
-    #                     dim=-1
-    #                 )
-    #         # import pdb; pdb.set_trace()
-    #         x_last = x_last * norm[:, -10:, :]                 # [B,10,1]
-
-    #         # ---- 写回原 x ----
-    #         x = x.clone()
-    #         x[:, -10:, :] = x_last.to(x.dtype)
-
-    #         return x.half()
-    #     else:
-    #         return x
 
 
 def get_nested_attr(obj, attr_path):
