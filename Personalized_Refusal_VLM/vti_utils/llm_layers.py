@@ -23,6 +23,7 @@ class VTILayer(nn.Module):
 
         # v: either [1,H], [K,H], or [1,K,H]
         v = self.vti_direction.to(x.device)
+        import pdb; pdb.set_trace()
         if v.dim() == 3:
             v = v.squeeze(0)
 
