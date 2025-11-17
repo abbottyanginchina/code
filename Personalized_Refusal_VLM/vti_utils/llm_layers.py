@@ -211,10 +211,6 @@ def add_multiple_layers(model: PreTrainedModel, vti_directions: Tensor, alpha: l
             layer = layers[idx]
             original_mlp = find_module(layer, mlp_keywords)
             layer.mlp = nn.Sequential(original_mlp, VTILayer(vti_directions[idx], alpha))
-            print(idx, "layer added vti") 
-            import pdb; pdb.set_trace()
-        print("all specified layers added vti")
-        import pdb; pdb.set_trace()
         
 
 def remove_multiple_layers(model: PreTrainedModel, layer_indices: list[int], cfg):
