@@ -157,7 +157,7 @@ def eval_model(args):
         raw_image = load_image(out_test_images[img_id])
         question = out_test_text[img_id]
         # add_multiple_layers(model, torch.stack([refusal_all[img_id]],dim=1).cuda(), alpha = [cfg.alpha_text], layer_indices = target_layers, cfg = cfg)
-        add_multiple_layers(model, torch.stack([refusal_vector],dim=1).cuda(), alpha = [cfg.alpha_text], layer_indices = target_layers, cfg=cfg)
+        add_multiple_layers(model, torch.stack([refusal_vector[:, 9,:]],dim=1).cuda(), alpha = [cfg.alpha_text], layer_indices = target_layers, cfg=cfg)
        
         # add_multiple_layers(model, steer_vecs, alpha = [cfg.alpha_text], layer_indices = target_layers, cfg=cfg)
         # 只在一层加
