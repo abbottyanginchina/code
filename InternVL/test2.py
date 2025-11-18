@@ -18,7 +18,6 @@ model = AutoModel.from_pretrained(
 pixel_values = load_image(image_file='../jiaxi.jpg', max_num=12).to(torch.bfloat16).cuda()
 
 inputs = processor(
-    image=pixel_values,
     text="describe this image",
     return_tensors="pt"
 ).to("cuda")
