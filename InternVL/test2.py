@@ -57,7 +57,6 @@ inputs = {
 with torch.no_grad():
     outputs = model(
         **inputs,
-        pixel_values=pixel_values,
         output_hidden_states=True,
         return_dict=True
     )
