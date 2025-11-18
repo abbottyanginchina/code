@@ -42,4 +42,16 @@ inputs = processor(
 output = model.generate(**inputs, max_new_tokens=100)
 answer = processor.decode(output[0], skip_special_tokens=True)
 
+marker = "\nassistant\n"   # 匹配你屏幕里那种格式：上一行是 assistant，下一行开始是回答
+idx = decoded.find(marker)
+
+if idx != -1:
+    answer = decoded[idx + len(marker):].strip()
+else:
+    # 兜底：万一没有换行，只找到 'assistant'
+    if "assistant" in decoded:
+        answer = decoded.split("assistant", 1)[1].strip()
+    else:
+        answer = decoded.strip()
+
 print(answer)
