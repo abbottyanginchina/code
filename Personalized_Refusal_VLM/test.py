@@ -41,11 +41,4 @@ inputs = processor(
 
 output = model.generate(**inputs, max_new_tokens=100)
 answer = processor.decode(output[0], skip_special_tokens=True)
-# Replace header markers
-answer = answer.replace("<|start_header_id|>", "")
-answer = answer.replace("<|end_header_id|>", "")
-
-# Extract after 'assistant'
-answer = answer.split("assistant", 1)[-1].strip()
-
 print(answer)
