@@ -1,4 +1,4 @@
-from transformers import AutoModel, AutoProcessor
+from transformers import AutoModel, AutoProcessor, AutoTokenizer
 import torch
 from PIL import Image
 import torchvision.transforms as transforms
@@ -7,6 +7,7 @@ from utils_internvl2 import load_image
 
 model_id = "/gpuhome/jmy5701/gpu/models/InternVL2-8B"
 
+tokenizer = AutoTokenizer.from_pretrained(model_id, trust_remote_code=True)
 processor = AutoProcessor.from_pretrained(model_id, trust_remote_code=True)
 model = AutoModel.from_pretrained(
     model_id,
