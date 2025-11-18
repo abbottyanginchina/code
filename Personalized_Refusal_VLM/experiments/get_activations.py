@@ -97,8 +97,6 @@ def eval_model(args):
         processor = Blip2Processor.from_pretrained(model_path)
     else:
         processor = AutoProcessor.from_pretrained(model_path, use_fast=False)
-    
-    import pdb; pdb.set_trace()
 
     # Load datasets
     original_data = get_all_datasets_filter(args)
