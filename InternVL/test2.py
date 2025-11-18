@@ -35,3 +35,18 @@ pixel_values, image_grid_thw, image_flags = preprocess_image(image)
 
 text = "Describe this image."
 tok = tokenizer(text, return_tensors="pt")
+
+inputs = {
+    "input_ids": tok["input_ids"].cuda(),
+    "attention_mask": tok["attention_mask"].cuda(),
+    "pixel_values": pixel_values.half().cuda(),
+    "image_grid_thw": image_grid_thw.cuda(),
+    "image_flags": image_flags.cuda(),
+}
+
+with torch.no_grad():
+    outputs = model(
+        **inputs,
+        output_hidden_states=True,
+        return_dict=True
+    )
