@@ -1,12 +1,8 @@
-from transformers import AutoProcessor, AutoModelForCausalLM
-import torch
-
-model_id = "/gpuhome/jmy5701/gpu/models/Yi-VL-6B"
-
-processor = AutoProcessor.from_pretrained(model_id)
-model = AutoModelForCausalLM.from_pretrained(
-    model_id,
-    trust_remote_code=True,
-    torch_dtype=torch.float16,
-    device_map="auto"
-).eval()
+from llava.conversation import conv_templates
+from llava.mm_utils import (
+    KeywordsStoppingCriteria,
+    expand2square,
+    get_model_name_from_path,
+    load_pretrained_model,
+    tokenizer_image_token,
+)
