@@ -1,3 +1,0 @@
-{
-  "chat_template": "{% for message in messages %}{% if loop.first %}<|begin_of_text|>{% endif %}{% if message['role'] == 'system' %}<|start_header_id|>system<|end_header_id|>\n{{ message['content'] }}\n<|eot_id|>{% elif message['role'] == 'user' %}<|start_header_id|>user<|end_header_id|>\n{% if message['image'] is defined and message['image'] %}<|image|>\n{% endif %}{{ message['content'] }}\n<|eot_id|>{% elif message['role'] == 'assistant' %}<|start_header_id|>assistant<|end_header_id|>\n{{ message['content'] }}\n<|eot_id|>{% endif %}{% endfor %}{% if add_generation_prompt %}<|start_header_id|>assistant<|end_header_id|>\n{% endif %}"
-}
