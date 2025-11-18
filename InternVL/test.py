@@ -14,7 +14,7 @@ model = AutoModel.from_pretrained(
     trust_remote_code=True
 ).cuda().eval()
 
-image = Image.open('../jiaxi.jpg').convert("RGB")
+# image = Image.open('../jiaxi.jpg').convert("RGB")
 pixel_values = load_image('../jiaxi.jpg', max_num=12).to(torch.bfloat16).cuda()
 
 inputs = processor(
