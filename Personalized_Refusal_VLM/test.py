@@ -11,6 +11,7 @@ model = MllamaForConditionalGeneration.from_pretrained(
     device_map="auto",
 )
 processor = AutoProcessor.from_pretrained(model_id)
+import pdb; pdb.set_trace()
 
 url = "https://huggingface.co/datasets/huggingface/documentation-images/resolve/0052a70beed5bf71b92610a43a52df6d286cd5f3/diffusers/rabbit.jpg"
 image = Image.open(requests.get(url, stream=True).raw)
