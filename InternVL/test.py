@@ -2,6 +2,8 @@ from transformers import AutoModel, AutoProcessor
 import torch
 from PIL import Image
 
+from utils_internvl2 import load_image
+
 model_id = "/gpuhome/jmy5701/gpu/models/InternVL2-8B"
 
 processor = AutoProcessor.from_pretrained(model_id, trust_remote_code=True)
@@ -13,6 +15,7 @@ model = AutoModel.from_pretrained(
 ).cuda().eval()
 
 image = Image.open('../jiaxi.jpg').convert("RGB")
+pixel_values = load_image('./examples/image1.jpg', max_num=12).to(torch.bfloat16).cuda()
 
 inputs = processor(
     image=image,
