@@ -1,4 +1,4 @@
-ffrom transformers import AutoModelForVision2Seq, AutoProcessor
+from transformers import AutoModelForVision2Seq, AutoProcessor
 import torch
 from PIL import Image
 
