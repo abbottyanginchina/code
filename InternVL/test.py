@@ -13,7 +13,7 @@ model = AutoModel.from_pretrained(
     low_cpu_mem_usage=True,
     trust_remote_code=True
 ).cuda().eval()
-import pdb; pdb.set_trace()
+
 # image = Image.open('../jiaxi.jpg').convert("RGB")
 pixel_values = load_image('../jiaxi.jpg', max_num=12).to(torch.bfloat16).cuda()
 
