@@ -97,7 +97,7 @@ def eval_model(args):
     elif 'blip2-' in model_path.lower():
         processor = Blip2Processor.from_pretrained(model_path)
     else:
-        processor = AutoProcessor.from_pretrained(model_path)
+        processor = AutoProcessor.from_pretrained(model_path, use_fast=False)
 
     # Load datasets
     original_data = get_all_datasets_filter(args)
