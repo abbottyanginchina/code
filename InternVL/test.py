@@ -11,3 +11,11 @@ model = AutoModel.from_pretrained(
     low_cpu_mem_usage=True,
     trust_remote_code=True
 ).cuda().eval()
+
+image = Image.open('../jiaxi.jpg').convert("RGB")
+
+inputs = processor(
+    image=image,
+    text="describe this image",
+    return_tensors="pt"
+).to("cuda")
