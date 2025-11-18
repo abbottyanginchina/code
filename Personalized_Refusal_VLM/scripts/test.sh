@@ -5,13 +5,13 @@ num_layers=15 # Example number of layers for llava-1.5-7b-hf
 step=3
 num_train=200
 num_test=100
-model_name="llava-1.5-7b-hf"
+model_name="Llama-3.2-11B-Vision"
 inter_start_layer=12
 inter_end_layer=31
 alpha_text=1.5
 
 # echo "🚀 Step 1: Extracting activations..."
-# python -m experiments.get_activations --model_name $model_name --num_test $num_test --num_train $num_train
+python -m experiments.get_activations --model_name $model_name --num_test $num_test --num_train $num_train
 
 # echo "🧠 Step 2: Training steering vector model..."
 # # python -m experiments.train_steering_vector --model_name $model_name --start_layer 0 --end_layer 10 &
