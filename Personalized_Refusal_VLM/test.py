@@ -24,7 +24,7 @@ messages = [
     {
         "role": "user",
         "image": True,
-        "content": "Describe the image in detail."
+        "content": "Say 'I cannot answer' directly if the question is not a 'physics' question. Question:Describe the image in detail."
     }
 ]
 prompt = processor.apply_chat_template(
