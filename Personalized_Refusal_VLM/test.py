@@ -40,7 +40,7 @@ inputs = processor(
 ).to(model.device)
 
 output = model.generate(**inputs, max_new_tokens=100)
-answer = processor.decode(output[0], skip_special_tokens=True)
+decoded = processor.decode(output[0], skip_special_tokens=True)
 
 marker = "\nassistant\n"   # 匹配你屏幕里那种格式：上一行是 assistant，下一行开始是回答
 idx = decoded.find(marker)
