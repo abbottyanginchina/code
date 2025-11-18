@@ -18,12 +18,15 @@ image = Image.open(requests.get(url, stream=True).raw)
 
 messages = [
     {
+        "role": "system",
+        "content": "You are an expert assistant that gives detailed, safe, context-aware responses."
+    },
+    {
         "role": "user",
-        "image": image,
-        "content": "Describe what is happening in this picture."
+        "image": True,
+        "content": "Describe the image in detail."
     }
 ]
-
 prompt = processor.apply_chat_template(
     messages,
     add_generation_prompt=True,
