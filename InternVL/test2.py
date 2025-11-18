@@ -49,7 +49,7 @@ inputs = {
     "input_ids": text_inputs["input_ids"].cuda(),
     "attention_mask": text_inputs["attention_mask"].cuda(),
     "pixel_values": pixel_values.half().cuda(),
-    "image_grid_thw": image_grid_thw.cuda(),
+    # "image_grid_thw": image_grid_thw.cuda(),
     "image_flags": image_flags.cuda(),
 }
 
