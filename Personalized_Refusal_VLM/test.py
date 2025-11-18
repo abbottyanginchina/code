@@ -38,10 +38,3 @@ inputs = processor(
 
 output = model.generate(**inputs, max_new_tokens=100)
 print(processor.decode(output[0]))
-import pdb; pdb.set_trace()
-
-prompt = "<|image|><|begin_of_text|>If I had to write a haiku for this one"
-inputs = processor(image, prompt, return_tensors="pt").to(model.device)
-
-output = model.generate(**inputs, max_new_tokens=30)
-print(processor.decode(output[0]))
