@@ -24,6 +24,14 @@ messages = [
     }
 ]
 
+prompt = processor.apply_chat_template(
+    messages,
+    add_generation_prompt=True,
+    tokenize=False
+)
+
+print(prompt)
+
 prompt = "<|image|><|begin_of_text|>If I had to write a haiku for this one"
 inputs = processor(image, prompt, return_tensors="pt").to(model.device)
 
