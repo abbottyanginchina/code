@@ -117,13 +117,13 @@ def filter_data(cfg, model, processor, tokenizer, with_sys_out_train_text, witho
             [
                 {"role": "user", "content": [
                     {"type": "text", "text": without_sys_out_train_text[i]},
-                    {"type": "image", "image": image},
+                    {"type": "image"},
                 ]},
             ],
             [
                 {"role": "user", "content": [
                     {"type": "text", "text": with_sys_out_train_text[i]},
-                    {"type": "image", "image": image},
+                    {"type": "image"},
                 ]},
             ]
         ]
