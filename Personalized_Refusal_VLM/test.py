@@ -19,7 +19,7 @@ image = Image.open(requests.get(url, stream=True).raw)
 messages = [
     {
         "role": "system",
-        "content": "You are an expert assistant that gives detailed, safe, context-aware responses."
+        "content": "Say 'I cannot answer' if the question is not a 'physics' question."
     },
     {
         "role": "user",
