@@ -39,22 +39,7 @@ inputs = processor(
     return_tensors="pt"
 ).to(model.device)
 
-def extract_assistant_answer(decoded):
-    # Remove template tokens
-    toks = [
-        "<|begin_of_text|>", "<|start_header_id|>", "<|end_header_id|>",
-        "<|eot_id|>", "<unk>", "<s>", "</s>"
-    ]
-    for t in toks:
-        decoded = decoded.replace(t, "")
-
-    # Now find the assistant header
-    if "assistant" in decoded:
-        decoded = decoded.split("assistant", 1)[-1]
-
-    return decoded.strip()
-
 output = model.generate(**inputs, max_new_tokens=100)
 answer = processor.decode(output[0], skip_special_tokens=True)
-answer = extract_assistant_answer(answer)
+
 print(answer)
