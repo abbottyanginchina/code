@@ -1,5 +1,3 @@
-model_id = "/gpuhome/jmy5701/gpu/models/InternVL2-8B"
-
 ffrom transformers import AutoModelForVision2Seq, AutoProcessor
 import torch
 from PIL import Image
