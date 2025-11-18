@@ -56,5 +56,5 @@ def extract_assistant_answer(decoded):
 
 output = model.generate(**inputs, max_new_tokens=100)
 answer = processor.decode(output[0], skip_special_tokens=True)
-answer = extract_assistant_answer(decoded)
+answer = extract_assistant_answer(answer)
 print(answer)
