@@ -30,8 +30,6 @@ prompt = processor.apply_chat_template(
     tokenize=False
 )
 
-print(prompt)
-
 inputs = processor(
     images=image, 
     text=prompt, 
