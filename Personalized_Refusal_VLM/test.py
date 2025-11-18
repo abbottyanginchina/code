@@ -37,6 +37,14 @@ inputs = processor(
 ).to(model.device)
 
 output = model.generate(**inputs, max_new_tokens=100)
+
+decoded = processor.decode(output[0], skip_special_tokens=True)
+
+# Replace header markers
+decoded = decoded.replace("<|start_header_id|>", "")
+decoded = decoded.replace("<|end_header_id|>", "")
+
+# Extract after 'assistant'
 answer = decoded.split("assistant", 1)[-1].strip()
 
 print(answer)
