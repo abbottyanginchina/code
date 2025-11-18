@@ -89,7 +89,7 @@ def eval_model(args):
             model_path,
             dtype=torch.float16,
             device_map="auto",
-        )
+        ).to(device)
 
     if 'instructblip-' in model_path.lower():
         processor = InstructBlipProcessor.from_pretrained(model_path)
