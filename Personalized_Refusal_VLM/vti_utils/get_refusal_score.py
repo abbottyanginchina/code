@@ -100,6 +100,7 @@ def get_refusal_scores_llava(
         # 3️⃣ 前向传播
         with add_hooks(fwd_pre_hooks, fwd_hooks):
             outputs = model(**inputs, output_hidden_states=True, return_dict=True)
+            import pdb; pdb.set_trace()
 
         logits = outputs.logits
         refusal_scores[i:i+batch_size] = refusal_score(logits, refusal_toks, tokenizer=tokenizer)
