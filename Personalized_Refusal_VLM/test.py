@@ -19,7 +19,7 @@ image = Image.open(requests.get(url, stream=True).raw)
 messages = [
     {
         "role": "system",
-        "content": "Say 'I cannot answer' if the question is not a 'physics' question."
+        "content": "Say 'I cannot answer' directly if the question is not a 'physics' question."
     },
     {
         "role": "user",
