@@ -41,6 +41,15 @@ pixel_values, image_grid_thw, image_flags = preprocess_internvl2_image(image)
 #     text="describe this image",
 #     return_tensors="pt"
 # ).to("cuda")
+text_inputs = tokenizer(prompt, return_tensors="pt")
+inputs = {
+    "input_ids": text_inputs["input_ids"].cuda(),
+    "attention_mask": text_inputs["attention_mask"].cuda(),
+    "pixel_values": pixel_values.half().cuda(),
+    "image_grid_thw": image_grid_thw.cuda(),
+    "image_flags": image_flags.cuda(),
+}
+
 
 with torch.no_grad():
     outputs = model(
