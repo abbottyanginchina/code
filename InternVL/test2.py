@@ -42,6 +42,8 @@ pixel_values, image_grid_thw, image_flags = preprocess_internvl2_image(image)
 #     text="describe this image",
 #     return_tensors="pt"
 # ).to("cuda")
+
+prompt = "describe this image"
 text_inputs = tokenizer(prompt, return_tensors="pt")
 inputs = {
     "input_ids": text_inputs["input_ids"].cuda(),
