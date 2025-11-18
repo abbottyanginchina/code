@@ -16,6 +16,14 @@ import pdb; pdb.set_trace()
 url = "https://huggingface.co/datasets/huggingface/documentation-images/resolve/0052a70beed5bf71b92610a43a52df6d286cd5f3/diffusers/rabbit.jpg"
 image = Image.open(requests.get(url, stream=True).raw)
 
+messages = [
+    {
+        "role": "user",
+        "image": image,
+        "content": "Describe what is happening in this picture."
+    }
+]
+
 prompt = "<|image|><|begin_of_text|>If I had to write a haiku for this one"
 inputs = processor(image, prompt, return_tensors="pt").to(model.device)
 
