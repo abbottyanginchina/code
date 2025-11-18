@@ -18,7 +18,7 @@ image = Image.open('../jiaxi.jpg').convert("RGB")
 pixel_values = load_image('../jiaxi.jpg', max_num=12).to(torch.bfloat16).cuda()
 
 inputs = processor(
-    image=image,
+    image=pixel_values,
     text="describe this image",
     return_tensors="pt"
 ).to("cuda")
