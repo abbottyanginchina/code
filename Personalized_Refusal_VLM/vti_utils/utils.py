@@ -395,7 +395,7 @@ def get_activations(cfg, model, inputs_text, image, processor, system_prompt=Fal
                         {
                             "role": "user",
                             "content": [
-                                {"type": "image"},
+                                {"type": "image", },
                                 {"type": "text", "text": text_list[style_id]},
                             ],
                         }
