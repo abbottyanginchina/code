@@ -34,6 +34,9 @@ def preprocess_internvl2_image(image: Image.Image):
 # image = Image.open('../jiaxi.jpg').convert("RGB")
 pixel_values = load_image(image_file='../jiaxi.jpg', max_num=12).to(torch.bfloat16).cuda()
 
+image = Image.open('../jiaxi.jpg').convert("RGB")
+pixel_values, image_grid_thw, image_flags = preprocess_internvl2_image(image)
+
 inputs = processor(
     text="describe this image",
     return_tensors="pt"
