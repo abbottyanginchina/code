@@ -38,6 +38,6 @@ inputs = processor(
 
 output = model.generate(**inputs, max_new_tokens=100)
 answer = processor.decode(output[0], skip_special_tokens=True)
-answer = decoded.split("assistant", 1)[-1].strip()
+answer = answer.split("assistant", 1)[-1].strip()
 
 print(answer)
