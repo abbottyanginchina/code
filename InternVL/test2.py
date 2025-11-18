@@ -21,7 +21,6 @@ inputs = processor(
     text="describe this image",
     return_tensors="pt"
 ).to("cuda")
-import pdb; pdb.set_trace()
 
 with torch.no_grad():
     outputs = model(
@@ -30,7 +29,7 @@ with torch.no_grad():
         output_hidden_states=True,
         return_dict=True
     )
-
+import pdb; pdb.set_trace()
 hidden_states = outputs.hidden_states  # List of (batch, seq, dim)
 print(len(hidden_states))
 print(hidden_states[-1].shape)
