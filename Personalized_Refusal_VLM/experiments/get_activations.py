@@ -89,6 +89,7 @@ def eval_model(args):
             model_path,
             dtype=torch.float16,
             device_map="auto",
+            low_cpu_mem_usage=True,
         )
 
     if 'instructblip-' in model_path.lower():
