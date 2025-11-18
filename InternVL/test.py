@@ -19,3 +19,14 @@ inputs = processor(
     text="describe this image",
     return_tensors="pt"
 ).to("cuda")
+
+with torch.no_grad():
+    outputs = model(
+        **inputs,
+        output_hidden_states=True,
+        return_dict=True
+    )
+
+hidden_states = outputs.hidden_states  # List of (batch, seq, dim)
+print(len(hidden_states))
+print(hidden_states[-1].shape)
