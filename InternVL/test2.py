@@ -30,7 +30,7 @@ def preprocess_image(img: Image.Image):
     image_flags = torch.tensor([[1]], dtype=torch.long)
     return pixel_values, image_grid_thw, image_flags
 
-image = Image.open("../jiaxi.jpeg").convert("RGB")
+image = Image.open("../jiaxi.jpg").convert("RGB")
 pixel_values, image_grid_thw, image_flags = preprocess_image(image)
 
 text = "Describe this image."
