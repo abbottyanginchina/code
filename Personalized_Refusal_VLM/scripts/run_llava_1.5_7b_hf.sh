@@ -18,7 +18,7 @@ dataset="ScienceQA"
 echo "🧠 Step 2: Training steering vector model..."
 python -m experiments.train_steering_vector --model_name $model_name --start_layer 9 --end_layer 10 &
 python -m experiments.train_steering_vector --model_name $model_name --start_layer 18 --end_layer 20 &
-python -m experiments.train_steering_vector --model_name $model_name --start_layer 28 --end_layer 30
+python -m experiments.train_steering_vector --model_name $model_name --start_layer 28 --end_layer 30 &
 
 
 
