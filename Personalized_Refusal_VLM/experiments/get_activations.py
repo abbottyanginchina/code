@@ -88,7 +88,7 @@ def eval_model(args):
         ).to(device)
 
     
-    
+    processor = AutoProcessor.from_pretrained(model_path)
 
     # Load datasets
     if args.data.filter_data:
