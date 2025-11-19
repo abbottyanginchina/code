@@ -45,6 +45,13 @@ def eval_model(args):
             device_map="auto",
             low_cpu_mem_usage=True, 
         ).to(device)
+    elif 'llava-onevision-' in model_path.lower():
+        model = AutoModelForCausalLM.from_pretrained(
+            model_path, 
+            torch_dtype="auto", 
+            device_map="auto", 
+            trust_remote_code=True
+        ).eval().to(device)
     elif 'internvl-chat-' in model_path.lower():
         model = AutoModel.from_pretrained(
             model_path,
