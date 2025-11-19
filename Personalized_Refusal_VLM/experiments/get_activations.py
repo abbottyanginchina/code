@@ -51,7 +51,7 @@ def eval_model(args):
             torch_dtype="auto", 
             device_map="auto", 
             trust_remote_code=True
-        ).eval().to(device)
+        )
     elif 'internvl-chat-' in model_path.lower():
         model = AutoModel.from_pretrained(
             model_path,
