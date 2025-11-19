@@ -422,6 +422,7 @@ if __name__ == "__main__":
     parser.add_argument("--inter_end_layer", type=int, default=32)
     parser.add_argument("--alpha_text", type=float, default=1.8)
     parser.add_argument("--dataset", type=str, default="MMMU", help="Name of the dataset to use")
+    parser.add_argument("--data_path", type=str, default="/gpuhome/jmy5701/gpu/data", help="Path to the data")
     args = parser.parse_args()
 
     if args.model_name is not None:
@@ -446,6 +447,8 @@ if __name__ == "__main__":
         cfg.alpha_text = args.alpha_text
     if args.dataset is not None:
         cfg.data.dataset_name = args.dataset
+    if args.data_path is not None:
+        cfg.data.path = args.data_path
 
     set_seed(cfg.seed)
     eval_model(cfg)
