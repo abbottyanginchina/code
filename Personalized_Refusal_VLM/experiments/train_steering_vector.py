@@ -242,13 +242,6 @@ def parse_args():
         action="store",
         help="Ending layer for training",
     )
-
-    parser.add_argument(
-        "--model_name",
-        type=str,
-        default="llava",
-        help="Name of the model to use",
-    )
    
     return parser.parse_args()
 
