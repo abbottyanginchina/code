@@ -87,7 +87,7 @@ def eval_model(args):
             torch_dtype=torch.float16,
         ).to(device)
 
-    
+    # Load processor
     processor = AutoProcessor.from_pretrained(model_path)
 
     # Load datasets
