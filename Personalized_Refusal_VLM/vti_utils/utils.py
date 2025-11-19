@@ -315,9 +315,9 @@ def get_all_datasets_filter(args):
     for i in range(len(sample_out['question']) - args.num_test):
         with_sys_out_train = sys_prompt + sample_out[i + args.num_test]['question']
         without_sys_out_train = sample_out[i + args.num_test]['question']
-        if args.dataset == "ScienceQA":
+        if args.data.dataset_name == "ScienceQA":
             out_img_train = sample_out[i + args.num_test]['image']
-        elif args.dataset == "MMMU":
+        elif args.data.dataset_name == "MMMU":
             out_img_train = sample_out[i + args.num_test]['image_1']
         with_sys_out_train_text.append(with_sys_out_train)
         without_sys_out_train_text.append(without_sys_out_train)
