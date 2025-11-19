@@ -229,14 +229,14 @@ def get_all_datasets(args):
     return original_dataset
 
 def get_all_datasets_filter(args):
-    if args.dataset == "ScienceQA":
+    if args.data.dataset_name == "ScienceQA":
         in_domain = ['physics']
         out_of_domain = ['biology', 'geography', 'writing-strategies', 'figurative-language', 'economics', 'earth-science']
         # dataset = load_dataset(f"{args.model_path}/ScienceQA")["train"].filter(lambda e: e["image"] is not None)
         dataset = load_dataset(f"{args.data.path}/ScienceQA")["train"].filter(lambda e: e["image"] is not None)
         in_train = dataset.filter(lambda example: example["topic"] in in_domain)
         out_train = dataset.filter(lambda example: example["topic"] in out_of_domain)
-    elif args.dataset == "MMMU":
+    elif args.data.dataset_name == "MMMU":
         # --- 定义领域 ---
         in_domain = ['Biology']
         out_of_domain = ['Accounting', 'Psychology', 'Computer_Science', 'Finance', 'Energy_and_Power']
