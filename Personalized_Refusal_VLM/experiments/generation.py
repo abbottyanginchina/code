@@ -123,7 +123,7 @@ def eval_model(args):
     in_test_images = original_data["in_test_images"]
     out_test_images = original_data["out_test_images"]
 
-    base_path = "./output/activations"
+    base_path = f"../output_{cfg.model_name}_{cfg.data.dataset_name}/activations"
     steering_list1 = []
     steering_list2 = []
     # llava[1, 33]  qwen[1, 29]
