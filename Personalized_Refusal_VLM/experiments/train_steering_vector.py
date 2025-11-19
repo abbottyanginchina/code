@@ -85,8 +85,8 @@ def train(cfg, start_layer, end_layer):
     input_dim = torch.load(f"./output/activations/without_sys_in_train_activations_{cfg.model_name}.pt", weights_only=False).size(2)
 
     # === 加载逐样本 ground-truth 激活 ===
-    with_sys_image_others = torch.load(f"./output/activations/with_sys_image_others_activations_{cfg.model_name}.pt", weights_only=False).to(device, dtype=torch.float64)
-    without_sys_image_biology = torch.load(f"./output/activations/without_sys_image_biology_activations_{cfg.model_name}.pt", weights_only=False).to(device, dtype=torch.float64)
+    with_sys_image_others = torch.load(f"../output_{cfg.model_name}/activations/with_sys_image_others_activations_{cfg.model_name}.pt", weights_only=False).to(device, dtype=torch.float64)
+    without_sys_image_biology = torch.load(f"../output_{cfg.model_name}/activations/without_sys_image_biology_activations_{cfg.model_name}.pt", weights_only=False).to(device, dtype=torch.float64)
     gt_vec = F.normalize(with_sys_image_others - without_sys_image_biology, dim=-1)  # [N, D]
 
 
@@ -193,14 +193,14 @@ def train(cfg, start_layer, end_layer):
         print(f"✅ Training finished for layer {layer}")
 
         # Save model
-        if not os.path.exists("./output/models/"):
-            os.makedirs("./output/models/")
-        torch.save(model, f"./output/models/steering_model_layer{layer}_{cfg.model_name}.pt")
+        if not os.path.exists(f"../output_{cfg.model_name}/models/"):
+            os.makedirs(f"../output_{cfg.model_name}/models/")
+        torch.save(model, f"../output_{cfg.model_name}/models/steering_model_layer{layer}_{cfg.model_name}.pt")
         print(f"✅ Saved model for layer {layer}")
 
         # ========== 推理阶段 ==========
-        bio_x_test = torch.load(f"./output/activations/in_test_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device).double()
-        oth_x_test = torch.load(f"./output/activations/out_test_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device).double()
+        bio_x_test = torch.load(f"../output_{cfg.model_name}/activations/in_test_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device).double()
+        oth_x_test = torch.load(f"../output_{cfg.model_name}/activations/out_test_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device).double()
 
         pred_biology, p = infer_dataset(model, bio_x_test, cfg.training.batch_size)
         # print("Biology intervention probabilities:", p.squeeze().tolist())
@@ -209,11 +209,11 @@ def train(cfg, start_layer, end_layer):
 
         steering_vec_refusal = pred_other - oth_x_test
         steering_vec_biology = pred_biology - bio_x_test
-        torch.save(steering_vec_refusal, f"./output/activations/steering_vec_nonbiology_refusal_layer{layer}_{cfg.model_name}.pt")
-        torch.save(steering_vec_biology, f"./output/activations/steering_vec_biology_layer{layer}_{cfg.model_name}.pt")
+        torch.save(steering_vec_refusal, f"../output_{cfg.model_name}/activations/steering_vec_nonbiology_refusal_layer{layer}_{cfg.model_name}.pt")
+        torch.save(steering_vec_biology, f"../output_{cfg.model_name}/activations/steering_vec_biology_layer{layer}_{cfg.model_name}.pt")
 
 
-        save_dir = "./output/visualizations/"
+        save_dir = f"../output_{cfg.model_name}/visualizations/"
         if not os.path.exists(save_dir):
             os.makedirs(save_dir)
         visualize_distributions(train_other_target=oth_target, train_biology_target=bio_x_test,
