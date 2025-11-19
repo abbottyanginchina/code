@@ -82,6 +82,7 @@ def infer_dataset(model, X, batch_size=None):
 
 # Load training dataset
 def train(cfg, start_layer, end_layer):
+    print("../output_{cfg.model_name}_{cfg.data.dataset_name}/models/")
     input_dim = torch.load(f"../output_{cfg.model_name}_{cfg.data.dataset_name}/activations/without_sys_in_train_activations_{cfg.model_name}.pt", weights_only=False).size(2)
 
     # === 加载逐样本 ground-truth 激活 ===
