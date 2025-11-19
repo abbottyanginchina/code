@@ -300,10 +300,10 @@ def get_all_datasets_filter(args):
     for i in range(args.num_test):
         in_test= sample_in[i+args.num_train]['question']
         out_test = sample_out[i]['question']
-        if args.dataset == "ScienceQA":
+        if args.data.dataset_name == "ScienceQA":
             in_img_test = sample_in[i+args.num_train]['image']
             out_img_test = sample_out[i]['image']
-        elif args.dataset == "MMMU":
+        elif args.data.dataset_name == "MMMU":
             in_img_test = sample_in[i+args.num_train]['image_1']
             out_img_test = sample_out[i]['image_1']
 
