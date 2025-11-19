@@ -87,7 +87,7 @@ def main(cfg):
 
         visualize_distributions(train_other_target=oth_target, train_biology_target=bio_x_test,
                             pred_other=pred_other, pred_biology=pred_biology, steered_other=oth_x_test+steering_vec.unsqueeze(0), original_other=oth_x_test,
-                            save_path=f"{cfg.save_dir}/activations_{layer}_{cfg.model_name}.png")
+                            save_path=f"../output_{cfg.model_name}_{cfg.data.dataset_name}/activations_{layer}_{cfg.model_name}.png")
         print(f"✅ Saved steering vectors for layer {layer}")
 
 def parse_args():
