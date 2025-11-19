@@ -12,10 +12,10 @@ inter_end_layer=32
 alpha_text=1.8
 dataset="ScienceQA"
 
-# echo "🚀 Step 1: Extracting activations..."
-# python -m experiments.get_activations --model_name $model_name --num_test $num_test --num_train $num_train --dataset $dataset
+echo "🚀 Step 1: Extracting activations..."
+python -m experiments.get_activations --model_name $model_name --num_test $num_test --num_train $num_train --dataset $dataset
 
-# echo "🧠 Step 2: Training steering vector model..."
+echo "🧠 Step 2: Training steering vector model..."
 # python -m experiments.train_steering_vector --model_name $model_name --start_layer 9 --end_layer 10 &
 # python -m experiments.train_steering_vector --model_name $model_name --start_layer 18 --end_layer 20 &
 # python -m experiments.train_steering_vector --model_name $model_name --start_layer 28 --end_layer 30 &
