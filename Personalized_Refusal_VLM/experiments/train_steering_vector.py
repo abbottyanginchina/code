@@ -241,12 +241,7 @@ def parse_args():
         action="store",
         help="Ending layer for training",
     )
-    parser.add_argument(
-        "--dataset_name",
-        type=str,
-        default="/gpuhome/jmy5701/gpu/data",
-        help="Path to the dataset",
-    )
+   
     return parser.parse_args()
 
 if __name__ == '__main__':
