@@ -39,7 +39,7 @@ done
 wait
 
 echo "Step 3: Inference activations with steering vectors applied..."
-# python -m experiments.inference_activations --start_layer 0 --end_layer 33
+python -m experiments.inference_activations --start_layer 0 --end_layer 33
 
 echo "✅ All layer groups finished!"
 
