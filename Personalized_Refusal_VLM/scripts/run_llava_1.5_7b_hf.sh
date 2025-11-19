@@ -16,7 +16,7 @@ dataset="ScienceQA"
 # python -m experiments.get_activations --model_name $model_name --num_test $num_test --num_train $num_train --dataset $dataset
 
 echo "🧠 Step 2: Training steering vector model..."
-python -m experiments.train_steering_vector --model_name $model_name --start_layer 0 --end_layer 10 &
+python -m experiments.train_steering_vector --model_name $model_name --start_layer 8 --end_layer 9 &
 # # python -m experiments.train_steering_vector --model_name $model_name --start_layer 10 --end_layer 20 &
 # python -m experiments.train_steering_vector --model_name $model_name --start_layer 20 --end_layer 33
 
