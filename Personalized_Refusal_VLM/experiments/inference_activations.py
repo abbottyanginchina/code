@@ -9,10 +9,10 @@ from vti_utils.nets import FlowField
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
 def load_activations(cfg, layer):
-    bio_x = torch.load(f"../output_{cfg.model_name}/activations/without_sys_in_train_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device, dtype=torch.float64)
-    oth_x = torch.load(f"../output_{cfg.model_name}/activations/without_sys_out_train_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device, dtype=torch.float64)
+    bio_x = torch.load(f"../output_{cfg.model_name}_{cfg.data.dataset_name}/activations/without_sys_in_train_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device, dtype=torch.float64)
+    oth_x = torch.load(f"../output_{cfg.model_name}_{cfg.data.dataset_name}/activations/without_sys_out_train_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device, dtype=torch.float64)
     bio_target = bio_x
-    oth_target = torch.load(f"../output_{cfg.model_name}/activations/with_sys_out_train_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device, dtype=torch.float64)
+    oth_target = torch.load(f"../output_{cfg.model_name}_{cfg.data.dataset_name}/activations/with_sys_out_train_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device, dtype=torch.float64)
 
     steering_vec = oth_target.mean(dim=0) - oth_x.mean(dim=0)
     oth_steering = oth_x + steering_vec.unsqueeze(0)
@@ -50,10 +50,10 @@ def infer_dataset(model, X, batch_size=None):
 
 def inference(cfg, model, layer):
     # ========== 推理阶段 ==========
-    bio_x_test = torch.load(f"../output_{cfg.model_name}/activations/in_test_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device).double()
-    oth_x_test = torch.load(f"../output_{cfg.model_name}/activations/out_test_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device).double()
-    image_others_x_test = torch.load(f"../output_{cfg.model_name}/activations/image_out_test_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device).double()
-    image_biology_x_test = torch.load(f"../output_{cfg.model_name}/activations/image_in_test_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device).double()
+    bio_x_test = torch.load(f"../output_{cfg.model_name}_{cfg.data.dataset_name}/activations/in_test_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device).double()
+    oth_x_test = torch.load(f"../output_{cfg.model_name}_{cfg.data.dataset_name}/activations/out_test_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device).double()
+    image_others_x_test = torch.load(f"../output_{cfg.model_name}_{cfg.data.dataset_name}/activations/image_out_test_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device).double()
+    image_biology_x_test = torch.load(f"../output_{cfg.model_name}_{cfg.data.dataset_name}/activations/image_in_test_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device).double()
 
     pred_biology, p = infer_dataset(model, bio_x_test, cfg.training.batch_size)
     # print("Biology intervention probabilities:", p.squeeze().tolist())
@@ -64,10 +64,10 @@ def inference(cfg, model, layer):
 
     steering_vec_refusal = pred_other - oth_x_test
     steering_vec_biology = pred_biology - bio_x_test
-    torch.save(steering_vec_refusal, f"../output_{cfg.model_name}/activations/steering_vec_nonbiology_refusal_layer{layer}_{cfg.model_name}.pt")
-    torch.save(steering_vec_biology, f"../output_{cfg.model_name}/activations/steering_vec_biology_layer{layer}_{cfg.model_name}.pt")
-    torch.save(image_pred_other, f"../output_{cfg.model_name}/activations/image_pred_other_layer{layer}_{cfg.model_name}.pt")
-    torch.save(image_pred_biology, f"../output_{cfg.model_name}/activations/image_pred_biology_layer{layer}_{cfg.model_name}.pt")
+    torch.save(steering_vec_refusal, f"../output_{cfg.model_name}_{cfg.data.dataset_name}/activations/steering_vec_nonbiology_refusal_layer{layer}_{cfg.model_name}.pt")
+    torch.save(steering_vec_biology, f"../output_{cfg.model_name}_{cfg.data.dataset_name}/activations/steering_vec_biology_layer{layer}_{cfg.model_name}.pt")
+    torch.save(image_pred_other, f"../output_{cfg.model_name}_{cfg.data.dataset_name}/activations/image_pred_other_layer{layer}_{cfg.model_name}.pt")
+    torch.save(image_pred_biology, f"../output_{cfg.model_name}_{cfg.data.dataset_name}/activations/image_pred_biology_layer{layer}_{cfg.model_name}.pt")
 
     if not os.path.exists(cfg.save_dir):
         os.makedirs(cfg.save_dir)
@@ -80,7 +80,7 @@ def main(cfg):
         bio_x, oth_x, bio_target, oth_target, steering_vec = load_activations(cfg, layer)
 
         model = FlowField(input_dim=bio_x.shape[1], hidden=1024, ref_vec=steering_vec.to(device)).to(device).double()
-        model.load_state_dict(torch.load(f"../output_{cfg.model_name}/models/steering_model_layer{layer}_{cfg.model_name}.pt", weights_only=False).state_dict())
+        model.load_state_dict(torch.load(f"../output_{cfg.model_name}_{cfg.data.dataset_name}/models/steering_model_layer{layer}_{cfg.model_name}.pt", weights_only=False).state_dict())
         model.eval()
 
         pred_other, pred_biology, bio_x_test, oth_x_test, steering_vec_refusal = inference(cfg, model, layer)
