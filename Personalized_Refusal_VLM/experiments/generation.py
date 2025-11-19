@@ -148,18 +148,18 @@ def eval_model(args):
     # 这里最大层数是前面减1，因为第零层不取
     target_layers = list(range(args.inter_start_layer, args.inter_end_layer))  # Qwen 1-28  Llava 1-32
 
-    oth_target = torch.load(f"./output/activations/with_sys_out_train_activations_{cfg.model_name}.pt", weights_only=False).double()
-    oth_x = torch.load(f"./output/activations/without_sys_out_train_activations_{cfg.model_name}.pt", weights_only=False).double()
+    oth_target = torch.load(f"{base_path}/with_sys_out_train_activations_{cfg.model_name}.pt", weights_only=False).double()
+    oth_x = torch.load(f"{base_path}/without_sys_out_train_activations_{cfg.model_name}.pt", weights_only=False).double()
     refusal_vector = oth_target.mean(dim=0) - oth_x.mean(dim=0)
     # refusal_vector = refusal_vector.mean(dim=0)[1:]
 
-    if not os.path.exists("./output/results/"):
-        os.makedirs("./output/results/")
+    if not os.path.exists(f"../output_{cfg.model_name}_{cfg.data.dataset_name}/results/"):
+        os.makedirs(f"../output_{cfg.model_name}_{cfg.data.dataset_name}/results/")
 
     
     
     # 生成拒绝测试集
-    answers_file = f"./output/results/nonbiology_answer_{cfg.model_name}.jsonl"
+    answers_file = f"../output_{cfg.model_name}_{cfg.data.dataset_name}/results/nonbiology_answer_{cfg.model_name}.jsonl"
     os.makedirs(os.path.dirname(answers_file), exist_ok=True)
     ans_file = open(answers_file, "w")
     for img_id in range(len(out_test_images)):
@@ -222,7 +222,7 @@ def eval_model(args):
     ans_file.close()
 
     # 生成in-domain测试集
-    answers_file = f"./output/results/biology_answer_{cfg.model_name}.jsonl"
+    answers_file = f"../output_{cfg.model_name}_{cfg.data.dataset_name}/results/biology_answer_{cfg.model_name}.jsonl"
     os.makedirs(os.path.dirname(answers_file), exist_ok=True)
     ans_file = open(answers_file, "w")
     for img_id in range(len(in_test_images)):
@@ -283,7 +283,7 @@ def eval_model(args):
     ans_file.close()
 
     ############ 只有图片没有文字 #############
-    answers_file = f"./output/results/image_nonbiology_answer_{cfg.model_name}.jsonl"
+    answers_file = f"../output_{cfg.model_name}_{cfg.data.dataset_name}/results/image_nonbiology_answer_{cfg.model_name}.jsonl"
     os.makedirs(os.path.dirname(answers_file), exist_ok=True)
     ans_file = open(answers_file, "w")
     for img_id in range(len(out_test_images)):
@@ -346,7 +346,7 @@ def eval_model(args):
         # remove_one_layer(model, layer_idx = layer)
     ans_file.close()
 
-    answers_file = f"./output/results/image_biology_answer_{cfg.model_name}.jsonl"
+    answers_file = f"../output_{cfg.model_name}_{cfg.data.dataset_name}/results/image_biology_answer_{cfg.model_name}.jsonl"
     os.makedirs(os.path.dirname(answers_file), exist_ok=True)
     ans_file = open(answers_file, "w")
     for img_id in range(len(in_test_images)):
