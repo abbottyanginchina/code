@@ -69,8 +69,8 @@ def inference(cfg, model, layer):
     torch.save(image_pred_other, f"../output_{cfg.model_name}_{cfg.data.dataset_name}/activations/image_pred_other_layer{layer}_{cfg.model_name}.pt")
     torch.save(image_pred_biology, f"../output_{cfg.model_name}_{cfg.data.dataset_name}/activations/image_pred_biology_layer{layer}_{cfg.model_name}.pt")
 
-    if not os.path.exists(cfg.save_dir):
-        os.makedirs(cfg.save_dir)
+    # if not os.path.exists(cfg.save_dir):
+    #     os.makedirs(cfg.save_dir)
 
     return pred_other, pred_biology, bio_x_test, oth_x_test, steering_vec_refusal
     
