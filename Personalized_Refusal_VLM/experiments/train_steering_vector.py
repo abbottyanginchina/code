@@ -41,8 +41,8 @@ class FlowField(nn.Module):
         return x_out, delta, p, logits
 
 def load_activations(cfg, layer):
-    bio_x = torch.load(f"../output_{cfg.model_name}/activations/without_sys_in_train_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device, dtype=torch.float64)
-    oth_x = torch.load(f"../output_{cfg.model_name}/activations/without_sys_out_train_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device, dtype=torch.float64)
+    bio_x = torch.load(f"../output_{cfg.model_name}_{cfg.data.dataset_name}/activations/without_sys_in_train_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device, dtype=torch.float64)
+    oth_x = torch.load(f"../output_{cfg.model_name}_{cfg.data.dataset_name}/activations/without_sys_out_train_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device, dtype=torch.float64)
     bio_target = bio_x
     oth_target = torch.load(f"../output_{cfg.model_name}/activations/with_sys_out_train_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device, dtype=torch.float64)
 
@@ -82,11 +82,11 @@ def infer_dataset(model, X, batch_size=None):
 
 # Load training dataset
 def train(cfg, start_layer, end_layer):
-    input_dim = torch.load(f"../output_{cfg.model_name}/activations/without_sys_in_train_activations_{cfg.model_name}.pt", weights_only=False).size(2)
+    input_dim = torch.load(f"../output_{cfg.model_name}__{cfg.data.dataset_name}/activations/without_sys_in_train_activations_{cfg.model_name}.pt", weights_only=False).size(2)
 
     # === 加载逐样本 ground-truth 激活 ===
-    with_sys_image_others = torch.load(f"../output_{cfg.model_name}/activations/with_sys_image_others_activations_{cfg.model_name}.pt", weights_only=False).to(device, dtype=torch.float64)
-    without_sys_image_biology = torch.load(f"../output_{cfg.model_name}/activations/without_sys_image_biology_activations_{cfg.model_name}.pt", weights_only=False).to(device, dtype=torch.float64)
+    with_sys_image_others = torch.load(f"../output_{cfg.model_name}__{cfg.data.dataset_name}/activations/with_sys_image_others_activations_{cfg.model_name}.pt", weights_only=False).to(device, dtype=torch.float64)
+    without_sys_image_biology = torch.load(f"../output_{cfg.model_name}__{cfg.data.dataset_name}/activations/without_sys_image_biology_activations_{cfg.model_name}.pt", weights_only=False).to(device, dtype=torch.float64)
     gt_vec = F.normalize(with_sys_image_others - without_sys_image_biology, dim=-1)  # [N, D]
 
 
@@ -193,14 +193,14 @@ def train(cfg, start_layer, end_layer):
         print(f"✅ Training finished for layer {layer}")
 
         # Save model
-        if not os.path.exists(f"../output_{cfg.model_name}/models/"):
-            os.makedirs(f"../output_{cfg.model_name}/models/")
-        torch.save(model, f"../output_{cfg.model_name}/models/steering_model_layer{layer}_{cfg.model_name}.pt")
+        if not os.path.exists(f"../output_{cfg.model_name}_{cfg.data.dataset_name}/models/"):
+            os.makedirs(f"../output_{cfg.model_name}_{cfg.data.dataset_name}/models/")
+        torch.save(model, f"../output_{cfg.model_name}_{cfg.data.dataset_name}/models/steering_model_layer{layer}_{cfg.model_name}.pt")
         print(f"✅ Saved model for layer {layer}")
 
         # ========== 推理阶段 ==========
-        bio_x_test = torch.load(f"../output_{cfg.model_name}/activations/in_test_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device).double()
-        oth_x_test = torch.load(f"../output_{cfg.model_name}/activations/out_test_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device).double()
+        bio_x_test = torch.load(f"../output_{cfg.model_name}_{cfg.data.dataset_name}/activations/in_test_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device).double()
+        oth_x_test = torch.load(f"../output_{cfg.model_name}_{cfg.data.dataset_name}/activations/out_test_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device).double()
 
         pred_biology, p = infer_dataset(model, bio_x_test, cfg.training.batch_size)
         # print("Biology intervention probabilities:", p.squeeze().tolist())
@@ -209,11 +209,11 @@ def train(cfg, start_layer, end_layer):
 
         steering_vec_refusal = pred_other - oth_x_test
         steering_vec_biology = pred_biology - bio_x_test
-        torch.save(steering_vec_refusal, f"../output_{cfg.model_name}/activations/steering_vec_nonbiology_refusal_layer{layer}_{cfg.model_name}.pt")
-        torch.save(steering_vec_biology, f"../output_{cfg.model_name}/activations/steering_vec_biology_layer{layer}_{cfg.model_name}.pt")
+        torch.save(steering_vec_refusal, f"../output_{cfg.model_name}_{cfg.data.dataset_name}/activations/steering_vec_nonbiology_refusal_layer{layer}_{cfg.model_name}.pt")
+        torch.save(steering_vec_biology, f"../output_{cfg.model_name}_{cfg.data.dataset_name}/activations/steering_vec_biology_layer{layer}_{cfg.model_name}.pt")
 
 
-        save_dir = f"../output_{cfg.model_name}/visualizations/"
+        save_dir = f"../output_{cfg.model_name}_{cfg.data.dataset_name}/visualizations/"
         if not os.path.exists(save_dir):
             os.makedirs(save_dir)
         visualize_distributions(train_other_target=oth_target, train_biology_target=bio_x_test,
