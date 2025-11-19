@@ -88,7 +88,7 @@ def eval_model(args):
         ).to(device)
 
     # Load datasets
-    if args.filter_data:
+    if args.data.filter_data:
         original_data = get_all_datasets_filter(args)
     else:
         original_data = get_all_datasets(args)
@@ -107,7 +107,7 @@ def eval_model(args):
     torch.cuda.empty_cache()
 
    
-    if args.filter_data:
+    if args.data.filter_data:
         # Filter data based on model scores
         without_sys_out_train_text, with_sys_out_train_text, out_train_images = filter_data(cfg, model, processor, processor.tokenizer, with_sys_out_train_text, without_sys_out_train_text, out_train_images)
 
