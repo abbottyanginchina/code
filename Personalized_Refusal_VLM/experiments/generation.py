@@ -426,6 +426,8 @@ if __name__ == "__main__":
 
     if args.model_name is not None:
         cfg.model_name = args.model_name
+    if args.model_path is not None:
+        cfg.model_path = args.model_path
     if args.alpha_image is not None:
         cfg.alpha_image = args.alpha_image
     if args.seed is not None:
@@ -443,7 +445,7 @@ if __name__ == "__main__":
     if args.alpha_text is not None:
         cfg.alpha_text = args.alpha_text
     if args.dataset is not None:
-        cfg.dataset = args.dataset
+        cfg.data.dataset_name = args.dataset
 
     set_seed(cfg.seed)
     eval_model(cfg)
