@@ -1,0 +1,21 @@
+training:
+  batch_size: 8
+  epochs: 200
+  lr: 1e-4
+pos: -1
+model_name: "llava-1.5-7b-hf"
+model_path: "./"
+seed: 40
+max_new_tokens: 40
+alpha_text: 1.2
+num_train: 200
+num_test: 100
+start_layer: 0
+end_layer: 32
+
+data:
+  path: "./data"
+  dataset_name: "ScienceQA"
+  filter_data: True
+
+  
