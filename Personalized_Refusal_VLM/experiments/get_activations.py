@@ -37,7 +37,7 @@ def eval_model(args):
     model_path = os.path.join(args.model_path, args.model_name)
     device = "cuda" if torch.cuda.is_available() else "cpu"
 
-    if 'llava' in model_path.lower():
+    if 'llava-1.5' in model_path.lower():
         print('Loading Llava model...')
         model = LlavaForConditionalGeneration.from_pretrained(
             model_path, 
