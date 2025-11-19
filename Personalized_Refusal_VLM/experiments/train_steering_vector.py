@@ -255,10 +255,10 @@ def parse_args():
 if __name__ == '__main__':
     args = parse_args()
 
-    if args.model_name is not None:
-        cfg.model_name = args.model_name
-
     config_path = 'configs/cfgs.yaml'
     cfg = mmengine.Config.fromfile(config_path)
+
+    if args.model_name is not None:
+        cfg.model_name = args.model_name
 
     train(cfg, args.start_layer, args.end_layer)
