@@ -8,7 +8,7 @@ num_train=200
 num_test=100
 model_name="LLaVA-OneVision-1.5-8B-Instruct"
 inter_start_layer=12
-inter_end_layer=32
+inter_end_layer=36
 alpha_text=1.8
 dataset="ScienceQA"
 
