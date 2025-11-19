@@ -82,7 +82,7 @@ def infer_dataset(model, X, batch_size=None):
 
 # Load training dataset
 def train(cfg, start_layer, end_layer):
-    input_dim = torch.load(f"./output/activations/without_sys_in_train_activations_{cfg.model_name}.pt", weights_only=False).size(2)
+    input_dim = torch.load(f"../output_{cfg.model_name}/activations/without_sys_in_train_activations_{cfg.model_name}.pt", weights_only=False).size(2)
 
     # === 加载逐样本 ground-truth 激活 ===
     with_sys_image_others = torch.load(f"../output_{cfg.model_name}/activations/with_sys_image_others_activations_{cfg.model_name}.pt", weights_only=False).to(device, dtype=torch.float64)
