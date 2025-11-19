@@ -153,7 +153,7 @@ def filter_data(cfg, model, processor, tokenizer, with_sys_out_train_text, witho
     gap_tensor = torch.tensor(gap_list)
 
     # ✅ 条件筛选：加了 system prompt 后拒绝分数要 > 0
-    valid_mask = score_with_tensor > 8
+    valid_mask = score_with_tensor > 0
     valid_indices = torch.nonzero(valid_mask, as_tuple=False).squeeze().tolist()
 
     if isinstance(valid_indices, int):
