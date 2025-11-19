@@ -95,3 +95,4 @@ def visualize_distributions(
     if save_path:
         plt.savefig(save_path, dpi=160, bbox_inches="tight")
     # plt.show()
+    plt.close()
