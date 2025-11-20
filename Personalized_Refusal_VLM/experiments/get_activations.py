@@ -119,8 +119,6 @@ def eval_model(args):
         tokenizer = AutoTokenizer.from_pretrained("Qwen/Qwen-VL-Chat", trust_remote_code=True)  # 使用默认tokenizer
     else:
         processor = AutoProcessor.from_pretrained(model_path)
-    
-    import pdb; pdb.set_trace()
 
     # Load datasets
     if args.data.filter_data:
