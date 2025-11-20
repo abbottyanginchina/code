@@ -4,7 +4,7 @@ import torch
 # 加载分词器和模型
 model_name = "/gpuhome/jmy5701/gpu/models/Qwen-VL-Chat"  # 或者 "Qwen/Qwen-Chat"
 tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)
-model = AutoModelForCausalLM.from_pretrained(model_name, output_hidden_states=True, trust_remote_code=True).eval()
+model = AutoModelForCausalLM.from_pretrained(model_name, output_hidden_states=True, trust_remote_code=True, device_map="cuda").eval()
 
 # 设置模型为评估模式
 model.eval()
