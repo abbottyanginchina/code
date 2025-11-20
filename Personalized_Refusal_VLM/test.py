@@ -20,7 +20,7 @@ model = AutoModelForCausalLM.from_pretrained(
 # 1. 先构造 prompt（string）
 # -------------------------
 prompt = tokenizer.from_list_format([
-    {"image": "demo.png"},
+    {"image": 'https://qianwen-res.oss-cn-beijing.aliyuncs.com/Qwen-VL/assets/demo.jpeg'},
     {"text": "这是什么？"}
 ])
 
