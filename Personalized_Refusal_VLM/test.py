@@ -18,7 +18,7 @@ input_ids = inputs['input_ids']
 
 # 使用 teacher forcing 模式，将 input_ids 作为 labels
 # 注意：在 teacher forcing 中，我们通常将目标 token 作为输入，并预测下一个 token
-labels = tokenizer("I cannot answer", return_tensors="pt")['input_ids']
+labels = tokenizer("I cannot answer", return_tensors="pt").to("cuda")['input_ids']
 
 # 前向传播，获取 hidden states
 with torch.no_grad():
