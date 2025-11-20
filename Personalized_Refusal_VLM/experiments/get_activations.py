@@ -56,7 +56,7 @@ def eval_model(args):
         )
     elif 'llava-v1.6' in model_path.lower():
         print('Loading Llava model...')
-        model = LlavaForConditionalGeneration.from_pretrained(
+        model = LlavaNextForConditionalGeneration.from_pretrained(
             model_path, 
             dtype=torch.float16, 
             device_map="auto",
