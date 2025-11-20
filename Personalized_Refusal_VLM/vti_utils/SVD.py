@@ -27,7 +27,7 @@ def compute_layerwise_V_k(with_sys, without_sys, device, k=16):
         _, _, V = torch.svd(D)           # V: [H, H]
         V_k = V[:, :k]                   # [H, k]
 
-        V_dict[layer] = V_k
+        V_dict[layer] = V_k.to(device)
     
     return V_dict
 
