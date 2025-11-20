@@ -52,7 +52,7 @@ def eval_model(args):
             device_map="auto", 
             trust_remote_code=True
         )
-    if 'llava-v1.6' in model_path.lower():
+    elif 'llava-v1.6' in model_path.lower():
         print('Loading Llava model...')
         model = LlavaForConditionalGeneration.from_pretrained(
             model_path, 
