@@ -105,7 +105,10 @@ def eval_model(args):
         ).to(device)
 
     # Load processor
-    processor = AutoProcessor.from_pretrained(model_path)
+    if 'llava-v1.6' in model_path.lower():
+        processor = LlavaNextProcessor.from_pretrained(model_path)
+    else:
+        processor = AutoProcessor.from_pretrained(model_path)
 
     # Load datasets
     if args.data.filter_data:
