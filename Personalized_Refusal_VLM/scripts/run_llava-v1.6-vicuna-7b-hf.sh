@@ -9,7 +9,7 @@ num_test=100
 model_name="llava-v1.6-vicuna-7b-hf"
 inter_start_layer=12
 inter_end_layer=32
-alpha_text=2.0
+alpha_text=2.1
 dataset="ScienceQA"
 
 echo "🚀 Step 1: Extracting activations..."
