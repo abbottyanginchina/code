@@ -64,7 +64,7 @@ def eval_model(args):
             dtype=torch.float16, 
             device_map="auto",
             low_cpu_mem_usage=True, 
-        ).to(device)
+        )
     elif 'qwen3-' in model_path.lower():
         model = Qwen3VLForConditionalGeneration.from_pretrained(
             model_path, 
