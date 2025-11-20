@@ -13,7 +13,10 @@ import torch.nn.functional as F
 import matplotlib.pyplot as plt
 
 from PIL import Image
-from transformers import Qwen2_5_VLForConditionalGeneration, AutoModelForCausalLM, set_seed, AutoTokenizer, AutoModel, AutoProcessor, LlavaForConditionalGeneration, CLIPImageProcessor, LlavaOnevisionForConditionalGeneration
+# from transformers import (Qwen2_5_VLForConditionalGeneration, 
+#                           AutoModelForCausalLM, 
+#                           set_seed, 
+#                           AutoTokenizer, AutoModel, AutoProcessor, LlavaForConditionalGeneration, CLIPImageProcessor, LlavaOnevisionForConditionalGeneration
 
 # from vti_utils.utils import get_all_datasets
 from vti_utils.llm_layers import add_vti_layers, remove_vti_layers
