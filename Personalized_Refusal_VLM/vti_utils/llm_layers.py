@@ -29,6 +29,7 @@ class VTILayer(nn.Module):
                 else:
                     lambda_sim = 1.0
                     clean_vti_direction = project_onto_svd_subspace(self.vti_direction[i], self.V_dict).to(x.device)
+                    clean_vti_direction = self.vti_direction[i]
                     y += self.lam[i] * lambda_sim * F.normalize(clean_vti_direction, dim=-1)
             y = y/len(self.vti_direction)
             x = F.normalize(F.normalize(x.float(),dim=-1) +  0.1 * y, dim=-1) * norm
