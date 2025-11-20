@@ -15,6 +15,7 @@ import numpy as np
 from vti_utils.utils import get_demos, get_customer_demos, obtain_textual_vti, obtain_visual_vti, obtain_negative_vector, obtain_positive_vector, obtain_test_vector, get_all_datasets_filter, get_all_datasets
 from vti_utils.llm_layers import add_vti_layers, remove_vti_layers, add_one_layer, remove_one_layer, add_multiple_layers, remove_multiple_layers
 from vti_utils.conversation import conv_templates
+from vti_utils.SVD import compute_layerwise_V_k
 
 from datasets import load_dataset, concatenate_datasets
 import random
@@ -168,6 +169,8 @@ def eval_model(args):
     oth_target = torch.load(f"{base_path}/with_sys_out_train_activations_{cfg.model_name}.pt", weights_only=False).double() # Shape: torch.Size([200, 33, 4096]) [num_samples, num_layers, hidden_size]
     oth_x = torch.load(f"{base_path}/without_sys_out_train_activations_{cfg.model_name}.pt", weights_only=False).double()   # Shape: torch.Size([200, 33, 4096]) [num_samples, num_layers, hidden_size]
     import pdb; pdb.set_trace()
+
+
     refusal_vector = oth_target.mean(dim=0) - oth_x.mean(dim=0)
     # refusal_vector = refusal_vector.mean(dim=0)[1:]
 
