@@ -412,9 +412,9 @@ def get_demos(args, image_processor, model, tokenizer, patch_size = 14, file_pat
     return inputs_images, input_ids
 
 def get_activations_qwen(model, inputs_text, image, tokenizer, system_prompt=False):
+    pass
 
 def get_activations(model, inputs_text, image, processor, system_prompt=False):
-    # import pdb; pdb.set_trace()
     h_all = []
     with torch.no_grad():
         for example_id in tqdm(range(len(inputs_text)), desc="Getting activations", total=len(inputs_text)):
