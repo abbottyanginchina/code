@@ -11,7 +11,7 @@ model.eval()
 
 # 准备输入文本
 input_text = "What is your response to the question: 'What is the capital of France?'"
-inputs = tokenizer(input_text, return_tensors="pt")
+inputs = tokenizer(input_text, return_tensors="pt").to("cuda")
 
 # 获取输入的 token IDs
 input_ids = inputs['input_ids']
