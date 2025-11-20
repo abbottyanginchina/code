@@ -21,7 +21,7 @@ from transformers import (set_seed,
                           Qwen3VLForConditionalGeneration, 
                           LlavaNextProcessor, 
                           LlavaNextForConditionalGeneration,
-                          AutoModelForVision2Seq
+                          AutoModelForVision2Seq,
                           AutoModel,
                           AutoTokenizer)
 
