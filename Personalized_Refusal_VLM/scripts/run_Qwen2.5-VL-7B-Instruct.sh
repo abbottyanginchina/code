@@ -38,7 +38,7 @@ for ((layer=15; layer<num_layers; layer+=step)); do
 done
 wait
 
-python -m experiments.inference_activations --start_layer 0 --end_layer 36 --model_name $model_name
+python -m experiments.inference_activations --start_layer 0 --end_layer $num_layers --model_name $model_name
 
 echo "✅ All layer groups finished!"
 
