@@ -8,7 +8,7 @@ num_train=200
 num_test=100
 model_name="Qwen2.5-VL-7B-Instruct"
 inter_start_layer=15
-inter_end_layer=35
+inter_end_layer=27
 alpha_text=2.2
 dataset="ScienceQA"
 
