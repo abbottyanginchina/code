@@ -520,11 +520,7 @@ def get_activations_teacher_enforce(model, inputs_text, image, processor, system
                             ],
                         }
                     ]
-                    if 'llama' not in cfg.model_name.lower():
-                        text = processor.apply_chat_template(conversation, add_generation_prompt=True)
-                    else:
-                        text = text_list[style_id]
-
+                    text = processor.apply_chat_template(conversation, add_generation_prompt=True)
                     inputs = processor(text=text, images=image[example_id], return_tensors="pt")
 
                     device = next(model.parameters()).device
