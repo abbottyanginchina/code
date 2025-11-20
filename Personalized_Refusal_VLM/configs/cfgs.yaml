@@ -16,6 +16,6 @@ end_layer: 32
 data:
   path: "./data"
   dataset_name: "ScienceQA"
-  filter_data: True
+  filter_data: False
 
   
