@@ -464,7 +464,7 @@ def get_activations_teacher_enforce(model, inputs_text, image, processor, system
                     # 仅强制最后 refusal_ids 的 token
                     labels[:, -refusal_ids.size(1):] = refusal_ids
                     device = next(model.parameters()).device
-                    inputs = {k: (v.to(device) if isinstance(v, torch.Tensor) else v) for k, v in inputs.items()}
+                    # inputs = {k: (v.to(device) if isinstance(v, torch.Tensor) else v) for k, v in inputs.items()}
 
                     with torch.no_grad():
                         h = model(
