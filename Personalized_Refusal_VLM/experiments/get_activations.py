@@ -141,9 +141,6 @@ def eval_model(args):
 
     print('Obtaining direction\n')
 
-    # test_img_tensors = processor(images=out_train_images[0], return_tensors="pt").to('cuda')
-    # get_visual_hiddenstates(model, [test_img_tensors], model_is_llaval=False)
-
     with torch.no_grad():
         with_sys_in_train_activations = process(get_activations(model, with_sys_in_train_text, in_train_images, processor, system_prompt=False))
         with_sys_out_train_activations = process(get_activations(model, with_sys_out_train_text, out_train_images, processor, system_prompt=False))
