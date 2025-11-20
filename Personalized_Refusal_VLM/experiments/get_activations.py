@@ -25,7 +25,7 @@ from transformers import (set_seed,
                           AutoModel,
                           AutoTokenizer)
 
-from vti_utils.utils import get_activations_blip, get_activations, get_all_datasets_filter, get_all_datasets, get_activations_qwen
+from vti_utils.utils import get_activations_blip, get_activations, get_all_datasets_filter, get_all_datasets, get_activations_teacher_enforce
 from vti_utils.get_refusal_score import filter_data
 
 DEFAULT_IMAGE_TOKEN = "<image>"
@@ -147,10 +147,10 @@ def eval_model(args):
     print('Obtaining direction\n')
 
     with torch.no_grad():
-        with_sys_in_train_activations = process(get_activations(model, with_sys_in_train_text, in_train_images, processor, system_prompt=False))
-        with_sys_out_train_activations = process(get_activations(model, with_sys_out_train_text, out_train_images, processor, system_prompt=False))
-        without_sys_in_train_activations = process(get_activations(model, without_sys_in_train_text, in_train_images, processor, system_prompt=False))
-        without_sys_out_train_activations = process(get_activations(model, without_sys_out_train_text, out_train_images, processor, system_prompt=False))
+        with_sys_in_train_activations = process(get_activations_teacher_enforce(model, with_sys_in_train_text, in_train_images, processor, system_prompt=False))
+        with_sys_out_train_activations = process(get_activations_teacher_enforce(model, with_sys_out_train_text, out_train_images, processor, system_prompt=False))
+        without_sys_in_train_activations = process(get_activations_teacher_enforce(model, without_sys_in_train_text, in_train_images, processor, system_prompt=False))
+        without_sys_out_train_activations = process(get_activations_teacher_enforce(model, without_sys_out_train_text, out_train_images, processor, system_prompt=False))
 
         # 1. 加 system prompt 的 others（对应 h_c(Image_{others} + system_prompt)）
         with_sys_image_others_activations = process(
@@ -158,17 +158,16 @@ def eval_model(args):
         )
         # 2. 不加 system prompt 的 biology（对应 h_c(Image_{biology} + "None")）
         without_sys_image_biology_activations = process(
-            get_activations(model, [""] * len(in_train_images), in_train_images, processor, system_prompt=False)
+            get_activations_teacher_enforce(model, [""] * len(in_train_images), in_train_images, processor, system_prompt=False)
         )
 
-        in_test_activations = process(get_activations(model, in_test_text, in_test_images, processor, system_prompt=False))
-        out_test_activations = process(get_activations(model, out_test_text, out_test_images, processor, system_prompt=False))
-
+        in_test_activations = process(get_activations_teacher_enforce(model, in_test_text, in_test_images, processor, system_prompt=False))
+        out_test_activations = process(get_activations_teacher_enforce(model, out_test_text, out_test_images, processor, system_prompt=False))
         image_in_test_activations = process(
-            get_activations(model, [""] * len(in_test_images), in_test_images, processor, system_prompt=False)
+            get_activations_teacher_enforce(model, [""] * len(in_test_images), in_test_images, processor, system_prompt=False)
         )
         image_out_test_activations = process(
-            get_activations(model, [""] * len(out_test_images), out_test_images, processor, system_prompt=False)
+            get_activations_teacher_enforce(model, [""] * len(out_test_images), out_test_images, processor, system_prompt=False)
         )
 
     save_path = f"../output_{cfg.model_name}_{cfg.data.dataset_name}/activations/"
