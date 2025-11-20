@@ -160,7 +160,7 @@ def remove_one_layer(model: PreTrainedModel, layer_idx: int):
     else:
         print(f"Layer {layer_idx} 没有 VTILayer 或结构不符合预期")
 
-def add_multiple_layers(V_dict, model: PreTrainedModel, oth_x_test: Tensor, vti_directions: Tensor, alpha: list, layer_indices: list[int], cfg):
+def add_multiple_layers(V_dict, model: PreTrainedModel, vti_directions: Tensor, alpha: list, layer_indices: list[int], cfg):
     if 'blip2-' in cfg.model_name:
         layers = get_layers_blip2(model)
         for idx in layer_indices:
