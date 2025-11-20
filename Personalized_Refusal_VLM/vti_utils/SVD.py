@@ -7,7 +7,7 @@ def project_onto_svd_subspace(delta_raw, V_k):
     """
     return V_k @ (V_k.T @ delta_raw)
 
-def compute_layerwise_V_k(with_sys, without_sys, k=16):
+def compute_layerwise_V_k(with_sys, without_sys, device, k=16):
     """
     with_sys:    [N, L, H] 
     without_sys: [N, L, H]
