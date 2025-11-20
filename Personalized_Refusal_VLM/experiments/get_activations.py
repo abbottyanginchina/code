@@ -24,7 +24,7 @@ from transformers import (set_seed,
                           AutoModel,
                           AutoTokenizer)
 
-from vti_utils.utils import get_activations_blip, get_activations, get_all_datasets_filter, get_all_datasets
+from vti_utils.utils import get_activations_blip, get_activations, get_all_datasets_filter, get_all_datasets, get_activations_qwen
 from vti_utils.get_refusal_score import filter_data
 
 DEFAULT_IMAGE_TOKEN = "<image>"
