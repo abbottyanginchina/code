@@ -50,6 +50,13 @@ def eval_model(args):
             torch_dtype=torch.float16, 
             low_cpu_mem_usage=True, 
         ).to(device)
+    elif 'llava-onevision-' in model_path.lower():
+        model = AutoModelForCausalLM.from_pretrained(
+            model_path, 
+            torch_dtype="auto", 
+            device_map="auto", 
+            trust_remote_code=True
+        )
     elif 'qwen3-' in model_path.lower():
         model = Qwen3VLForConditionalGeneration.from_pretrained(
             model_path, 
