@@ -189,7 +189,7 @@ def add_multiple_layers(model: PreTrainedModel, vti_directions: Tensor, alpha: l
             layers = get_layers_qwen(model)
         elif 'instructblip-' in cfg.model_name:
             layers = get_layers_blip(model)
-        # import pdb; pdb.set_trace()
+        import pdb; pdb.set_trace()
         mlp_keywords = ["mlp", "feedforward", "ffn"]
         # assert len(vti_directions) == len(layers)
         for idx in layer_indices:
