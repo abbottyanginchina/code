@@ -5,22 +5,22 @@ from transformers import PreTrainedModel
 from torch import Tensor
 import numpy as np
 
-from vti_utils.SVD import 
+from vti_utils.SVD import project_onto_svd_subspace
 
 
 class VTILayer(nn.Module):
 
-    def __init__(self, V_dict, oth_x_test, vti_direction, lam):
+    def __init__(self, V_dict, vti_direction, lam):
         super(VTILayer, self).__init__()
         self.vti_direction = vti_direction
         self.lam = lam
         self.V_dict = V_dict
-        self.oth_x_test = oth_x_test
 
     def forward(self, x):
         if self.vti_direction is not None:
             norm = torch.norm(x.float(),dim=-1).unsqueeze(-1)            
             y = 0
+            project_onto_svd_subspace()
             for i in range(len(self.vti_direction)):
                 if x.size(1) < 2:
                     lambda_sim = 1.0 #+ torch.max(torch.tensor([0.]).to(x.device), F.cosine_similarity(x.float(), -self.vti_direction[i][None,None,:], dim=-1)).unsqueeze(-1)
