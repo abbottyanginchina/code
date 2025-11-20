@@ -21,7 +21,7 @@ model = AutoModelForCausalLM.from_pretrained(
 # 1. 先构造 prompt（string）
 # -------------------------
 prompt = tokenizer.from_list_format([
-    {"image": 'https://qianwen-res.oss-cn-beijing.aliyuncs.com/Qwen-VL/assets/demo.jpeg'},
+    {"image": './jiaxi.jpg'},
     {"text": "这是什么？"}
 ])
 
@@ -37,7 +37,7 @@ enc = tokenizer(
 input_ids = enc["input_ids"].to(device)
 attention_mask = enc["attention_mask"].to(device)
 # pixel_values = enc["pixel_values"].to(device)
-image = Image.open("https://qianwen-res.oss-cn-beijing.aliyuncs.com/Qwen-VL/assets/demo.jpeg").convert("RGB")
+image = Image.open("./jiaxi.jpg").convert("RGB")
 pixel_values = model.transformer.visual.process_images([image]).to(device)
 
 # -------------------------
