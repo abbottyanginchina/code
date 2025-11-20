@@ -4,7 +4,7 @@ import torch
 torch.manual_seed(1234)
 
 # Note: The default behavior now has injection attack prevention off.
-tokenizer = AutoTokenizer.from_pretrained("Qwen/Qwen-VL-Chat", trust_remote_code=True)
+tokenizer = AutoTokenizer.from_pretrained("/gpuhome/jmy5701/gpu/models/Qwen-VL-Chat", trust_remote_code=True)
 
 # use bf16
 # model = AutoModelForCausalLM.from_pretrained("Qwen/Qwen-VL-Chat", device_map="auto", trust_remote_code=True, bf16=True).eval()
