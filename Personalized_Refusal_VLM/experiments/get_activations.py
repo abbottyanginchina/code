@@ -107,6 +107,8 @@ def eval_model(args):
     # Load processor
     if 'llava-v1.6' in model_path.lower():
         processor = LlavaNextProcessor.from_pretrained(model_path)
+    if 'qwen-' in model_path.lower():
+        pass  # 使用默认tokenizer
     else:
         processor = AutoProcessor.from_pretrained(model_path)
     
