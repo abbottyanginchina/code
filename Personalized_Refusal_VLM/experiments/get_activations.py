@@ -110,8 +110,6 @@ def eval_model(args):
     else:
         processor = AutoProcessor.from_pretrained(model_path)
 
-    import pdb; pdb.set_trace()
-
     # Load datasets
     if args.data.filter_data:
         original_data = get_all_datasets_filter(args)
