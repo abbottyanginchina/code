@@ -10,7 +10,7 @@ model = AutoModelForCausalLM.from_pretrained(model_name, output_hidden_states=Tr
 model.eval()
 
 # 准备输入文本
-input_text = "I cannot answer"
+input_text = "What is your response to the question: 'What is the capital of France?'"
 inputs = tokenizer(input_text, return_tensors="pt")
 
 # 获取输入的 token IDs
