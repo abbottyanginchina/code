@@ -21,7 +21,8 @@ from transformers import (set_seed,
                         #   Qwen3VLForConditionalGeneration, 
                           LlavaNextProcessor, 
                           LlavaNextForConditionalGeneration,
-                          AutoModel)
+                          AutoModel,
+                          AutoTokenizer)
 
 from vti_utils.utils import get_activations_blip, get_activations, get_all_datasets_filter, get_all_datasets
 from vti_utils.get_refusal_score import filter_data
@@ -108,7 +109,7 @@ def eval_model(args):
     if 'llava-v1.6' in model_path.lower():
         processor = LlavaNextProcessor.from_pretrained(model_path)
     if 'qwen-' in model_path.lower():
-        pass  # 使用默认tokenizer
+        tokenizer = AutoTokenizer.from_pretrained("Qwen/Qwen-VL-Chat", trust_remote_code=True)  # 使用默认tokenizer
     else:
         processor = AutoProcessor.from_pretrained(model_path)
     
