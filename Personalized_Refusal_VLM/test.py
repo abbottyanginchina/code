@@ -18,7 +18,6 @@ model = AutoModelForVision2Seq.from_pretrained(
 # 2. 准备输入图片
 # -----------------------------
 image1 = Image.open("/gpuhome/jmy5701/img1.jpg")
-image2 = Image.open("/gpuhome/jmy5701/img2.jpg")
 
 # -----------------------------
 # 3. 构建 prompt（与 generate 一致）
@@ -31,19 +30,6 @@ messages = [
             {"type": "text", "text": "What do we see in this image?"},
         ]
     },
-    {
-        "role": "assistant",
-        "content": [
-            {"type": "text", "text": "In this image, we can see the city of New York."},
-        ]
-    },
-    {
-        "role": "user",
-        "content": [
-            {"type": "image"},
-            {"type": "text", "text": "What about this one?"},
-        ]
-    }
 ]
 
 # 最终我们要 teacher forcing 的“拒绝标签”
@@ -56,7 +42,7 @@ prompt = processor.apply_chat_template(messages, add_generation_prompt=True)
 
 enc = processor(
     text=prompt,
-    images=[image1, image2],
+    images=[image1],
     return_tensors="pt",
     padding=True
 ).to(device)
