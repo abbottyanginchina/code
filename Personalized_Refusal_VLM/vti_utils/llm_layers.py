@@ -231,6 +231,8 @@ def remove_multiple_layers(model: PreTrainedModel, layer_indices: list[int], cfg
             layers = get_layers_qwen(model)
         elif 'instructblip-' in cfg.model_name:
             layers = get_layers_blip(model)
+        else:
+            layers = get_layers(model)
         mlp_keywords = ["mlp", "feedforward", "ffn"] 
         for idx in layer_indices:
             layer = layers[idx]
