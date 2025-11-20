@@ -120,6 +120,8 @@ def eval_model(args):
         processor = InstructBlipProcessor.from_pretrained(model_path)
     elif 'blip2-' in model_path.lower():
         processor = Blip2Processor.from_pretrained(model_path)
+    elif 'llava-v1.6' in model_path.lower():
+        processor = LlavaNextProcessor.from_pretrained(model_path)
     else:
         processor = AutoProcessor.from_pretrained(model_path)
 
