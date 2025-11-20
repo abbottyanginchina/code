@@ -114,6 +114,12 @@ def eval_model(args):
             trust_remote_code=True, 
             fp16=True
         ).eval().to(device)
+    elif 'idefics2-' in model_path.lower():
+        model = AutoModelForVision2Seq.from_pretrained(
+            model_path,
+            output_hidden_states=True,       
+            torch_dtype=torch.float16
+        ).to(device).eval()
 
     if 'qwen-' in model_path.lower():
         processor = QWenProcessor.from_pretrained(model_path)
