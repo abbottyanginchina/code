@@ -38,14 +38,14 @@ echo "🧠 Step 2: Training steering vector model..."
 # done
 # wait
 
-# echo "Step 3: Inference activations with steering vectors applied..."
-# python -m experiments.inference_activations --start_layer 0 --end_layer 33
+echo "Step 3: Inference activations with steering vectors applied..."
+python -m experiments.inference_activations --start_layer 0 --end_layer 33
 
-# echo "✅ All layer groups finished!"
+echo "✅ All layer groups finished!"
 
-# echo "🎯 Step 4: Generating responses with steering vectors applied..."
-# python -m experiments.generation --model_name $model_name --num_test $num_test --num_train $num_train --inter_start_layer $inter_start_layer --inter_end_layer $inter_end_layer --alpha_text $alpha_text --dataset $dataset
+echo "🎯 Step 4: Generating responses with steering vectors applied..."
+python -m experiments.generation --model_name $model_name --num_test $num_test --num_train $num_train --inter_start_layer $inter_start_layer --inter_end_layer $inter_end_layer --alpha_text $alpha_text --dataset $dataset
 
-# echo "🎉 All steps completed!"
+echo "🎉 All steps completed!"
 
-# done
+done
