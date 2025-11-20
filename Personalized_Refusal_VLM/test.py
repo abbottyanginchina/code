@@ -7,9 +7,9 @@ device = "cuda"
 # -----------------------------
 # 1. 加载模型和 processor
 # -----------------------------
-processor = AutoProcessor.from_pretrained("HuggingFaceM4/idefics2-8b")
+processor = AutoProcessor.from_pretrained("/gpuhome/jmy5701/gpu/models/idefics2-8b")
 model = AutoModelForVision2Seq.from_pretrained(
-    "HuggingFaceM4/idefics2-8b",
+    "/gpuhome/jmy5701/gpu/models/idefics2-8b",
     output_hidden_states=True,       # <<--- 必须开这个！
     torch_dtype=torch.float16
 ).to(device).eval()
