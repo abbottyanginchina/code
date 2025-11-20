@@ -455,7 +455,7 @@ def get_activations_teacher_enforce(model, inputs_text, image, processor, system
                     text = processor.apply_chat_template(conversation, add_generation_prompt=True)
                     # inputs = processor(text=text, images=image[example_id], return_tensors="pt")
 
-                    refusal_text = "I cannot answer."
+                    refusal_text = "I cannot answer that question."
                     enc = processor(
                         text=text,
                         images=[image[example_id]],
