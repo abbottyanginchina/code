@@ -171,7 +171,7 @@ def eval_model(args):
     # import pdb; pdb.set_trace()
 
     # SVD
-    V_dict = compute_layerwise_V_k(oth_target, oth_x).to(device)
+    V_dict = compute_layerwise_V_k(oth_target, oth_x, device)
 
 
     refusal_vector = oth_target.mean(dim=0) - oth_x.mean(dim=0)
