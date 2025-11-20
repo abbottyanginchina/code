@@ -20,7 +20,6 @@ class VTILayer(nn.Module):
         if self.vti_direction is not None:
             norm = torch.norm(x.float(),dim=-1).unsqueeze(-1)            
             y = 0
-            import pdb; pdb.set_trace()
             for i in range(len(self.vti_direction)):
                 if x.size(1) < 2:
                     lambda_sim = 1.0    # torch.max(torch.tensor([0.]).to(x.device), F.cosine_similarity(x.float(), -self.vti_direction[i][None,None,:], dim=-1)).unsqueeze(-1)
