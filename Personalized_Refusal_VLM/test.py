@@ -13,7 +13,7 @@ tokenizer = AutoTokenizer.from_pretrained("/gpuhome/jmy5701/gpu/models/Qwen-VL-C
 # use cpu only
 # model = AutoModelForCausalLM.from_pretrained("Qwen/Qwen-VL-Chat", device_map="cpu", trust_remote_code=True).eval()
 # use cuda device
-model = AutoModelForCausalLM.from_pretrained("Qwen/Qwen-VL-Chat", device_map="cuda", trust_remote_code=True, bf16=True).eval()
+model = AutoModelForCausalLM.from_pretrained("/gpuhome/jmy5701/gpu/models/Qwen-VL-Chat", device_map="cuda", trust_remote_code=True, bf16=True).eval()
 
 # Specify hyperparameters for generation (No need to do this if you are using transformers>=4.32.0)
 # model.generation_config = GenerationConfig.from_pretrained("Qwen/Qwen-VL-Chat", trust_remote_code=True)
