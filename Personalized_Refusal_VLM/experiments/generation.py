@@ -173,7 +173,6 @@ def eval_model(args):
     # SVD
     V_dict = compute_layerwise_V_k(oth_target, oth_x, device, k=16)
 
-
     refusal_vector = oth_target.mean(dim=0) - oth_x.mean(dim=0)
     # refusal_vector = refusal_vector.mean(dim=0)[1:]
 
