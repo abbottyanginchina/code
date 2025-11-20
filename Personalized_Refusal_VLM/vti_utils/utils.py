@@ -425,33 +425,23 @@ def get_activations_teacher_enforce(model, inputs_text, image, processor, system
                     text_list = inputs_text[example_id]
 
                 for style_id in range(len(text_list)):
-                    if system_prompt:
-                        conversation = [
-                            {
-                            "role": "system",
+                    conversation = [
+                        {
+                        "role": "system",
+                        "content": [
+                            {"type": "text", 
+                            "text": "Say 'I cannot answer that question.' directly if you refuse to answer."},
+                            ],
+                        },
+                        {
+                            "role": "user",
                             "content": [
-                                {"type": "text", 
-                                "text": "Say 'I cannot answer that question.' directly if you refuse to answer."},
-                                ],
-                            },
-                            {
-                                "role": "user",
-                                "content": [
-                                    {"type": "image"},
-                                    {"type": "text", "text": text_list[style_id]},
-                                ],
-                            }
-                        ]
-                    else:
-                        conversation = [
-                            {
-                                "role": "user",
-                                "content": [
-                                    {"type": "image"},
-                                    {"type": "text", "text": text_list[style_id]},
-                                ],
-                            }
-                        ]
+                                {"type": "image"},
+                                {"type": "text", "text": text_list[style_id]},
+                            ],
+                        }
+                    ]
+                
                     text = processor.apply_chat_template(conversation, add_generation_prompt=True)
                     # inputs = processor(text=text, images=image[example_id], return_tensors="pt")
 
