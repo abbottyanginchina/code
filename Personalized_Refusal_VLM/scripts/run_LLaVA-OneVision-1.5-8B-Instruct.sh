@@ -48,4 +48,4 @@ python -m experiments.train_steering_vector --model_name $model_name --start_lay
 
 # echo "🎉 All steps completed!"
 
-done
+# done
