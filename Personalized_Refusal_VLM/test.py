@@ -1,71 +1,36 @@
-
 from transformers import AutoTokenizer, AutoModelForCausalLM
 import torch
-from PIL import Image
 
-device = "cuda"
+# 加载分词器和模型
+model_name = "/gpuhome/jmy5701/gpu/models/Qwen-VL-Chat"  # 或者 "Qwen/Qwen-Chat"
+tokenizer = AutoTokenizer.from_pretrained(model_name)
+model = AutoModelForCausalLM.from_pretrained(model_name, output_hidden_states=True)
 
-tokenizer = AutoTokenizer.from_pretrained(
-    "/gpuhome/jmy5701/gpu/models/Qwen-VL-Chat",
-    trust_remote_code=True
-)
+# 设置模型为评估模式
+model.eval()
 
-model = AutoModelForCausalLM.from_pretrained(
-    "/gpuhome/jmy5701/gpu/models/Qwen-VL-Chat",
-    trust_remote_code=True,
-    device_map="auto",
-    torch_dtype=torch.float16
-).eval()
+# 准备输入文本
+input_text = "I cannot answer"
+inputs = tokenizer(input_text, return_tensors="pt")
 
-# -------------------------
-# 1. 先构造 prompt（string）
-# -------------------------
-prompt = tokenizer.from_list_format([
-    {"image": '../jiaxi.jpg'},
-    {"text": "这是什么？"}
-])
+# 获取输入的 token IDs
+input_ids = inputs['input_ids']
 
-# -------------------------
-# 2. 再 tokenize（才能得到 input_ids + pixel_values）
-# -------------------------
-enc = tokenizer(
-    prompt,
-    return_tensors="pt"
-)
-# import pdb; pdb.set_trace()
+# 使用 teacher forcing 模式，将 input_ids 作为 labels
+# 注意：在 teacher forcing 中，我们通常将目标 token 作为输入，并预测下一个 token
+labels = input_ids.clone()
 
-input_ids = enc["input_ids"].to(device)
-attention_mask = enc["attention_mask"].to(device)
-# pixel_values = enc["pixel_values"].to(device)
-image = Image.open("../jiaxi.jpg").convert("RGB")
-pixel_values = model.transformer.visual.process_images([image]).to(device)
-
-# -------------------------
-# 3. 构造拒绝 labels（Teacher Forcing）
-# -------------------------
-refusal = "对不起，我不能回答这个问题。"
-refusal_ids = tokenizer(
-    refusal,
-    return_tensors="pt",
-    add_special_tokens=False
-).input_ids.to(device)
-
-labels = torch.full_like(input_ids, -100)
-labels[:, -refusal_ids.size(1):] = refusal_ids   # 对齐末尾 token
-
-# -------------------------
-# 4. forward + 获取隐藏层
-# -------------------------
+# 前向传播，获取 hidden states
 with torch.no_grad():
-    outputs = model(
-        input_ids=input_ids,
-        attention_mask=attention_mask,
-        pixel_values=pixel_values,
-        labels=labels,
-        output_hidden_states=True,
-        return_dict=True
-    )
+    outputs = model(input_ids=input_ids, labels=labels, output_hidden_states=True)
 
-hidden_states = outputs.hidden_states
-print(f"Total layers = {len(hidden_states)}")
-print(hidden_states[-1].shape)  # [1, seq_len, hidden_dim]
+# 获取所有层的 hidden states
+hidden_states = outputs.hidden_states  # tuple of (batch_size, seq_len, hidden_size)
+
+# 打印每一层的 hidden state 形状
+for i, hidden_state in enumerate(hidden_states):
+    print(f"Layer {i} Hidden State Shape: {hidden_state.shape}")
+
+# 如果你想获取特定位置的 hidden state（例如最后一个 token 的 hidden state）
+last_hidden_state = hidden_states[-1][:, -1, :]  # 最后一层，最后一个 token
+print(f"Last Token Hidden State Shape: {last_hidden_state.shape}")
