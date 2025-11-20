@@ -217,7 +217,7 @@ def remove_multiple_layers(model: PreTrainedModel, layer_indices: list[int], cfg
                         return x
                 layer.mlp = OriginalMLP(layer.mlp.fc1, layer.mlp.act, layer.mlp.fc2)
     else:
-        if 'llava' in cfg.model_name:
+        if 'llava' in cfg.model_name.lower():
             layers = get_layers(model)
         elif 'qwen' in cfg.model_name.lower():
             layers = get_layers_qwen(model)
