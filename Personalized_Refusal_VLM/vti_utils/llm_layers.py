@@ -183,7 +183,7 @@ def add_multiple_layers(model: PreTrainedModel, vti_directions: Tensor, alpha: l
 
             layer.mlp = MLPWithVTI(original_fc1, original_act, original_fc2, vti_directions[idx], alpha)
     else:
-        if 'llava' in cfg.model_name:
+        if 'llava' in cfg.model_name.lower():
             layers = get_layers(model)
         elif 'qwen' in cfg.model_name.lower():
             layers = get_layers_qwen(model)
