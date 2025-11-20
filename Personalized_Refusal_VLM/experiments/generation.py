@@ -422,7 +422,6 @@ def eval_model(args):
         remove_multiple_layers(model, layer_indices = target_layers, cfg = cfg)
         # remove_one_layer(model, layer_idx = layer)
     ans_file.close()
-    '''
 
 if __name__ == "__main__":
     config_path = 'configs/cfgs.yaml'
