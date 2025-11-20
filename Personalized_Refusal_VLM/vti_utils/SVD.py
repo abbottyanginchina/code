@@ -24,3 +24,15 @@ def compute_layerwise_V_k(with_sys, without_sys, k=16):
     
     return V_dict
 
+def project_onto_svd_subspace(delta_raw, V_k):
+    """
+    delta_raw: [H]  原始 steering vector（某一层）
+    V_k: [H, k]     来自方法1的该层的 SVD 子空间
+
+    return:
+        delta_clean: [H]
+    """
+    # (V_k.T @ delta_raw) → shape [k]
+    # V_k @ (…) → shape [H]
+    delta_clean = V_k @ (V_k.T @ delta_raw)
+    return delta_clean
