@@ -31,6 +31,7 @@ enc = tokenizer(
     prompt,
     return_tensors="pt"
 )
+import pdb; pdb.set_trace()
 
 input_ids = enc["input_ids"].to(device)
 attention_mask = enc["attention_mask"].to(device)
