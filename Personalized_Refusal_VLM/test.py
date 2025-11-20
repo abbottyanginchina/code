@@ -1,6 +1,7 @@
 
 from transformers import AutoTokenizer, AutoModelForCausalLM
 import torch
+from PIL import Image
 
 device = "cuda"
 
@@ -31,11 +32,13 @@ enc = tokenizer(
     prompt,
     return_tensors="pt"
 )
-import pdb; pdb.set_trace()
+# import pdb; pdb.set_trace()
 
 input_ids = enc["input_ids"].to(device)
 attention_mask = enc["attention_mask"].to(device)
-pixel_values = enc["pixel_values"].to(device)
+# pixel_values = enc["pixel_values"].to(device)
+image = Image.open("demo.jpeg").convert("RGB")
+pixel_values = model.transformer.visual.process_images([image]).to(device)
 
 # -------------------------
 # 3. 构造拒绝 labels（Teacher Forcing）
