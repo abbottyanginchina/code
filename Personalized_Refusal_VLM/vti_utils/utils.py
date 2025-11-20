@@ -457,12 +457,34 @@ def get_activations(model, inputs_text, image, processor, system_prompt=False):
                 text = processor.apply_chat_template(conversation, add_generation_prompt=True)
                 inputs = processor(text=text, images=image[example_id], return_tensors="pt")
 
+                refusal_text = "I cannot answer."
+                enc = processor(
+                    text=prompt,
+                    images=[image1],
+                    return_tensors="pt",
+                    padding=True
+                ).to(device)
+
+                input_ids = enc["input_ids"]
+                refusal_ids = processor.tokenizer(
+                    refusal_text,
+                    add_special_tokens=False,
+                    return_tensors="pt"
+                )["input_ids"].to(device)
+
+                labels = input_ids.clone()
+                # 仅强制最后 refusal_ids 的 token
+                labels[:, -refusal_ids.size(1):] = refusal_ids
                 device = next(model.parameters()).device
                 inputs = {k: (v.to(device) if isinstance(v, torch.Tensor) else v) for k, v in inputs.items()}
 
                 with torch.no_grad():
                     h = model(
-                        **inputs,
+                        # **inputs,
+                        input_ids=input_ids,
+                        pixel_values=enc["pixel_values"],
+                        attention_mask=enc["attention_mask"],
+                        labels=labels,
                         output_hidden_states=True,  # 关键参数！
                         return_dict=True
                     )
