@@ -105,6 +105,12 @@ def eval_model(args):
             device_map="auto", 
             torch_dtype=torch.float16,
         ).to(device)
+    elif 'idefics2-' in model_path.lower():
+        model = AutoModelForVision2Seq.from_pretrained(
+            model_path,
+            output_hidden_states=True,       
+            torch_dtype=torch.float16
+        ).to(device).eval()
 
     # Load processor
     if 'llava-v1.6' in model_path.lower():
