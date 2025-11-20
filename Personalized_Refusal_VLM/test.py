@@ -17,7 +17,7 @@ model = AutoModelForVision2Seq.from_pretrained(
 # -----------------------------
 # 2. 准备输入图片
 # -----------------------------
-image1 = Image.open("/gpuhome/jmy5701/img1.jpg")
+image1 = Image.open("../jiaxi.jpg")
 
 # -----------------------------
 # 3. 构建 prompt（与 generate 一致）
