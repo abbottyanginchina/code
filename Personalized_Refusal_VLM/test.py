@@ -1,38 +1,57 @@
-from transformers import AutoModelForCausalLM, AutoTokenizer
-from transformers.generation import GenerationConfig
+from transformers import AutoTokenizer, AutoModelForCausalLM
 import torch
-torch.manual_seed(1234)
 
-# Note: The default behavior now has injection attack prevention off.
-tokenizer = AutoTokenizer.from_pretrained("/gpuhome/jmy5701/gpu/models/Qwen-VL-Chat", trust_remote_code=True)
+device = "cuda"
 
-# use bf16
-# model = AutoModelForCausalLM.from_pretrained("Qwen/Qwen-VL-Chat", device_map="auto", trust_remote_code=True, bf16=True).eval()
-# use fp16
-# model = AutoModelForCausalLM.from_pretrained("Qwen/Qwen-VL-Chat", device_map="auto", trust_remote_code=True, fp16=True).eval()
-# use cpu only
-# model = AutoModelForCausalLM.from_pretrained("Qwen/Qwen-VL-Chat", device_map="cpu", trust_remote_code=True).eval()
-# use cuda device
-model = AutoModelForCausalLM.from_pretrained("/gpuhome/jmy5701/gpu/models/Qwen-VL-Chat", device_map="cuda", trust_remote_code=True, bf16=True).eval()
+tokenizer = AutoTokenizer.from_pretrained(
+    "Qwen/Qwen-VL-Chat",
+    trust_remote_code=True
+)
 
-# Specify hyperparameters for generation (No need to do this if you are using transformers>=4.32.0)
-# model.generation_config = GenerationConfig.from_pretrained("Qwen/Qwen-VL-Chat", trust_remote_code=True)
+model = AutoModelForCausalLM.from_pretrained(
+    "Qwen/Qwen-VL-Chat",
+    device_map="auto",
+    trust_remote_code=True,
+    torch_dtype=torch.float16
+).eval()
 
-# 1st dialogue turn
+# ------------------------------------------------------------------
+# 1. 构造图像 + query
+# ------------------------------------------------------------------
 query = tokenizer.from_list_format([
-    {'image': 'https://qianwen-res.oss-cn-beijing.aliyuncs.com/Qwen-VL/assets/demo.jpeg'},
-    {'text': '这是什么'},
+    {"image": "demo.png"},   # 你的训练图片路径
+    {"text": "这是什么？"}
 ])
-response, history = model.chat(tokenizer, query=query, history=None)
-print(response)
-# 图中是一名年轻女子在沙滩上和她的狗玩耍，狗的品种可能是拉布拉多。她们坐在沙滩上，狗的前腿抬起来，似乎在和人类击掌。两人之间充满了信任和爱。
 
-# 2nd dialogue turn
-response, history = model.chat(tokenizer, '输出"击掌"的检测框', history=history)
-print(response)
-# <ref>击掌</ref><box>(517,508),(589,611)</box>
-image = tokenizer.draw_bbox_on_latest_picture(response, history)
-if image:
-  image.save('1.jpg')
-else:
-  print("no box")
+input_ids = query["input_ids"].to(device)
+pixel_values = query["pixel_values"].to(device)
+attention_mask = query["attention_mask"].to(device)
+
+# ------------------------------------------------------------------
+# 2. 构造 teacher forcing 的拒绝句子
+# ------------------------------------------------------------------
+refusal_text = "对不起，我无法回答这个问题。"  # 你的拒绝模板
+refusal_ids = tokenizer(
+    refusal_text,
+    return_tensors="pt",
+    add_special_tokens=False
+).input_ids.to(device)
+
+# 把 label 对齐到 input_ids 的长度
+labels = torch.full_like(input_ids, -100)   # -100 表示忽略
+labels[:, -refusal_ids.size(1):] = refusal_ids  # 让最后 K 个 token 预测拒绝句
+
+# ------------------------------------------------------------------
+# 3. 调用 forward 做 teacher forcing（激活隐藏层）
+# ------------------------------------------------------------------
+with torch.no_grad():
+    outputs = model(
+        input_ids=input_ids,
+        attention_mask=attention_mask,
+        pixel_values=pixel_values,
+        labels=labels,
+        output_hidden_states=True,
+        return_dict=True
+    )
+
+hidden_states = outputs.hidden_states   # tuple: [layer0, layer1, ...]
