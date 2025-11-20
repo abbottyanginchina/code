@@ -1,5 +1,12 @@
 import torch
 
+def project_onto_svd_subspace(delta_raw, V_k):
+    """
+    delta_raw: [H]   单个样本的原始 steering 向量
+    V_k:       [H,k] 来自 compute_layerwise_V_k 的第 k 个子空间
+    """
+    return V_k @ (V_k.T @ delta_raw)
+
 def compute_layerwise_V_k(with_sys, without_sys, k=16):
     """
     with_sys:    [N, L, H] 
