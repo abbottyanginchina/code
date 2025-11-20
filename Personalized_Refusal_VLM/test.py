@@ -1,12 +1,3 @@
-from transformers import AutoTokenizer, AutoModelForCausalLM
-import torch
-
-device = "cuda"
-
-tokenizer = AutoTokenizer.from_pretrained(
-    "/gpuhome/jmy5701/gpu/models/Qwen-VL-Chat",
-    trust_remote_code=True
-)
 
 from transformers import AutoTokenizer, AutoModelForCausalLM
 import torch
