@@ -8,7 +8,7 @@ num_train=200
 num_test=100
 model_name="llava-v1.6-vicuna-7b-hf"
 inter_start_layer=12
-inter_end_layer=35
+inter_end_layer=33
 alpha_text=1.8
 dataset="ScienceQA"
 
