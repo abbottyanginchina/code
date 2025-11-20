@@ -458,7 +458,7 @@ def get_activations_teacher_enforce(model, inputs_text, image, processor, system
                         refusal_text,
                         add_special_tokens=False,
                         return_tensors="pt"
-                    )["input_ids"].to(device)
+                    )["input_ids"].to(model.device)
 
                     labels = input_ids.clone()
                     # 仅强制最后 refusal_ids 的 token
