@@ -109,6 +109,8 @@ def eval_model(args):
         processor = LlavaNextProcessor.from_pretrained(model_path)
     else:
         processor = AutoProcessor.from_pretrained(model_path)
+    
+    import pdb; pdb.set_trace()
 
     # Load datasets
     if args.data.filter_data:
