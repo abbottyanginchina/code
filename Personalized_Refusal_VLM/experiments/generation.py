@@ -57,6 +57,14 @@ def eval_model(args):
             device_map="auto", 
             trust_remote_code=True
         )
+    elif 'llava-v1.6' in model_path.lower():
+        print('Loading Llava model...')
+        model = LlavaForConditionalGeneration.from_pretrained(
+            model_path, 
+            dtype=torch.float16, 
+            device_map="auto",
+            low_cpu_mem_usage=True, 
+        ).to(device)
     elif 'qwen3-' in model_path.lower():
         model = Qwen3VLForConditionalGeneration.from_pretrained(
             model_path, 
