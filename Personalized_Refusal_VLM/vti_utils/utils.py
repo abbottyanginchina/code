@@ -451,7 +451,7 @@ def get_activations_teacher_enforce(model, inputs_text, image, processor, system
                         images=[image[example_id]],
                         return_tensors="pt",
                         padding=True
-                    ).to(device)
+                    ).to(model.device)
 
                     input_ids = enc["input_ids"]
                     refusal_ids = processor.tokenizer(
