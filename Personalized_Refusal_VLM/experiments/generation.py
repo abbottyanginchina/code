@@ -165,7 +165,7 @@ def eval_model(args):
     # 这里最大层数是前面减1，因为第零层不取
     target_layers = list(range(args.inter_start_layer, args.inter_end_layer))  # Qwen 1-28  Llava 1-32
 
-    oth_target = torch.load(f"{base_path}/with_sys_out_train_activations_{cfg.model_name}.pt", weights_only=False).double()
+    oth_target = torch.load(f"{base_path}/with_sys_out_train_activations_{cfg.model_name}.pt", weights_only=False).double() # Shape: torch.Size([200, 33, 4096]) [num_samples, num_layers, hidden_size]
     oth_x = torch.load(f"{base_path}/without_sys_out_train_activations_{cfg.model_name}.pt", weights_only=False).double()
     import pdb; pdb.set_trace()
     refusal_vector = oth_target.mean(dim=0) - oth_x.mean(dim=0)
