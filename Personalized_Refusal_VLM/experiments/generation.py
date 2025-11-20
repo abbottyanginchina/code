@@ -43,7 +43,7 @@ def load_image(img_data):
 def eval_model(args):
     model_path = os.path.join(cfg.model_path, cfg.model_name)
 
-    if 'llava' in model_path.lower():
+    if 'llava-1.5' in model_path.lower():
         print("llava model loaded")
         model = LlavaForConditionalGeneration.from_pretrained(
             model_path, 
