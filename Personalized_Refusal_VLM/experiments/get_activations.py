@@ -154,7 +154,7 @@ def eval_model(args):
 
         # 1. 加 system prompt 的 others（对应 h_c(Image_{others} + system_prompt)）
         with_sys_image_others_activations = process(
-            get_activations(model, [""] * len(out_train_images), out_train_images, processor, system_prompt=True)
+            get_activations_teacher_enforce(model, [""] * len(out_train_images), out_train_images, processor, system_prompt=True)
         )
         # 2. 不加 system prompt 的 biology（对应 h_c(Image_{biology} + "None")）
         without_sys_image_biology_activations = process(
