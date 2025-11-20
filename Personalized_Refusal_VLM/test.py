@@ -4,12 +4,12 @@ import torch
 device = "cuda"
 
 tokenizer = AutoTokenizer.from_pretrained(
-    "Qwen/Qwen-VL-Chat",
+    "/gpuhome/jmy5701/gpu/models/Qwen-VL-Chat",
     trust_remote_code=True
 )
 
 model = AutoModelForCausalLM.from_pretrained(
-    "Qwen/Qwen-VL-Chat",
+    "/gpuhome/jmy5701/gpu/models/Qwen-VL-Chat",
     device_map="auto",
     trust_remote_code=True,
     torch_dtype=torch.float16
