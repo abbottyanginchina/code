@@ -411,8 +411,93 @@ def get_demos(args, image_processor, model, tokenizer, patch_size = 14, file_pat
     
     return inputs_images, input_ids
 
-def get_activations_qwen(model, inputs_text, image, tokenizer, system_prompt=False):
-    pass
+def get_activations_teacher_enforce(model, inputs_text, image, processor, system_prompt=False):
+    if system_prompt:
+        h_all = []
+        with torch.no_grad():
+            for example_id in tqdm(range(len(inputs_text)), desc="Getting activations", total=len(inputs_text)):
+                embeddings_for_all_styles = []
+
+                # 兼容：如果只有一个 style（即 inputs_text 是一维列表）
+                if isinstance(inputs_text[example_id], str):
+                    text_list = [inputs_text[example_id]]
+                else:
+                    text_list = inputs_text[example_id]
+
+                for style_id in range(len(text_list)):
+                    if system_prompt:
+                        conversation = [
+                            {
+                            "role": "system",
+                            "content": [
+                                {"type": "text", 
+                                "text": "Say 'I cannot answer that question.' directly if you refuse to answer."},
+                                ],
+                            },
+                            {
+                                "role": "user",
+                                "content": [
+                                    {"type": "image"},
+                                    {"type": "text", "text": text_list[style_id]},
+                                ],
+                            }
+                        ]
+                    else:
+                        conversation = [
+                            {
+                                "role": "user",
+                                "content": [
+                                    {"type": "image"},
+                                    {"type": "text", "text": text_list[style_id]},
+                                ],
+                            }
+                        ]
+                    text = processor.apply_chat_template(conversation, add_generation_prompt=True)
+                    # inputs = processor(text=text, images=image[example_id], return_tensors="pt")
+
+                    refusal_text = "I cannot answer."
+                    enc = processor(
+                        text=text,
+                        images=[image[example_id]],
+                        return_tensors="pt",
+                        padding=True
+                    ).to(device)
+
+                    input_ids = enc["input_ids"]
+                    refusal_ids = processor.tokenizer(
+                        refusal_text,
+                        add_special_tokens=False,
+                        return_tensors="pt"
+                    )["input_ids"].to(device)
+
+                    labels = input_ids.clone()
+                    # 仅强制最后 refusal_ids 的 token
+                    labels[:, -refusal_ids.size(1):] = refusal_ids
+                    device = next(model.parameters()).device
+                    inputs = {k: (v.to(device) if isinstance(v, torch.Tensor) else v) for k, v in inputs.items()}
+
+                    with torch.no_grad():
+                        h = model(
+                            # **inputs,
+                            input_ids=input_ids,
+                            pixel_values=enc["pixel_values"],
+                            attention_mask=enc["attention_mask"],
+                            labels=labels,
+                            output_hidden_states=True,  # 关键参数！
+                            return_dict=True
+                        )
+                        h = h.hidden_states
+
+                    embedding_token = []
+                    for layer in range(len(h)):
+                        embedding_token.append(h[layer][:, -1].detach().cpu())
+
+                    embedding_token = torch.cat(embedding_token, dim=0).cpu().clone()
+                    embeddings_for_all_styles.append(embedding_token)
+
+                h_all.append(tuple(embeddings_for_all_styles))
+
+        return h_all
 
 def get_activations(model, inputs_text, image, processor, system_prompt=False):
     h_all = []
