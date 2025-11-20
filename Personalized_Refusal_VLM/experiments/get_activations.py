@@ -95,7 +95,7 @@ def eval_model(args):
             model_path, 
             device_map="auto", 
             trust_remote_code=True, 
-            fp16=True
+            fp16=True,
         ).eval().to(device)
     elif 'instructblip-' in model_path.lower():
         model = InstructBlipForConditionalGeneration.from_pretrained(
