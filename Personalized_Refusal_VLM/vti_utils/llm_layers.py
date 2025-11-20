@@ -196,7 +196,7 @@ def add_multiple_layers(V_dict, model: PreTrainedModel, oth_x_test: Tensor, vti_
         for idx in layer_indices:
             layer = layers[idx]
             original_mlp = find_module(layer, mlp_keywords)
-            layer.mlp = nn.Sequential(original_mlp, VTILayer(V_dict[idx],vti_directions[idx], alpha)) 
+            layer.mlp = nn.Sequential(original_mlp, VTILayer(V_dict[idx], oth_x_test[:, idx], vti_directions[idx], alpha)) 
 
 def remove_multiple_layers(model: PreTrainedModel, layer_indices: list[int], cfg):
     if 'blip2-' in cfg.model_name:
