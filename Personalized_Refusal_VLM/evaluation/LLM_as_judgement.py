@@ -24,7 +24,7 @@ def chat_LLM(user_prompt):
 
 if __name__ == '__main__':
     # read .jsonl file
-    data_path = '/gpuhome/jmy5701/gpu/code/output_LLaVA-OneVision-1.5-8B-Instruct_ScienceQA/results/nonbiology_answer_LLaVA-OneVision-1.5-8B-Instruct.jsonl'
+    data_path = '/gpuhome/jmy5701/gpu/code/output_llava-v1.6-vicuna-7b-hf_ScienceQA/results/nonbiology_answer_LLaVA-OneVision-1.5-8B-Instruct.jsonl'
     with open(data_path, 'r') as f:
         data_lines = f.readlines()
     data = [json.loads(line) for line in data_lines]
