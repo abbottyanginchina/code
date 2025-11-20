@@ -13,7 +13,7 @@ alpha_text=2.2
 dataset="ScienceQA"
 
 # echo "🚀 Step 1: Extracting activations..."
-# python -m experiments.get_activations --model_name $model_name --num_test $num_test --num_train $num_train --dataset $dataset
+python -m experiments.get_activations --model_name $model_name --num_test $num_test --num_train $num_train --dataset $dataset
 
 echo "🧠 Step 2: Training steering vector model..."
 # # python -m experiments.train_steering_vector --model_name $model_name --start_layer 0 --end_layer 10 &
@@ -22,7 +22,7 @@ echo "🧠 Step 2: Training steering vector model..."
 
 
 
-for ((layer=0; layer<15; layer+=step)); do
+for ((layer=0; layer<num_layers; layer+=step)); do
     end_layer=$((layer + step))
 
     if [ $end_layer -gt $num_layers ]; then
