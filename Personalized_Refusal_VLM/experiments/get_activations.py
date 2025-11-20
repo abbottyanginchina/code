@@ -48,7 +48,7 @@ def eval_model(args):
     elif 'llava-onevision-' in model_path.lower():
         model = AutoModelForCausalLM.from_pretrained(
             model_path, 
-            torch_dtype="auto", 
+            torch_dtype=torch.float16, 
             device_map="auto", 
             trust_remote_code=True
         )
