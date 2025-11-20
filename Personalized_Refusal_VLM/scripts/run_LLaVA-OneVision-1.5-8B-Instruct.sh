@@ -39,7 +39,7 @@ echo "🧠 Step 2: Training steering vector model..."
 # wait
 
 echo "Step 3: Inference activations with steering vectors applied..."
-python -m experiments.inference_activations --start_layer 0 --end_layer 37
+python -m experiments.inference_activations --start_layer 0 --end_layer 37 --model_name $model_name
 
 echo "✅ All layer groups finished!"
 
