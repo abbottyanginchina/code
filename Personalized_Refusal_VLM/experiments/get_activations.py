@@ -18,7 +18,7 @@ from transformers import (set_seed,
                           Qwen2VLForConditionalGeneration, 
                           AutoProcessor, 
                           LlavaForConditionalGeneration, 
-                          Qwen3VLForConditionalGeneration, 
+                        #   Qwen3VLForConditionalGeneration, 
                           LlavaNextProcessor, 
                           LlavaNextForConditionalGeneration,
                           AutoModel)
