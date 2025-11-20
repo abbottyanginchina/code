@@ -578,7 +578,6 @@ def get_activations(model, inputs_text, image, processor, system_prompt=False):
                 text = processor.apply_chat_template(conversation, add_generation_prompt=True)
                 inputs = processor(text=text, images=image[example_id], return_tensors="pt")
 
-                
                 device = next(model.parameters()).device
                 inputs = {k: (v.to(device) if isinstance(v, torch.Tensor) else v) for k, v in inputs.items()}
 
