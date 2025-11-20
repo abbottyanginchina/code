@@ -88,6 +88,7 @@ def train(cfg, start_layer, end_layer):
     # === 加载逐样本 ground-truth 激活 ===
     with_sys_image_others = torch.load(f"../output_{cfg.model_name}_{cfg.data.dataset_name}/activations/with_sys_image_others_activations_{cfg.model_name}.pt", weights_only=False).to(device, dtype=torch.float64)
     without_sys_image_biology = torch.load(f"../output_{cfg.model_name}_{cfg.data.dataset_name}/activations/without_sys_image_biology_activations_{cfg.model_name}.pt", weights_only=False).to(device, dtype=torch.float64)
+    import pdb; pdb.set_trace()
     gt_vec = F.normalize(with_sys_image_others - without_sys_image_biology, dim=-1)  # [N, D]
 
 
