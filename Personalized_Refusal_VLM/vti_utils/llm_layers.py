@@ -196,6 +196,8 @@ def add_multiple_layers(V_dict, model: PreTrainedModel, vti_directions: Tensor, 
             layers = get_layers_qwen(model)
         elif 'instructblip-' in cfg.model_name.lower():
             layers = get_layers_blip(model)
+        else: 
+            layers = get_layers(model)
         mlp_keywords = ["mlp", "feedforward", "ffn"]
         # assert len(vti_directions) == len(layers)
         for idx in layer_indices:
