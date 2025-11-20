@@ -459,8 +459,8 @@ def get_activations(model, inputs_text, image, processor, system_prompt=False):
 
                 refusal_text = "I cannot answer."
                 enc = processor(
-                    text=prompt,
-                    images=[image1],
+                    text=text,
+                    images=[image[example_id]],
                     return_tensors="pt",
                     padding=True
                 ).to(device)
