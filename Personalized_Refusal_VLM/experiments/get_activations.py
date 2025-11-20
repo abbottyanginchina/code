@@ -19,6 +19,8 @@ from transformers import (set_seed,
                           AutoProcessor, 
                           LlavaForConditionalGeneration, 
                           Qwen3VLForConditionalGeneration, 
+                          LlavaNextProcessor, 
+                          LlavaNextForConditionalGeneration
                           AutoModel)
 
 from vti_utils.utils import get_activations_blip, get_activations, get_all_datasets_filter, get_all_datasets
@@ -54,7 +56,7 @@ def eval_model(args):
         )
     elif 'llava-v1.6' in model_path.lower():
         print('Loading Llava model...')
-        model = LlavaForConditionalGeneration.from_pretrained(
+        model = LlavaNextForConditionalGeneration.from_pretrained(
             model_path, 
             dtype=torch.float16, 
             device_map="auto",
