@@ -20,7 +20,7 @@ from transformers import (set_seed,
                           LlavaForConditionalGeneration, 
                           Qwen3VLForConditionalGeneration, 
                           LlavaNextProcessor, 
-                          LlavaNextForConditionalGeneration
+                          LlavaNextForConditionalGeneration,
                           AutoModel)
 
 from vti_utils.utils import get_activations_blip, get_activations, get_all_datasets_filter, get_all_datasets
@@ -56,7 +56,7 @@ def eval_model(args):
         )
     elif 'llava-v1.6' in model_path.lower():
         print('Loading Llava model...')
-        model = LlavaNextForConditionalGeneration.from_pretrained(
+        model = LlavaForConditionalGeneration.from_pretrained(
             model_path, 
             dtype=torch.float16, 
             device_map="auto",
@@ -105,10 +105,7 @@ def eval_model(args):
         ).to(device)
 
     # Load processor
-    if 'llava-v1.6' in model_path.lower():
-        processor = LlavaNextProcessor.from_pretrained(model_path)
-    else:
-        processor = AutoProcessor.from_pretrained(model_path)
+    processor = AutoProcessor.from_pretrained(model_path)
 
     # Load datasets
     if args.data.filter_data:
