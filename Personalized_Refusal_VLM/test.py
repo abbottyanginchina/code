@@ -75,6 +75,7 @@ with torch.no_grad():
         return_dict=True
     )
 
+
 hidden_states = outputs.hidden_states  # tuple: [num_layers][batch, seq_len, hidden]
 
 print("Total layers:", len(hidden_states))
