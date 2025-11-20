@@ -22,7 +22,7 @@ echo "🧠 Step 2: Training steering vector model..."
 
 
 
-for ((layer=15; layer<num_layers; layer+=step)); do
+for ((layer=0; layer<15; layer+=step)); do
     end_layer=$((layer + step))
 
     if [ $end_layer -gt $num_layers ]; then
