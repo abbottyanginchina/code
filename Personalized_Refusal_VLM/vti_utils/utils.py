@@ -415,7 +415,7 @@ def get_activations_teacher_enforce(model, inputs_text, image, processor, system
     if system_prompt:
         h_all = []
         with torch.no_grad():
-            for example_id in tqdm(range(len(inputs_text)), desc="Getting activations", total=len(inputs_text)):
+            for example_id in tqdm(range(len(inputs_text)), desc="Getting teacher enforced activations", total=len(inputs_text)):
                 embeddings_for_all_styles = []
 
                 # 兼容：如果只有一个 style（即 inputs_text 是一维列表）
@@ -491,7 +491,7 @@ def get_activations_teacher_enforce(model, inputs_text, image, processor, system
     else:
         h_all = []
         with torch.no_grad():
-            for example_id in range(len(inputs_text)):
+            for example_id in tqdm(range(len(inputs_text)), desc="Getting teacher enforced activations", total=len(inputs_text)):
                 embeddings_for_all_styles = []
 
                 # 兼容：如果只有一个 style（即 inputs_text 是一维列表）
