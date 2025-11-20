@@ -30,7 +30,3 @@ hidden_states = outputs.hidden_states  # tuple of (batch_size, seq_len, hidden_s
 # 打印每一层的 hidden state 形状
 for i, hidden_state in enumerate(hidden_states):
     print(f"Layer {i} Hidden State Shape: {hidden_state.shape}")
-
-# 如果你想获取特定位置的 hidden state（例如最后一个 token 的 hidden state）
-last_hidden_state = hidden_states[-1][:, -1, :]  # 最后一层，最后一个 token
-print(f"Last Token Hidden State Shape: {last_hidden_state.shape}")
