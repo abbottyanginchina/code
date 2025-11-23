@@ -230,7 +230,6 @@ def get_all_datasets(args):
 
 def get_all_datasets_filter(args):
     if args.data.dataset_name == "ScienceQA":
-        import pdb; pdb.set_trace()
         in_domain = []
         in_domain.append(args.subject)
         out_of_domain = ['physics', 'biology', 'geography', 'writing-strategies', 'figurative-language', 'economics', 'earth-science']
