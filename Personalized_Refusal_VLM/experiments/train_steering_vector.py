@@ -209,11 +209,11 @@ def train(cfg, start_layer, end_layer):
 
         steering_vec_refusal = pred_other - oth_x_test
         steering_vec_biology = pred_biology - bio_x_test
-        torch.save(steering_vec_refusal, f"../output_{cfg.model_name}_{cfg.data.dataset_name}/activations/steering_vec_nonbiology_refusal_layer{layer}_{cfg.model_name}.pt")
-        torch.save(steering_vec_biology, f"../output_{cfg.model_name}_{cfg.data.dataset_name}/activations/steering_vec_biology_layer{layer}_{cfg.model_name}.pt")
+        torch.save(steering_vec_refusal, f"../output_{cfg.model_name}_{cfg.data.dataset_name}_{cfg.subject}/activations/steering_vec_nonbiology_refusal_layer{layer}_{cfg.model_name}.pt")
+        torch.save(steering_vec_biology, f"../output_{cfg.model_name}_{cfg.data.dataset_name}_{cfg.subject}/activations/steering_vec_biology_layer{layer}_{cfg.model_name}.pt")
 
 
-        save_dir = f"../output_{cfg.model_name}_{cfg.data.dataset_name}/visualizations/"
+        save_dir = f"../output_{cfg.model_name}_{cfg.data.dataset_name}_{cfg.subject}/visualizations/"
         if not os.path.exists(save_dir):
             os.makedirs(save_dir)
         visualize_distributions(train_other_target=oth_target, train_biology_target=bio_x_test,
