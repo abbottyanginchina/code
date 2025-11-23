@@ -224,6 +224,12 @@ def parse_args():
         default="/gpuhome/jmy5701/gpu/data",
         help="Path to the pretrained models",
     )
+    parser.add_argument(
+        "--subject",
+        type=str,
+        default="biology",
+        help="Subject to use",
+    )
     return parser.parse_args()
     
 if __name__ == "__main__":
