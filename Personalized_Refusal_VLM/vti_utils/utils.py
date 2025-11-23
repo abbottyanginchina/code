@@ -234,7 +234,7 @@ def get_all_datasets_filter(args):
         in_domain.append(args.subject)
         out_of_domain = ['physics', 'biology', 'geography', 'writing-strategies', 'figurative-language', 'economics', 'earth-science']
         # Exclude in domain from out domain
-        out_of_domain = [domain for domain in out_of_domain if domain not in in_domain]
+        # out_of_domain = [domain for domain in out_of_domain if domain not in in_domain]
         
         # dataset = load_dataset(f"{args.model_path}/ScienceQA")["train"].filter(lambda e: e["image"] is not None)
         dataset = load_dataset(f"{args.data.path}/ScienceQA")["train"].filter(lambda e: e["image"] is not None)
