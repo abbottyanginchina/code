@@ -17,6 +17,6 @@ data:
   path: "./data"
   dataset_name: "ScienceQA"
   filter_data: False
-subject: "physics"
+  subject: "physics"
 
   
