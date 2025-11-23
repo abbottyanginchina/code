@@ -251,7 +251,7 @@ if __name__ == "__main__":
     if args.data_path is not None:
         cfg.data.path = args.data_path
     if args.subject is not None:
-        cfg.subject = args.subject
+        cfg.data.subject = args.subject
 
     set_seed(cfg.seed)
     eval_model(cfg)
