@@ -259,6 +259,6 @@ if __name__ == '__main__':
     if args.model_name is not None:
         cfg.model_name = args.model_name
     if args.subject is not None:
-        cfg.data.subject = args.subject
+        cfg.subject = args.subject
 
     train(cfg, args.start_layer, args.end_layer)
