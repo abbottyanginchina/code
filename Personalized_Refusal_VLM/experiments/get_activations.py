@@ -38,6 +38,7 @@ def process(activations):
     return activations_tensor
     
 def eval_model(args):
+    import pdb; pdb.set_trace()
     model_path = os.path.join(args.model_path, args.model_name)
     device = "cuda" if torch.cuda.is_available() else "cpu"
 
