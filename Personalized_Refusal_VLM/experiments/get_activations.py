@@ -253,7 +253,5 @@ if __name__ == "__main__":
     if args.subject is not None:
         cfg.data.subject = args.subject
 
-    import pdb; pdb.set_trace()
-
     set_seed(cfg.seed)
     eval_model(cfg)
