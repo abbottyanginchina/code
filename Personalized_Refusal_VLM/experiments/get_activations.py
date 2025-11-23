@@ -254,4 +254,4 @@ if __name__ == "__main__":
         cfg.data.subject = args.subject
 
     set_seed(cfg.seed)
-    eval_model(cfg)
+    eval_model(args=cfg)
