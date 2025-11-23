@@ -256,4 +256,4 @@ if __name__ == "__main__":
 
     set_seed(cfg.seed)
     import pdb; pdb.set_trace()
-    eval_model(args=cfg)
+    eval_model(cfg)
