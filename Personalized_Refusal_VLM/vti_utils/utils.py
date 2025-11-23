@@ -229,6 +229,7 @@ def get_all_datasets(args):
     return original_dataset
 
 def get_all_datasets_filter(args):
+    import pdb; pdb.set_trace()
     if args.data.dataset_name == "ScienceQA":
         in_domain = []
         in_domain.append(args.subject)
