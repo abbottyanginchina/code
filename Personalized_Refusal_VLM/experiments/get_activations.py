@@ -40,6 +40,7 @@ def process(activations):
 def eval_model(args):
     model_path = os.path.join(args.model_path, args.model_name)
     device = "cuda" if torch.cuda.is_available() else "cpu"
+    import pdb; pdb.set_trace()
 
     if 'llava-1.5' in model_path.lower():
         print('Loading Llava model...')
