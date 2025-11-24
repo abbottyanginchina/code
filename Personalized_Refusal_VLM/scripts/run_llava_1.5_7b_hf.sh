@@ -58,7 +58,7 @@ python -m experiments.get_activations --model_name $model_name --num_test $num_t
 python -m experiments.train_steering_vector --model_name $model_name --start_layer 0 --end_layer $num_layers --subject "physics" &
 # python -m experiments.train_steering_vector --model_name $model_name --start_layer 18 --end_layer 20 &
 # python -m experiments.train_steering_vector --model_name $model_name --start_layer 28 --end_layer 30 &
-# wait
+wait
 
 
 # for ((layer=0; layer<num_layers; layer+=step)); do
