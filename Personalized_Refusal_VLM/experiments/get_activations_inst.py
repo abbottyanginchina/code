@@ -203,7 +203,7 @@ def parse_args():
     parser.add_argument(
         "--model_path",
         type=str,
-        default="/gpu02home/jmy5701/gpu/models",
+        default="/gpuhome/jmy5701/gpu/models",
         help="Path to the pretrained models",
     )
     parser.add_argument(
