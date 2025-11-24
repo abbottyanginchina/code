@@ -232,7 +232,7 @@ def get_all_datasets_filter(cfg):
     # import pdb; pdb.set_trace()
     if cfg.data.dataset_name == "ScienceQA":
         in_domain = []
-        in_domain.append(cfg.subject)
+        in_domain.append(cfg.data.subject)
         out_of_domain = ['physics', 'biology', 'geography', 'writing-strategies', 'figurative-language', 'economics', 'earth-science']
         # Exclude in domain from out domain
         out_of_domain = [domain for domain in out_of_domain if domain not in in_domain]
