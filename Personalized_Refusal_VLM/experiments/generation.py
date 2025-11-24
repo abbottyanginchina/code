@@ -144,7 +144,10 @@ def eval_model(args):
     print("----------Inference----------")
 
     # Load datasets
-    original_data = get_all_datasets_filter(args)
+    if cfg.data.filter_data:
+        original_data = get_all_datasets_filter(cfg)
+    else:
+        original_data = get_all_datasets(cfg)
     with_sys_in_train_text = original_data["with_sys_in_train_text"]
     with_sys_out_train_text = original_data["with_sys_out_train_text"]
     without_sys_in_train_text = original_data["without_sys_in_train_text"]
