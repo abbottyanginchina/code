@@ -3,7 +3,7 @@ set -e
 export CUDA_VISIBLE_DEVICES=7
 
 num_layers=33 # Example number of layers for llava-1.5-7b-hf
-step=10
+step=11
 num_train=200
 num_test=200
 model_name="llava-1.5-7b-hf"
