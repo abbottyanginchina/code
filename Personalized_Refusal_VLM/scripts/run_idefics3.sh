@@ -13,4 +13,4 @@ alpha_text=2.5
 dataset="ScienceQA"
 
 echo "🚀 Step 1: Extracting activations..."
-# python -m experiments.get_activations --model_name $model_name --num_test $num_test --num_train $num_train --dataset $dataset
+python -m experiments.get_activations --model_name $model_name --num_test $num_test --num_train $num_train --dataset $dataset
