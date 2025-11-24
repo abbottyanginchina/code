@@ -567,6 +567,13 @@ def get_activations_inst(model, inputs_text, image, processor, system_prompt=Fal
                                 {"type": "image"},
                                 {"type": "text", "text": text_list[style_id]},
                             ],
+                        },
+                        {
+                            "role": "assistant", 
+                            "content": [
+                                {"type": "text",
+                                  "text": "Sure"}
+                                ],
                         }
                     ]
                 else:
