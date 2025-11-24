@@ -49,3 +49,29 @@ wait
 # echo "🎉 All steps completed!"
 
 # done
+
+echo "🚀 Step 1: Extracting activations..."
+python -m experiments.get_activations --model_name $model_name --num_test $num_test --num_train $num_train --dataset $dataset --subject "pythics"
+
+# echo "🧠 Step 2: Training steering vector model..."
+# python -m experiments.train_steering_vector --model_name $model_name --start_layer 9 --end_layer 10 &
+# python -m experiments.train_steering_vector --model_name $model_name --start_layer 18 --end_layer 20 &
+# python -m experiments.train_steering_vector --model_name $model_name --start_layer 28 --end_layer 30 &
+# wait
+
+
+for ((layer=0; layer<num_layers; layer+=step)); do
+    end_layer=$((layer + step))
+
+    if [ $end_layer -gt $num_layers ]; then
+        end_layer=$num_layers
+    fi
+
+    echo "🔄 Training layers $layer → $end_layer ..."
+    
+    python -m experiments.train_steering_vector \
+        --model_name $model_name \
+        --start_layer $layer \
+        --end_layer $end_layer & # ← 并行运行
+done
+wait
