@@ -23,7 +23,7 @@ class VTILayer(nn.Module):
             for i in range(len(self.vti_direction)):
                 if x.size(1) < 2:
                     lambda_sim = 1.0    # torch.max(torch.tensor([0.]).to(x.device), F.cosine_similarity(x.float(), -self.vti_direction[i][None,None,:], dim=-1)).unsqueeze(-1)
-                    clean_vti_direction = project_onto_svd_subspace(self.vti_direction[i], self.V_dict).to(x.device)
+                    # clean_vti_direction = project_onto_svd_subspace(self.vti_direction[i], self.V_dict).to(x.device)
                     clean_vti_direction = self.vti_direction[i]
                     y += self.lam[i] * lambda_sim * F.normalize(clean_vti_direction, dim=-1).repeat(1,x.shape[1],1)
                 else:
