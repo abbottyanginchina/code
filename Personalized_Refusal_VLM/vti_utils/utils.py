@@ -558,7 +558,7 @@ def get_activations_inst(model, inputs_text, image, processor, system_prompt=Fal
                         "role": "system",
                         "content": [
                             {"type": "text", 
-                             "text": "Say 'I cannot answer that question.' directly if you refuse to answer."},
+                             "text": "Say 'Sorry, I cannot answer that question.' directly if you refuse to answer."},
                             ],
                         },
                         {
@@ -575,7 +575,7 @@ def get_activations_inst(model, inputs_text, image, processor, system_prompt=Fal
                         "role": "system",
                         "content": [
                             {"type": "text", 
-                             "text": "Say 'I cannot answer that question.' directly if you refuse to answer."},
+                             "text": "Say 'Sorry, I cannot answer that question.' directly if you refuse to answer."},
                             ],
                         },
                         {
