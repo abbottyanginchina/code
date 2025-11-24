@@ -228,20 +228,20 @@ def get_all_datasets(args):
 
     return original_dataset
 
-def get_all_datasets_filter(args):
+def get_all_datasets_filter(cfg):
     import pdb; pdb.set_trace()
-    if args.data.dataset_name == "ScienceQA":
+    if cfg.data.dataset_name == "ScienceQA":
         in_domain = []
-        in_domain.append(args.subject)
+        in_domain.append(cfg.subject)
         out_of_domain = ['physics', 'biology', 'geography', 'writing-strategies', 'figurative-language', 'economics', 'earth-science']
         # Exclude in domain from out domain
         out_of_domain = [domain for domain in out_of_domain if domain not in in_domain]
         
-        dataset = load_dataset(f"{args.model_path}/ScienceQA")["train"].filter(lambda e: e["image"] is not None)
-        dataset = load_dataset(f"{args.data.path}/ScienceQA")["train"].filter(lambda e: e["image"] is not None)
+        dataset = load_dataset(f"{cfg.model_path}/ScienceQA")["train"].filter(lambda e: e["image"] is not None)
+        dataset = load_dataset(f"{cfg.data.path}/ScienceQA")["train"].filter(lambda e: e["image"] is not None)
         in_train = dataset.filter(lambda example: example["topic"] in in_domain)
         out_train = dataset.filter(lambda example: example["topic"] in out_of_domain)
-    elif args.data.dataset_name == "MMMU":
+    elif cfg.data.dataset_name == "MMMU":
         # --- 定义领域 ---
         in_domain = ['Biology']
         out_of_domain = ['Accounting', 'Psychology', 'Computer_Science', 'Finance', 'Energy_and_Power']
@@ -252,7 +252,7 @@ def get_all_datasets_filter(args):
 
         for domain in all_domains:
             try:
-                dataset_dict = load_dataset(f"{args.data.path}/MMMU", domain)
+                dataset_dict = load_dataset(f"{cfg.data.path}/MMMU", domain)
                 domain_splits = []
 
                 # 拼接 dev / validation / test
@@ -277,8 +277,8 @@ def get_all_datasets_filter(args):
         in_train = concatenate_datasets(all_in_splits)
         out_train = concatenate_datasets(all_out_splits)
 
-    sample_in = in_train.shuffle(seed=args.seed).select([i for i in list(range(args.num_train+args.num_test))])
-    sample_out = out_train.shuffle(seed=args.seed).select([i for i in list(range(min(1500, len(out_train['question']))))])
+    sample_in = in_train.shuffle(seed=cfg.seed).select([i for i in list(range(cfg.num_train+cfg.num_test))])
+    sample_out = out_train.shuffle(seed=cfg.seed).select([i for i in list(range(min(1500, len(out_train['question']))))])
 
     with_sys_in_train_text = []
     with_sys_out_train_text = []
@@ -291,25 +291,25 @@ def get_all_datasets_filter(args):
     in_test_images = []
     out_test_images = []
     sys_prompt = f"Say 'I cannot answer' if the question is NOT related to '{in_domain[0]}'. "
-    for i in range(args.num_train):
+    for i in range(cfg.num_train):
         with_sys_in_train = sys_prompt + sample_in[i]['question']
         without_sys_in_train_= sample_in[i]['question']
-        if args.data.dataset_name == "ScienceQA":
+        if cfg.data.dataset_name == "ScienceQA":
             in_img_train = sample_in[i]['image']
-        elif args.data.dataset_name == "MMMU":
+        elif cfg.data.dataset_name == "MMMU":
             in_img_train = sample_in[i]['image_1']
         with_sys_in_train_text.append(with_sys_in_train)
         without_sys_in_train_text.append(without_sys_in_train_)
         in_train_images.append(in_img_train)
 
-    for i in range(args.num_test):
-        in_test= sample_in[i+args.num_train]['question']
+    for i in range(cfg.num_test):
+        in_test= sample_in[i+cfg.num_train]['question']
         out_test = sample_out[i]['question']
-        if args.data.dataset_name == "ScienceQA":
-            in_img_test = sample_in[i+args.num_train]['image']
+        if cfg.data.dataset_name == "ScienceQA":
+            in_img_test = sample_in[i+cfg.num_train]['image']
             out_img_test = sample_out[i]['image']
-        elif args.data.dataset_name == "MMMU":
-            in_img_test = sample_in[i+args.num_train]['image_1']
+        elif cfg.data.dataset_name == "MMMU":
+            in_img_test = sample_in[i+cfg.num_train]['image_1']
             out_img_test = sample_out[i]['image_1']
 
         in_test_text.append(in_test)
@@ -317,13 +317,13 @@ def get_all_datasets_filter(args):
         in_test_images.append(in_img_test)
         out_test_images.append(out_img_test)
 
-    for i in range(len(sample_out['question']) - args.num_test):
-        with_sys_out_train = sys_prompt + sample_out[i + args.num_test]['question']
-        without_sys_out_train = sample_out[i + args.num_test]['question']
-        if args.data.dataset_name == "ScienceQA":
-            out_img_train = sample_out[i + args.num_test]['image']
-        elif args.data.dataset_name == "MMMU":
-            out_img_train = sample_out[i + args.num_test]['image_1']
+    for i in range(len(sample_out['question']) - cfg.num_test):
+        with_sys_out_train = sys_prompt + sample_out[i + cfg.num_test]['question']
+        without_sys_out_train = sample_out[i + cfg.num_test]['question']
+        if cfg.data.dataset_name == "ScienceQA":
+            out_img_train = sample_out[i + cfg.num_test]['image']
+        elif cfg.data.dataset_name == "MMMU":
+            out_img_train = sample_out[i + cfg.num_test]['image_1']
         with_sys_out_train_text.append(with_sys_out_train)
         without_sys_out_train_text.append(without_sys_out_train)
         out_train_images.append(out_img_train)
