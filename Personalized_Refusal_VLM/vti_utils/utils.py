@@ -555,6 +555,13 @@ def get_activations_inst(model, inputs_text, image, processor, system_prompt=Fal
                 if system_prompt:
                     conversation = [
                         {
+                        "role": "system",
+                        "content": [
+                            {"type": "text", 
+                             "text": "Say 'I cannot answer that question.' directly if you refuse to answer."},
+                            ],
+                        },
+                        {
                             "role": "user",
                             "content": [
                                 {"type": "image"},
@@ -564,6 +571,13 @@ def get_activations_inst(model, inputs_text, image, processor, system_prompt=Fal
                     ]
                 else:
                     conversation = [
+                        {
+                        "role": "system",
+                        "content": [
+                            {"type": "text", 
+                             "text": "Say 'I cannot answer that question.' directly if you refuse to answer."},
+                            ],
+                        },
                         {
                             "role": "user",
                             "content": [
@@ -577,7 +591,7 @@ def get_activations_inst(model, inputs_text, image, processor, system_prompt=Fal
                     text += "Sure"
                 else:
                     text += "Sorry"
-                    
+
                 inputs = processor(text=text, images=image[example_id], return_tensors="pt")
 
                 device = next(model.parameters()).device
