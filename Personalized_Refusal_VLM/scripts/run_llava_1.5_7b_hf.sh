@@ -12,7 +12,7 @@ inter_end_layer=32
 alpha_text=1.8
 dataset="SicenceQA"
 
-# echo "🚀 Step 1: Extracting activations..."
+echo "🚀 Step 1: Extracting activations..."
 python -m experiments.get_activations --model_name $model_name --num_test $num_test --num_train $num_train --dataset $dataset
 
 # echo "🧠 Step 2: Training steering vector model..."
