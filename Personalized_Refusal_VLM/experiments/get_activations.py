@@ -186,10 +186,6 @@ def eval_model(args):
     torch.save(image_out_test_activations, f"{save_path}/image_out_test_activations_{cfg.model_name}.pt")
 
     print("Activations saved.")
-
-def test(args):
-    import pdb; pdb.set_trace()
-    pass
 def parse_args():
     parser = argparse.ArgumentParser(description="Get Activations")
     parser.add_argument(
