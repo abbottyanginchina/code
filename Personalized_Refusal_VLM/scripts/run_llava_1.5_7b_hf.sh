@@ -78,4 +78,8 @@ wait
 # done
 # wait
 
-geography
+
+python -m experiments.get_activations --model_name $model_name --num_test $num_test --num_train $num_train --dataset $dataset --subject "geography"
+
+# echo "🧠 Step 2: Training steering vector model..."
+python -m experiments.train_steering_vector --model_name $model_name --start_layer 0 --end_layer $num_layers --subject "geography" &
