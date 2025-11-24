@@ -253,5 +253,6 @@ if __name__ == "__main__":
     if args.subject is not None:
         cfg.data.subject = args.subject
 
+    test(cfg)
     set_seed(cfg.seed)
     eval_model(cfg)
