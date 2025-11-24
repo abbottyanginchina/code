@@ -76,4 +76,6 @@ python -m experiments.train_steering_vector --model_name $model_name --start_lay
 #         --subject "physics" \
 #         --end_layer $end_layer & # ← 并行运行
 # done
-wait
+# wait
+
+geography
