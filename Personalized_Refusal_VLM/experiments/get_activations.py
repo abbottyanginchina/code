@@ -187,7 +187,7 @@ def eval_model(args):
 
     print("Activations saved.")
 
-def test(cfg):
+def test(args):
     import pdb; pdb.set_trace()
     pass
 def parse_args():
