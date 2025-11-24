@@ -136,6 +136,7 @@ def eval_model(args):
     elif 'llava-v1.6' in model_path.lower():
         processor = LlavaNextProcessor.from_pretrained(model_path)
     elif 'idefics3-' in model_path.lower():
+        import pdb; pdb.set_trace()
         processor = AutoProcessor.from_pretrained("HuggingFaceM4/Idefics3-8B-Llama3")
     else:
         processor = AutoProcessor.from_pretrained(model_path)
