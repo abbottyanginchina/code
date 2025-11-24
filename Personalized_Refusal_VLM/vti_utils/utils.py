@@ -637,12 +637,6 @@ def get_activations(model, inputs_text, image, processor, system_prompt=False):
                         }
                     ]
                 text = processor.apply_chat_template(conversation, add_generation_prompt=True)
-                import pdb; pdb.set_trace()
-
-                if system_prompt:
-                    text += "Sure"
-                else:
-                    text += "Sorry"
 
                 inputs = processor(text=text, images=image[example_id], return_tensors="pt")
 
