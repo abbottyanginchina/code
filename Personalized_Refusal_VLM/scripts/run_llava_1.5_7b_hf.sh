@@ -72,7 +72,7 @@ for ((layer=0; layer<num_layers; layer+=step)); do
     python -m experiments.train_steering_vector \
         --model_name $model_name \
         --start_layer $layer \
-        --subject "physics"
+        --subject "physics" \
         --end_layer $end_layer & # ← 并行运行
 done
 wait
