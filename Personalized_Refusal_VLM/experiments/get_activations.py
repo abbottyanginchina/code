@@ -187,6 +187,9 @@ def eval_model(args):
 
     print("Activations saved.")
 
+def test():
+    import pdb; pdb.set_trace()
+    pass
 def parse_args():
     parser = argparse.ArgumentParser(description="Get Activations")
     parser.add_argument(
