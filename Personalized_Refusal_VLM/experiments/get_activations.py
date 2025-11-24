@@ -37,7 +37,8 @@ def process(activations):
     activations_tensor = torch.stack(newactivations)
     return activations_tensor
     
-def eval_model(args):
+def eval_model(cfg):
+    args = cfg
     model_path = os.path.join(args.model_path, args.model_name)
     device = "cuda" if torch.cuda.is_available() else "cpu"
 
