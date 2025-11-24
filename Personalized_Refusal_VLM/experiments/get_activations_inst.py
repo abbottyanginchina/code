@@ -113,7 +113,7 @@ def eval_model(cfg):
         ).to(device).eval()
     elif 'idefics3-' in model_path.lower():
         model = AutoModelForVision2Seq.from_pretrained(
-            model_path,
+            "HuggingFaceM4/Idefics3-8B-Llama3",
             output_hidden_states=True,       
             torch_dtype=torch.float16
         ).to(device).eval()
@@ -125,8 +125,6 @@ def eval_model(cfg):
         tokenizer = AutoTokenizer.from_pretrained("Qwen/Qwen-VL-Chat", trust_remote_code=True)  # 使用默认tokenizer
     else:
         AutoProcessor.from_pretrained("HuggingFaceM4/Idefics3-8B-Llama3")
-        import pdb; pdb.set_trace()
-        processor = AutoProcessor.from_pretrained(model_path)
 
     # Load datasets
     if cfg.data.filter_data:
