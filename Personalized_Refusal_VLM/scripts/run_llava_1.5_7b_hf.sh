@@ -51,7 +51,7 @@ wait
 # done
 
 echo "🚀 Step 1: Extracting activations..."
-python -m experiments.get_activations --model_name $model_name --num_test $num_test --num_train $num_train --dataset $dataset --subject "pythics"
+python -m experiments.get_activations --model_name $model_name --num_test $num_test --num_train $num_train --dataset $dataset --subject "physics"
 
 # echo "🧠 Step 2: Training steering vector model..."
 # python -m experiments.train_steering_vector --model_name $model_name --start_layer 9 --end_layer 10 &
