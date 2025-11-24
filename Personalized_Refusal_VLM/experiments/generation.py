@@ -185,7 +185,7 @@ def eval_model(args):
 
     oth_target = torch.load(f"{base_path}/with_sys_out_train_activations_{cfg.model_name}.pt", weights_only=False).double() # Shape: torch.Size([200, 33, 4096]) [num_samples, num_layers, hidden_size]
     oth_x = torch.load(f"{base_path}/without_sys_out_train_activations_{cfg.model_name}.pt", weights_only=False).double()   # Shape: torch.Size([200, 33, 4096]) [num_samples, num_layers, hidden_size]
-    # import pdb; pdb.set_trace()
+    import pdb; pdb.set_trace()
 
     # SVD
     # import pdb; pdb.set_trace()
