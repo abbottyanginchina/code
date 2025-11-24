@@ -539,6 +539,63 @@ def get_activations_teacher_enforce(model, inputs_text, image, processor, system
 
         return h_all
 
+def get_activations_inst(model, inputs_text, image, processor, system_prompt=False):
+    h_all = []
+    with torch.no_grad():
+        for example_id in tqdm(range(len(inputs_text)), desc="Getting activations", total=len(inputs_text)):
+            embeddings_for_all_styles = []
+
+            # 兼容：如果只有一个 style（即 inputs_text 是一维列表）
+            if isinstance(inputs_text[example_id], str):
+                text_list = [inputs_text[example_id]]
+            else:
+                text_list = inputs_text[example_id]
+
+            for style_id in range(len(text_list)):
+                if system_prompt:
+                    conversation = [
+                        {
+                            "role": "user",
+                            "content": [
+                                {"type": "image"},
+                                {"type": "text", "text": text_list[style_id]},
+                            ],
+                        }
+                    ]
+                else:
+                    conversation = [
+                        {
+                            "role": "user",
+                            "content": [
+                                {"type": "image"},
+                                {"type": "text", "text": text_list[style_id]},
+                            ],
+                        }
+                    ]
+                text = processor.apply_chat_template(conversation, add_generation_prompt=True)
+                inputs = processor(text=text, images=image[example_id], return_tensors="pt")
+
+                device = next(model.parameters()).device
+                inputs = {k: (v.to(device) if isinstance(v, torch.Tensor) else v) for k, v in inputs.items()}
+
+                with torch.no_grad():
+                    h = model(
+                        **inputs,
+                        output_hidden_states=True,  # 关键参数！
+                        return_dict=True
+                    )
+                    h = h.hidden_states
+
+                embedding_token = []
+                for layer in range(len(h)):
+                    embedding_token.append(h[layer][:, -1].detach().cpu())
+
+                embedding_token = torch.cat(embedding_token, dim=0).cpu().clone()
+                embeddings_for_all_styles.append(embedding_token)
+
+            h_all.append(tuple(embeddings_for_all_styles))
+
+    return h_all
 def get_activations(model, inputs_text, image, processor, system_prompt=False):
     h_all = []
     with torch.no_grad():
