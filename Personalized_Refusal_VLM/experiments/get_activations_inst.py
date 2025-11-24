@@ -123,7 +123,7 @@ def eval_model(cfg):
         processor = LlavaNextProcessor.from_pretrained(model_path)
     if 'qwen-' in model_path.lower():
         tokenizer = AutoTokenizer.from_pretrained("Qwen/Qwen-VL-Chat", trust_remote_code=True)  # 使用默认tokenizer
-    else:
+    elif 'Idefics3-' in model_path.lower():
         processor = AutoProcessor.from_pretrained("HuggingFaceM4/Idefics3-8B-Llama3")
 
     # Load datasets
