@@ -135,7 +135,7 @@ def eval_model(args):
         processor = Blip2Processor.from_pretrained(model_path)
     elif 'llava-v1.6' in model_path.lower():
         processor = LlavaNextProcessor.from_pretrained(model_path)
-    elif 'Idefics3-' in model_path.lower():
+    elif 'idefics3-' in model_path.lower():
         processor = AutoProcessor.from_pretrained("HuggingFaceM4/Idefics3-8B-Llama3")
     else:
         processor = AutoProcessor.from_pretrained(model_path)
