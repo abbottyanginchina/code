@@ -255,6 +255,7 @@ def eval_model(args):
             "model_answer": answer,
             "question": question
         }
+        print(answer)
         ans_file.write(json.dumps(img_save) + "\n")
         ans_file.flush()
         remove_multiple_layers(model, layer_indices = target_layers, cfg = cfg)
