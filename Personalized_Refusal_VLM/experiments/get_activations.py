@@ -39,7 +39,7 @@ def process(activations):
     
 def eval_model(cfg):
     import pdb; pdb.set_trace()
-    model_path = os.path.join(args.model_path, args.model_name)
+    model_path = os.path.join(cfg.model_path, cfg.model_name)
     device = "cuda" if torch.cuda.is_available() else "cpu"
 
     if 'llava-1.5' in model_path.lower():
@@ -122,10 +122,10 @@ def eval_model(cfg):
         processor = AutoProcessor.from_pretrained(model_path)
 
     # Load datasets
-    if args.data.filter_data:
-        original_data = get_all_datasets_filter(args)
+    if cfg.data.filter_data:
+        original_data = get_all_datasets_filter(cfg)
     else:
-        original_data = get_all_datasets(args)
+        original_data = get_all_datasets(cfg)
 
     with_sys_in_train_text = original_data["with_sys_in_train_text"]
     with_sys_out_train_text = original_data["with_sys_out_train_text"]
@@ -141,7 +141,7 @@ def eval_model(cfg):
     torch.cuda.empty_cache()
 
    
-    if args.data.filter_data:
+    if cfg.data.filter_data:
         # Filter data based on model scores
         without_sys_out_train_text, with_sys_out_train_text, out_train_images = filter_data(cfg, model, processor, processor.tokenizer, with_sys_out_train_text, without_sys_out_train_text, out_train_images)
 
