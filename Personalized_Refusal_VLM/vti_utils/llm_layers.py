@@ -10,11 +10,11 @@ from vti_utils.SVD import project_onto_svd_subspace
 
 class VTILayer(nn.Module):
 
-    def __init__(self, V_dict, vti_direction, lam):
+    def __init__(self, vti_direction, lam):
         super(VTILayer, self).__init__()
         self.vti_direction = vti_direction
         self.lam = lam
-        self.V_dict = V_dict
+        # self.V_dict = V_dict
 
     def forward(self, x):
         if self.vti_direction is not None:
