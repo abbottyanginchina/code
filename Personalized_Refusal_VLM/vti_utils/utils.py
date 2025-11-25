@@ -602,10 +602,6 @@ def get_activations_inst(model, inputs_text, image, processor, system_prompt=Fal
                     ]
                 # text = processor.apply_chat_template(conversation, add_generation_prompt=True)
                 text = processor.apply_chat_template(conversation, add_generation_prompt=False)
-                # if system_prompt:
-                #     text += "Sure"
-                # else:
-                #     text += "Sorry"
 
                 inputs = processor(text=text, images=image[example_id], return_tensors="pt")
                 
