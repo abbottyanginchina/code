@@ -628,7 +628,7 @@ def get_activations_inst(model, inputs_text, image, processor, system_prompt=Fal
 
                 embedding_token = []
                 for layer in range(len(h)):
-                    embedding_token.append(h[layer][:, -1].detach().cpu())
+                    # embedding_token.append(h[layer][:, -1].detach().cpu())
 
                 embedding_token = torch.cat(embedding_token, dim=0).cpu().clone()
                 embeddings_for_all_styles.append(embedding_token)
