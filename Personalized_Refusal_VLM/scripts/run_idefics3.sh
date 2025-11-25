@@ -2,7 +2,7 @@
 set -e
 export CUDA_VISIBLE_DEVICES=7
 
-num_layers=33 # Example number of layers for idefics2-8b
+num_layers=33 
 step=10
 num_train=200
 num_test=100
