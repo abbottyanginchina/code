@@ -609,6 +609,11 @@ def get_activations_inst(model, inputs_text, image, processor, system_prompt=Fal
                 #     text += "Sorry"
 
                 inputs = processor(text=text, images=image[example_id], return_tensors="pt")
+                
+                input_ids = inputs["input_ids"][0]
+                tokenizer = processor.tokenizer
+                assistant_token_id = tokenizer("Assistant:").input_ids[1]
+                assistant_positions = (input_ids == assistant_token_id).nonzero(as_tuple=True)[0]       
 
                 device = next(model.parameters()).device
                 inputs = {k: (v.to(device) if isinstance(v, torch.Tensor) else v) for k, v in inputs.items()}
