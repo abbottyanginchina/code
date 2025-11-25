@@ -466,6 +466,7 @@ if __name__ == "__main__":
     parser.add_argument("--alpha_text", type=float, default=1.8)
     parser.add_argument("--dataset", type=str, default="MMMU", help="Name of the dataset to use")
     parser.add_argument("--data_path", type=str, default="/gpuhome/jmy5701/gpu/data", help="Path to the data")
+    parser.add_argument("--subject", type=str, default="biology", help="Subject to use")
     args = parser.parse_args()
 
     if args.model_name is not None:
