@@ -9,7 +9,7 @@ num_test=100
 model_name="Idefics3-8B-Llama3"
 inter_start_layer=12
 inter_end_layer=32
-alpha_text=2.5
+alpha_text=1.5
 dataset="ScienceQA"
 
 echo "🚀 Step 1: Extracting activations..."
