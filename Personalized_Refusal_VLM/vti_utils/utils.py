@@ -602,7 +602,6 @@ def get_activations_inst(model, inputs_text, image, processor, system_prompt=Fal
                     ]
                 # text = processor.apply_chat_template(conversation, add_generation_prompt=True)
                 text = processor.apply_chat_template(conversation, add_generation_prompt=False)
-                import pdb; pdb.set_trace()
                 # if system_prompt:
                 #     text += "Sure"
                 # else:
@@ -613,7 +612,8 @@ def get_activations_inst(model, inputs_text, image, processor, system_prompt=Fal
                 input_ids = inputs["input_ids"][0]
                 tokenizer = processor.tokenizer
                 assistant_token_id = tokenizer("Assistant:").input_ids[1]
-                assistant_positions = (input_ids == assistant_token_id).nonzero(as_tuple=True)[0]       
+                assistant_positions = (input_ids == assistant_token_id).nonzero(as_tuple=True)[0]   
+                import pdb; pdb.set_trace()    
 
                 device = next(model.parameters()).device
                 inputs = {k: (v.to(device) if isinstance(v, torch.Tensor) else v) for k, v in inputs.items()}
