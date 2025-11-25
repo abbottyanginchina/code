@@ -493,6 +493,8 @@ if __name__ == "__main__":
         cfg.data.dataset_name = args.dataset
     if args.data_path is not None:
         cfg.data.path = args.data_path
+    if args.subject is not None:
+        cfg.data.subject = args.subject
 
     set_seed(cfg.seed)
     eval_model(cfg)
