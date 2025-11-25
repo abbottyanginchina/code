@@ -7,8 +7,8 @@ step=10
 num_train=200
 num_test=100
 model_name="Idefics3-8B-Llama3"
-inter_start_layer=20
-inter_end_layer=32
+inter_start_layer=12
+inter_end_layer=26
 alpha_text=0.8
 dataset="ScienceQA"
 
