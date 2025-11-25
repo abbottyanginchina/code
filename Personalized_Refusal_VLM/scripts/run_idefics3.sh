@@ -19,7 +19,7 @@ python -m experiments.get_activations_inst --model_name $model_name --num_test $
 echo "🧠 Step 2: Training steering vector model..."
 python -m experiments.train_steering_vector --model_name $model_name --start_layer 0 --end_layer $num_layers
 
-echo "Step 3: Inference activations with steering vectors applied..."
+echo "🎯 Step 3: Inference activations with steering vectors applied..."
 python -m experiments.inference_activations --start_layer 0 --end_layer $num_layers
 
 python -m experiments.generation --model_name $model_name --num_test $num_test --num_train $num_train --inter_start_layer $inter_start_layer \
