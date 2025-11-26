@@ -630,23 +630,13 @@ def get_activations_inst(cfg, model, inputs_text, image, processor, system_promp
                     target_text = "Sorry" if system_prompt else "Sure"
 
                     # 2. tokenize 这个词
-                    target_ids = tokenizer(target_text).input_ids[1:]   # 跳 BOS
-                    import pdb; pdb.set_trace()
-
-                    # 3. 在 input_ids 中搜索 target_ids 的开始位置
-                    #    （一般长度是1或2个token，所以用滑窗匹配）
+                    target_ids = tokenizer(target_text).input_ids[1]   # 跳 BOS
                     input_list = input_ids.tolist()
-                    match_pos = None
-
-                    for idx in range(len(input_list) - len(target_ids) + 1):
-                        if input_list[idx:idx + len(target_ids)] == target_ids:
-                            match_pos = idx
-                            break
-
-                    if match_pos is None:
-                        raise ValueError(f"Cannot find {target_text} token in input_ids for LLaVA!")
-
-                    assistant_start = match_pos  # teacher-forced answer 的起始 token
+                    # 3. 直接定位 token 的位置
+                    try:
+                        assistant_start = input_list.index(target_id)
+                    except ValueError:
+                        raise ValueError(f"Cannot find token id {target_id} ({target_text}) in input_ids")
 
                     # 4. Forward pass
                     device = next(model.parameters()).device
@@ -664,7 +654,7 @@ def get_activations_inst(cfg, model, inputs_text, image, processor, system_promp
                     embedding_token = []
                     for layer in range(len(h)):
                         embedding_token.append(
-                            h[layer][0, assistant_start].detach().cpu()
+                            h[layer][:, assistant_start].detach().cpu()
                         )
 
                 embedding_token = torch.cat(embedding_token, dim=0).cpu().clone()
