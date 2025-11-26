@@ -539,7 +539,7 @@ def get_activations_teacher_enforce(model, inputs_text, image, processor, system
 
         return h_all
 
-def get_activations_inst(model, inputs_text, image, processor, system_prompt=False):
+def get_activations_inst(cfg, model, inputs_text, image, processor, system_prompt=False):
     h_all = []
     with torch.no_grad():
         for example_id in tqdm(range(len(inputs_text)), desc="Getting activations", total=len(inputs_text)):
