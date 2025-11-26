@@ -628,6 +628,7 @@ def get_activations_inst(cfg, model, inputs_text, image, processor, system_promp
 
                     # 1. 根据 system_prompt 判断是 Sorry 还是 Sure
                     target_text = "Sorry" if system_prompt else "Sure"
+                    import pdb; pdb.set_trace()
 
                     # 2. tokenize 这个词
                     target_ids = tokenizer(target_text).input_ids[1]   # 跳 BOS
