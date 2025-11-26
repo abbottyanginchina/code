@@ -169,13 +169,13 @@ def eval_model(cfg):
             get_activations(cfg, model, [""] * len(in_train_images), in_train_images, processor, system_prompt=False)
         )
 
-        in_test_activations = process(get_activations(model, in_test_text, in_test_images, processor, system_prompt=False))
-        out_test_activations = process(get_activations(model, out_test_text, out_test_images, processor, system_prompt=True))
+        in_test_activations = process(get_activations(cfg, model, in_test_text, in_test_images, processor, system_prompt=False))
+        out_test_activations = process(get_activations(cfg, model, out_test_text, out_test_images, processor, system_prompt=True))
         image_in_test_activations = process(
-            get_activations(model, [""] * len(in_test_images), in_test_images, processor, system_prompt=False)
+            get_activations(cfg, model, [""] * len(in_test_images), in_test_images, processor, system_prompt=False)
         )
         image_out_test_activations = process(
-            get_activations(model, [""] * len(out_test_images), out_test_images, processor, system_prompt=True)
+            get_activations(cfg, model, [""] * len(out_test_images), out_test_images, processor, system_prompt=True)
         )
 
     save_path = f"../output_{cfg.model_name}_{cfg.data.dataset_name}_{cfg.data.subject}/activations/"
