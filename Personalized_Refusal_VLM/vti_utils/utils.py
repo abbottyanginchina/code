@@ -623,21 +623,47 @@ def get_activations_inst(cfg, model, inputs_text, image, processor, system_promp
                         # embedding_token.append(h[layer][:, -1].detach().cpu())
                         embedding_token.append(h[layer][:, assistant_start].detach().cpu())
 
-                elif 'llava-1.5' in cfg.model_name.lower():
-                    inputs = inputs.to(model.device)
-                    gen_out = model.generate(
-                        **inputs,
-                        max_new_tokens=1,
-                        output_hidden_states=True,
-                        return_dict_in_generate=True
-                    )
-                    import pdb; pdb.set_trace()               
-                    h_gen = gen_out.hidden_states[0]
+                elif 'llava' in cfg.model_name.lower():
+                    # 对于 LLaVA：没有 <assistant> token，需要直接定位 "Sorry" 或 "Sure" 自己的 token
+
+                    # 1. 根据 system_prompt 判断是 Sorry 还是 Sure
+                    target_text = "Sorry" if system_prompt else "Sure"
+
+                    # 2. tokenize 这个词
+                    target_ids = tokenizer(target_text).input_ids[1:]   # 跳 BOS
+
+                    # 3. 在 input_ids 中搜索 target_ids 的开始位置
+                    #    （一般长度是1或2个token，所以用滑窗匹配）
+                    input_list = input_ids.tolist()
+                    match_pos = None
+
+                    for idx in range(len(input_list) - len(target_ids) + 1):
+                        if input_list[idx:idx + len(target_ids)] == target_ids:
+                            match_pos = idx
+                            break
+
+                    if match_pos is None:
+                        raise ValueError(f"Cannot find {target_text} token in input_ids for LLaVA!")
+
+                    assistant_start = match_pos  # teacher-forced answer 的起始 token
+
+                    # 4. Forward pass
+                    device = next(model.parameters()).device
+                    inputs = {k: (v.to(device) if isinstance(v, torch.Tensor) else v) for k, v in inputs.items()}
+
+                    with torch.no_grad():
+                        out = model(
+                            **inputs,
+                            output_hidden_states=True,
+                            return_dict=True
+                        )
+                        h = out.hidden_states   # list[layers][batch, seq, dim]
+
+                    # 5. 取该 token 的每层 activation
                     embedding_token = []
-                    for layer_i in range(len(h_gen)):
-                        # h_gen[layer_i]: (batch=1, seq=1, dim)
+                    for layer in range(len(h)):
                         embedding_token.append(
-                            h_gen[layer_i][:, 0].detach().cpu()
+                            h[layer][0, assistant_start].detach().cpu()
                         )
 
                 embedding_token = torch.cat(embedding_token, dim=0).cpu().clone()
