@@ -578,13 +578,6 @@ def get_activations_inst(model, inputs_text, image, processor, system_prompt=Fal
                     ]
                 else:
                     conversation = [
-                        # {
-                        # "role": "system",
-                        # "content": [
-                        #     {"type": "text", 
-                        #      "text": "Say 'Sorry, I cannot answer that question.' directly if you refuse to answer."},
-                        #     ],
-                        # },
                         {
                             "role": "user",
                             "content": [
