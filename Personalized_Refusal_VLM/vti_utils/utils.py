@@ -630,12 +630,13 @@ def get_activations_inst(cfg, model, inputs_text, image, processor, system_promp
                         output_hidden_states=True,
                         return_dict_in_generate=True
                     )
+                    import pdb; pdb.set_trace()               
                     h_gen = gen_out.hidden_states[0]
                     embedding_token = []
                     for layer_i in range(len(h_gen)):
                         # h_gen[layer_i]: (batch=1, seq=1, dim)
                         embedding_token.append(
-                            h_gen[layer_i][0, 0].detach().cpu()
+                            h_gen[layer_i][:, 0].detach().cpu()
                         )
 
                 embedding_token = torch.cat(embedding_token, dim=0).cpu().clone()
