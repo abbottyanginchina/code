@@ -13,7 +13,7 @@ alpha_text=1.8
 dataset="ScienceQA"
 
 echo "🚀 Step 1: Extracting activations..."
-python -m experiments.get_activations --model_name $model_name --num_test $num_test --num_train $num_train --dataset $dataset --subject "biology"
+python -m experiments.get_activations_inst --model_name $model_name --num_test $num_test --num_train $num_train --dataset $dataset --subject "biology"
 
 # echo "🧠 Step 2: Training steering vector model..."
 # python -m experiments.train_steering_vector --model_name $model_name --start_layer 30 --end_layer 33 &
