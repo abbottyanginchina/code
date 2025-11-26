@@ -9,10 +9,10 @@ from vti_utils.nets import FlowField
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
 def load_activations(cfg, layer):
-    bio_x = torch.load(f"../output_{cfg.model_name}_{cfg.data.dataset_name}/activations/without_sys_in_train_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device, dtype=torch.float64)
-    oth_x = torch.load(f"../output_{cfg.model_name}_{cfg.data.dataset_name}/activations/without_sys_out_train_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device, dtype=torch.float64)
+    bio_x = torch.load(f"../output_{cfg.model_name}_{cfg.data.dataset_name}_{cfg.data.subject}/activations/without_sys_in_train_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device, dtype=torch.float64)
+    oth_x = torch.load(f"../output_{cfg.model_name}_{cfg.data.dataset_name}_{cfg.data.subject}/activations/without_sys_out_train_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device, dtype=torch.float64)
     bio_target = bio_x
-    oth_target = torch.load(f"../output_{cfg.model_name}_{cfg.data.dataset_name}/activations/with_sys_out_train_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device, dtype=torch.float64)
+    oth_target = torch.load(f"../output_{cfg.model_name}_{cfg.data.dataset_name}_{cfg.data.subject}/activations/with_sys_out_train_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device, dtype=torch.float64)
 
     steering_vec = oth_target.mean(dim=0) - oth_x.mean(dim=0)
     oth_steering = oth_x + steering_vec.unsqueeze(0)
@@ -80,14 +80,14 @@ def main(cfg):
         bio_x, oth_x, bio_target, oth_target, steering_vec = load_activations(cfg, layer)
 
         model = FlowField(input_dim=bio_x.shape[1], hidden=1024, ref_vec=steering_vec.to(device)).to(device).double()
-        model.load_state_dict(torch.load(f"../output_{cfg.model_name}_{cfg.data.dataset_name}/models/steering_model_layer{layer}_{cfg.model_name}.pt", weights_only=False).state_dict())
+        model.load_state_dict(torch.load(f"../output_{cfg.model_name}_{cfg.data.dataset_name}_{cfg.data.subject}/models/steering_model_layer{layer}_{cfg.model_name}.pt", weights_only=False).state_dict())
         model.eval()
 
         pred_other, pred_biology, bio_x_test, oth_x_test, steering_vec_refusal = inference(cfg, model, layer)
 
         visualize_distributions(train_other_target=oth_target, train_biology_target=bio_x_test,
                             pred_other=pred_other, pred_biology=pred_biology, steered_other=oth_x_test+steering_vec.unsqueeze(0), original_other=oth_x_test,
-                            save_path=f"../output_{cfg.model_name}_{cfg.data.dataset_name}/visualizations/activations_{layer}_{cfg.model_name}.png")
+                            save_path=f"../output_{cfg.model_name}_{cfg.data.dataset_name}_{cfg.data.subject}/visualizations/activations_{layer}_{cfg.model_name}.png")
         print(f"✅ Saved steering vectors for layer {layer}")
 
 def parse_args():
