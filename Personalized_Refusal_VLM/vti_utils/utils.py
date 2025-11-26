@@ -634,7 +634,7 @@ def get_activations_inst(cfg, model, inputs_text, image, processor, system_promp
                     input_list = input_ids.tolist()
                     # 3. 直接定位 token 的位置
                     try:
-                        assistant_start = input_list.index(input_list)
+                        assistant_start = input_list.index(target_id)
                     except ValueError:
                         raise ValueError(f"Cannot find token id {target_id} ({target_text}) in input_ids")
 
