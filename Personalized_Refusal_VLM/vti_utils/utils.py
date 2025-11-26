@@ -631,6 +631,7 @@ def get_activations_inst(cfg, model, inputs_text, image, processor, system_promp
 
                     # 2. tokenize 这个词
                     target_ids = tokenizer(target_text).input_ids[1:]   # 跳 BOS
+                    import pdb; pdb.set_trace()
 
                     # 3. 在 input_ids 中搜索 target_ids 的开始位置
                     #    （一般长度是1或2个token，所以用滑窗匹配）
