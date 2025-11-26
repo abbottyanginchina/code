@@ -170,7 +170,7 @@ def eval_model(cfg):
         )
 
         in_test_activations = process(get_activations(model, in_test_text, in_test_images, processor, system_prompt=False))
-        out_test_activations = process(get_activations(model, out_test_text, out_test_images, processor, system_prompt=False))
+        out_test_activations = process(get_activations(model, out_test_text, out_test_images, processor, system_prompt=True))
         image_in_test_activations = process(
             get_activations(model, [""] * len(in_test_images), in_test_images, processor, system_prompt=False)
         )
