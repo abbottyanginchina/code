@@ -3,7 +3,7 @@ set -e
 export CUDA_VISIBLE_DEVICES=7
 
 num_layers=33 
-step=15
+step=17
 num_train=200
 num_test=100
 model_name="Idefics3-8B-Llama3"
