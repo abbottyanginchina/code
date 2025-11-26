@@ -604,24 +604,24 @@ def get_activations_inst(cfg, model, inputs_text, image, processor, system_promp
                     assistant_token_id = tokenizer("Assistant:").input_ids[1]
                 
 
-                assistant_positions = (input_ids == assistant_token_id).nonzero(as_tuple=True)[0]   
-                assistant_start = assistant_positions[-1].item() + 1 
+                    assistant_positions = (input_ids == assistant_token_id).nonzero(as_tuple=True)[0]   
+                    assistant_start = assistant_positions[-1].item() + 1 
 
-                device = next(model.parameters()).device
-                inputs = {k: (v.to(device) if isinstance(v, torch.Tensor) else v) for k, v in inputs.items()}
+                    device = next(model.parameters()).device
+                    inputs = {k: (v.to(device) if isinstance(v, torch.Tensor) else v) for k, v in inputs.items()}
 
-                with torch.no_grad():
-                    h = model(
-                        **inputs,
-                        output_hidden_states=True,  # 关键参数！
-                        return_dict=True
-                    )
-                    h = h.hidden_states
+                    with torch.no_grad():
+                        h = model(
+                            **inputs,
+                            output_hidden_states=True,  # 关键参数！
+                            return_dict=True
+                        )
+                        h = h.hidden_states
 
-                embedding_token = []
-                for layer in range(len(h)):
-                    # embedding_token.append(h[layer][:, -1].detach().cpu())
-                    embedding_token.append(h[layer][:, assistant_start].detach().cpu())
+                    embedding_token = []
+                    for layer in range(len(h)):
+                        # embedding_token.append(h[layer][:, -1].detach().cpu())
+                        embedding_token.append(h[layer][:, assistant_start].detach().cpu())
 
                 elif 'llava-1.5' in cfg.model_name.lower():
                     gen_out = model.generate(
