@@ -155,10 +155,10 @@ def eval_model(cfg):
     print('Obtaining direction\n')
 
     with torch.no_grad():
-        with_sys_in_train_activations = process(get_activations_inst(cfg, model, with_sys_in_train_text, in_train_images, processor, system_prompt=False))
+        with_sys_in_train_activations = process(get_activations(cfg, model, with_sys_in_train_text, in_train_images, processor, system_prompt=False))
         with_sys_out_train_activations = process(get_activations_inst(cfg, model, with_sys_out_train_text, out_train_images, processor, system_prompt=True))
-        without_sys_in_train_activations = process(get_activations_inst(cfg, model, without_sys_in_train_text, in_train_images, processor, system_prompt=False))
-        without_sys_out_train_activations = process(get_activations_inst(cfg, model, without_sys_out_train_text, out_train_images, processor, system_prompt=False))
+        without_sys_in_train_activations = process(get_activations(model, without_sys_in_train_text, in_train_images, processor, system_prompt=False))
+        without_sys_out_train_activations = process(get_activations(model, without_sys_out_train_text, out_train_images, processor, system_prompt=False))
 
         # 1. 加 system prompt 的 others（对应 h_c(Image_{others} + system_prompt)）
         with_sys_image_others_activations = process(
