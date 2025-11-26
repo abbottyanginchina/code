@@ -166,7 +166,7 @@ def eval_model(cfg):
         )
         # 2. 不加 system prompt 的 biology（对应 h_c(Image_{biology} + "None")）
         without_sys_image_biology_activations = process(
-            get_activations_inst(cfg, model, [""] * len(in_train_images), in_train_images, processor, system_prompt=False)
+            get_activations(model, [""] * len(in_train_images), in_train_images, processor, system_prompt=False)
         )
 
         in_test_activations = process(get_activations(model, in_test_text, in_test_images, processor, system_prompt=False))
