@@ -624,6 +624,7 @@ def get_activations_inst(cfg, model, inputs_text, image, processor, system_promp
                         embedding_token.append(h[layer][:, assistant_start].detach().cpu())
 
                 elif 'llava-1.5' in cfg.model_name.lower():
+                    inputs = inputs.to(model.device)
                     gen_out = model.generate(
                         **inputs,
                         max_new_tokens=1,
