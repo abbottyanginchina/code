@@ -603,7 +603,7 @@ def get_activations_inst(model, inputs_text, image, processor, system_prompt=Fal
                 
                 if 'idefics3-' in cfg.model_name.lower():
                     assistant_token_id = tokenizer("Assistant:").input_ids[1]
-                elif 'llava-' in cfg.model_name.lower():
+                elif 'llava-1.5' in cfg.model_name.lower():
                     assistant_token_id = tokenizer("ASSISTANT:").input_ids[1]
 
                 assistant_positions = (input_ids == assistant_token_id).nonzero(as_tuple=True)[0]   
