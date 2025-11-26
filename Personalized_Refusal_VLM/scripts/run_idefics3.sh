@@ -36,7 +36,7 @@ done
 wait
 
 echo "🎯 Step 3: Inference activations with steering vectors applied..."
-# python -m experiments.inference_activations --start_layer 0 --end_layer $num_layers --subject $subject --model_name $model_name
+python -m experiments.inference_activations --start_layer 0 --end_layer $num_layers --subject $subject --model_name $model_name
 
 echo "🎉 Step 4: Generating responses with steering vectors applied..."
 python -m experiments.generation --model_name $model_name --num_test $num_test --num_train $num_train --inter_start_layer $inter_start_layer \
