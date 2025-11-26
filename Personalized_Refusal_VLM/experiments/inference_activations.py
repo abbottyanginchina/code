@@ -116,6 +116,10 @@ def parse_args():
         default="./output/visualizations/",
         help="Directory to save inference results",
     )
+     parser.add_argument("--subject", 
+                         type=str, 
+                         default="biology", 
+                         help="Subject to use")
     return parser.parse_args()
 
 if __name__ == '__main__':
