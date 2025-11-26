@@ -602,8 +602,7 @@ def get_activations_inst(cfg, model, inputs_text, image, processor, system_promp
                 
                 if 'idefics3-' in cfg.model_name.lower():
                     assistant_token_id = tokenizer("Assistant:").input_ids[1]
-                elif 'llava-1.5' in cfg.model_name.lower():
-                    assistant_token_id = tokenizer("ASSISTANT:").input_ids[1]
+                
 
                 assistant_positions = (input_ids == assistant_token_id).nonzero(as_tuple=True)[0]   
                 assistant_start = assistant_positions[-1].item() + 1 
@@ -624,10 +623,28 @@ def get_activations_inst(cfg, model, inputs_text, image, processor, system_promp
                     # embedding_token.append(h[layer][:, -1].detach().cpu())
                     embedding_token.append(h[layer][:, assistant_start].detach().cpu())
 
+                elif 'llava-1.5' in cfg.model_name.lower():
+                    gen_out = model.generate(
+                        **inputs,
+                        max_new_tokens=1,
+                        output_hidden_states=True,
+                        return_dict_in_generate=True
+                    )
+                    h_gen = gen_out.hidden_states[0]
+                    embedding_token = []
+                    for layer_i in range(len(h_gen)):
+                        # h_gen[layer_i]: (batch=1, seq=1, dim)
+                        embedding_token.append(
+                            h_gen[layer_i][0, 0].detach().cpu()
+                        )
+
+
                 embedding_token = torch.cat(embedding_token, dim=0).cpu().clone()
                 embeddings_for_all_styles.append(embedding_token)
 
             h_all.append(tuple(embeddings_for_all_styles))
+
+
 
     return h_all
 def get_activations(model, inputs_text, image, processor, system_prompt=False):
