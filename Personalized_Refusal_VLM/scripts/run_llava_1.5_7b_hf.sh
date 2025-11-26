@@ -45,7 +45,8 @@ python -m experiments.get_activations_inst --model_name $model_name --num_test $
 # echo "✅ All layer groups finished!"
 
 # echo "🎯 Step 4: Generating responses with steering vectors applied..."
-python -m experiments.generation --model_name $model_name --num_test $num_test --num_train $num_train --inter_start_layer $inter_start_layer --inter_end_layer $inter_end_layer --alpha_text $alpha_text --dataset $dataset
+python -m experiments.generation --model_name $model_name --num_test $num_test --num_train $num_train \
+    --inter_start_layer $inter_start_layer --inter_end_layer $inter_end_layer --alpha_text $alpha_text --dataset $dataset --subject $subject
 
 # echo "🎉 All steps completed!"
 
