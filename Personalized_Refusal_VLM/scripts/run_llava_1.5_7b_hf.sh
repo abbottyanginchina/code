@@ -52,38 +52,3 @@ python -m experiments.generation --model_name $model_name --num_test $num_test -
 
 # done
 
-echo "🚀 Step 1: Extracting activations..."
-python -m experiments.get_activations_inst --model_name $model_name --num_test $num_test --num_train $num_train --dataset $dataset --subject "physics"
-
-# echo "🧠 Step 2: Training steering vector model..."
-# python -m experiments.train_steering_vector --model_name $model_name --start_layer 0 --end_layer $num_layers --subject "physics" &
-# python -m experiments.train_steering_vector --model_name $model_name --start_layer 18 --end_layer 20 &
-# python -m experiments.train_steering_vector --model_name $model_name --start_layer 28 --end_layer 30 &
-wait
-
-
-# for ((layer=0; layer<num_layers; layer+=step)); do
-#     end_layer=$((layer + step))
-
-#     if [ $end_layer -gt $num_layers ]; then
-#         end_layer=$num_layers
-#     fi
-
-#     echo "🔄 Training layers $layer → $end_layer ..."
-    
-#     python -m experiments.train_steering_vector \
-#         --model_name $model_name \
-#         --start_layer $layer \
-#         --subject "physics" \
-#         --end_layer $end_layer & # ← 并行运行
-# done
-# wait
-
-python -m experiments.generation --model_name $model_name --num_test $num_test --num_train $num_train --inter_start_layer $inter_start_layer \
-    --inter_end_layer $inter_end_layer --alpha_text $alpha_text --dataset $dataset --subject $subject
-
-
-# python -m experiments.get_activations --model_name $model_name --num_test $num_test --num_train $num_train --dataset $dataset --subject "geography"
-
-# echo "🧠 Step 2: Training steering vector model..."
-# python -m experiments.train_steering_vector --model_name $model_name --start_layer 0 --end_layer $num_layers --subject "geography" &
