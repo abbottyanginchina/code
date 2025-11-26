@@ -178,7 +178,7 @@ def eval_model(args):
     refusal_all = torch.stack(steering_list1, dim=1)
     biology_all = torch.stack(steering_list2, dim=1)
     
-    layer = 25
+    # layer = 25
     
     # 这里最大层数是前面减1，因为第零层不取
     target_layers = list(range(args.inter_start_layer, args.inter_end_layer))  # Qwen 1-28  Llava 1-32
