@@ -138,5 +138,7 @@ if __name__ == '__main__':
         cfg.end_layer = args.end_layer
     if args.save_dir is not None:
         cfg.save_dir = args.save_dir
+    if args.subject is not None:
+        cfg.data.subject = args.subject
 
     main(cfg)
