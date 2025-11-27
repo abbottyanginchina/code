@@ -641,7 +641,7 @@ def get_activations_inst(cfg, model, inputs_text, image, processor, system_promp
                     for layer in range(len(h)):
                         # embedding_token.append(h[layer][:, -1].detach().cpu())
                         embedding_token.append(h[layer][:, assistant_start].detach().cpu())
-                    import pdb; pdb.set_trace()
+                    # import pdb; pdb.set_trace()
 
                 embedding_token = torch.cat(embedding_token, dim=0).cpu().clone()
                 embeddings_for_all_styles.append(embedding_token)
