@@ -203,7 +203,7 @@ def add_multiple_layers(model: PreTrainedModel, vti_directions: Tensor, alpha: l
         for idx in layer_indices:
             layer = layers[idx]
             original_mlp = find_module(layer, mlp_keywords)
-            layer.mlp = nn.Sequential(original_mlp, VTILayer(V_dict[idx], vti_directions[idx], alpha)) 
+            layer.mlp = nn.Sequential(original_mlp, VTILayer(vti_directions[idx], alpha)) 
             # layer.mlp = nn.Sequential(original_mlp, VTILayer(vti_directions[idx], alpha)) 
 
 def remove_multiple_layers(model: PreTrainedModel, layer_indices: list[int], cfg):
