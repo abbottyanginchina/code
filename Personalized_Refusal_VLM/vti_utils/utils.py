@@ -625,6 +625,8 @@ def get_activations_inst(cfg, model, inputs_text, image, processor, system_promp
 
                 elif 'llava-' in cfg.model_name.lower():
                     assistant_token_id = tokenizer("answer").input_ids[1]
+                    import pdb; pdb.set_trace()
+
                 embedding_token = torch.cat(embedding_token, dim=0).cpu().clone()
                 embeddings_for_all_styles.append(embedding_token)
 
