@@ -624,15 +624,27 @@ def get_activations_inst(cfg, model, inputs_text, image, processor, system_promp
                         embedding_token.append(h[layer][:, assistant_start].detach().cpu())
 
                 elif 'llava-' in cfg.model_name.lower():
-                    import pdb; pdb.set_trace()
-                    input_ids = inputs["input_ids"][0]
-                    tokenizer = processor.tokenizer
+                    llava_anchor_text = "Sorry, I cannot answer" if system_prompt else "Sure" # 根据 system_prompt 判断锚点文本
 
-                    eos_id = tokenizer.eos_token_id     # </s>
-                    eos_positions = (input_ids == eos_id).nonzero(as_tuple=True)[0]
-                    assistant_end = eos_positions[-1].item()
-                    last_content_token = assistant_end - 1
-                    import pdb; pdb.set_trace()
+                    llava_anchor_token_ids = tokenizer.encode(llava_anchor_text, add_special_tokens=False)
+                    
+                    if not llava_anchor_token_ids:
+                        print(f"Warning: Anchor text '{llava_anchor_text}' resulted in empty token IDs for LLaVA. Skipping example {example_id}.")
+                        assistant_anchor_token_idx = -1
+                    else:
+                        phrase_start_idx = -1
+                        for i in range(len(input_ids) - len(llava_anchor_token_ids) + 1):
+                            if torch.equal(input_ids[i : i + len(llava_anchor_token_ids)], torch.tensor(llava_anchor_token_ids, device=input_ids.device)):
+                                phrase_start_idx = i
+                                break
+                        
+                        if phrase_start_idx == -1:
+                            decoded_input = tokenizer.decode(input_ids)
+                            print(f"Warning: Anchor text '{llava_anchor_text}' not found in input_ids for LLaVA example {example_id}. Decoded input: '{decoded_input}'. Skipping.")
+                            assistant_anchor_token_idx = -1
+                        else:
+                            # 定位到锚点短语的最后一个 Token
+                            assistant_anchor_token_idx = phrase_start_idx + len(llava_anchor_token_ids) - 1
 
                 embedding_token = torch.cat(embedding_token, dim=0).cpu().clone()
                 embeddings_for_all_styles.append(embedding_token)
