@@ -49,7 +49,7 @@ def load_activations(cfg, layer):
     steering_vec = oth_target.mean(dim=0) - oth_x.mean(dim=0)
     oth_steering = oth_x + steering_vec.unsqueeze(0)
 
-    oth_target = oth_steering
+    # oth_target = oth_steering
 
     return bio_x, oth_x, bio_target, oth_target, steering_vec
 
