@@ -624,6 +624,7 @@ def get_activations_inst(cfg, model, inputs_text, image, processor, system_promp
                         embedding_token.append(h[layer][:, assistant_start].detach().cpu())
 
                 elif 'llava-' in cfg.model_name.lower():
+                    import pdb; pdb.set_trace()
                     input_ids = inputs["input_ids"][0]
                     tokenizer = processor.tokenizer
 
