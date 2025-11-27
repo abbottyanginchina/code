@@ -9,7 +9,7 @@ num_test=200
 model_name="llava-1.5-7b-hf"
 inter_start_layer=12
 inter_end_layer=32
-alpha_text=1.2
+alpha_text=1.
 dataset="ScienceQA"
 subject="biology"
 
