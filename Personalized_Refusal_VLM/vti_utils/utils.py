@@ -599,7 +599,6 @@ def get_activations_inst(cfg, model, inputs_text, image, processor, system_promp
                 
                 input_ids = inputs["input_ids"][0]
                 tokenizer = processor.tokenizer
-                import pdb; pdb.set_trace()
                 
                 if 'idefics3-' in cfg.model_name.lower():
                     assistant_token_id = tokenizer("Assistant:").input_ids[1]
