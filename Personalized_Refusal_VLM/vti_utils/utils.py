@@ -604,7 +604,6 @@ def get_activations_inst(cfg, model, inputs_text, image, processor, system_promp
                     assistant_token_id = tokenizer("Assistant:").input_ids[1]                
 
                     assistant_positions = (input_ids == assistant_token_id).nonzero(as_tuple=True)[0]  
-                    import pdb; pdb.set_trace() 
                     assistant_start = assistant_positions[-1].item() + 1 
 
                     device = next(model.parameters()).device
