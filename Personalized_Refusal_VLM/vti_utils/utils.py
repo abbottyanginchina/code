@@ -626,6 +626,7 @@ def get_activations_inst(cfg, model, inputs_text, image, processor, system_promp
                 elif 'llava-' in cfg.model_name.lower():
                     assistant_token_id = tokenizer("answer").input_ids[1]
                     assistant_positions = (input_ids == assistant_token_id).nonzero(as_tuple=True)[0]
+                    assistant_start = assistant_positions[-1].item()
                     device = next(model.parameters()).device
                     inputs = {k: (v.to(device) if isinstance(v, torch.Tensor) else v) for k, v in inputs.items()}
 
