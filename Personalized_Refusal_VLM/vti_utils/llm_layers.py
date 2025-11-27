@@ -10,11 +10,10 @@ from vti_utils.SVD import project_onto_svd_subspace
 
 class VTILayer(nn.Module):
 
-    def __init__(self, V_dict, vti_direction, lam):
+    def __init__(self, vti_direction, lam):
         super(VTILayer, self).__init__()
         self.vti_direction = vti_direction
         self.lam = lam
-        self.V_dict = V_dict
 
     def forward(self, x):
         if self.vti_direction is not None:
@@ -22,14 +21,14 @@ class VTILayer(nn.Module):
             y = 0
             for i in range(len(self.vti_direction)):
                 if x.size(1) < 2:
-                    lambda_sim = 1.0    # torch.max(torch.tensor([0.]).to(x.device), F.cosine_similarity(x.float(), -self.vti_direction[i][None,None,:], dim=-1)).unsqueeze(-1)
-                    clean_vti_direction = project_onto_svd_subspace(self.vti_direction[i], self.V_dict).to(x.device)
-                    # clean_vti_direction = self.vti_direction[i]
+                    # lambda_sim = 1.0    # torch.max(torch.tensor([0.]).to(x.device), F.cosine_similarity(x.float(), -self.vti_direction[i][None,None,:], dim=-1)).unsqueeze(-1)
+                    # clean_vti_direction = project_onto_svd_subspace(self.vti_direction[i], self.V_dict).to(x.device)
+                    clean_vti_direction = self.vti_direction[i]
                     y += self.lam[i] * lambda_sim * F.normalize(clean_vti_direction, dim=-1).repeat(1,x.shape[1],1)
                 else:
                     lambda_sim = 1.0
-                    clean_vti_direction = project_onto_svd_subspace(self.vti_direction[i], self.V_dict).to(x.device)
-                    # clean_vti_direction = self.vti_direction[i]
+                    # clean_vti_direction = project_onto_svd_subspace(self.vti_direction[i], self.V_dict).to(x.device)
+                    clean_vti_direction = self.vti_direction[i]
                     y += self.lam[i] * lambda_sim * F.normalize(clean_vti_direction, dim=-1)
             y = y/len(self.vti_direction)
             x = F.normalize(F.normalize(x.float(),dim=-1) +  0.1 * y, dim=-1) * norm
