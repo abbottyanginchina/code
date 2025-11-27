@@ -627,6 +627,7 @@ def get_activations_inst(cfg, model, inputs_text, image, processor, system_promp
                     llava_anchor_text = "Sorry, I cannot answer" if system_prompt else "Sure" # 根据 system_prompt 判断锚点文本
 
                     llava_anchor_token_ids = tokenizer.encode(llava_anchor_text, add_special_tokens=False)
+                    import pdb; pdb.set_trace()
                     
                     if not llava_anchor_token_ids:
                         print(f"Warning: Anchor text '{llava_anchor_text}' resulted in empty token IDs for LLaVA. Skipping example {example_id}.")
