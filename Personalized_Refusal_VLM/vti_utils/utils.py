@@ -624,39 +624,14 @@ def get_activations_inst(cfg, model, inputs_text, image, processor, system_promp
                         embedding_token.append(h[layer][:, assistant_start].detach().cpu())
 
                 elif 'llava' in cfg.model_name.lower():
-                    # 对于 LLaVA：没有 <assistant> token，需要直接定位 "Sorry" 或 "Sure" 自己的 token
+                    input_ids = inputs["input_ids"][0]
+                    tokenizer = processor.tokenizer
 
-                    # 1. 根据 system_prompt 判断是 Sorry 还是 Sure
-                    target_text = "Sorry" if system_prompt else "Sure"
+                    eos_id = tokenizer.eos_token_id     # </s>
+                    eos_positions = (input_ids == eos_id).nonzero(as_tuple=True)[0]
+                    assistant_end = eos_positions[-1].item()
+                    last_content_token = assistant_end - 1
                     import pdb; pdb.set_trace()
-
-                    # 2. tokenize 这个词
-                    target_ids = tokenizer(target_text).input_ids[1]   # 跳 BOS
-                    input_list = input_ids.tolist()
-                    # 3. 直接定位 token 的位置
-                    try:
-                        assistant_start = input_list.index(target_ids)
-                    except ValueError:
-                        raise ValueError(f"Cannot find token id {target_id} ({target_text}) in input_ids")
-
-                    # 4. Forward pass
-                    device = next(model.parameters()).device
-                    inputs = {k: (v.to(device) if isinstance(v, torch.Tensor) else v) for k, v in inputs.items()}
-
-                    with torch.no_grad():
-                        out = model(
-                            **inputs,
-                            output_hidden_states=True,
-                            return_dict=True
-                        )
-                        h = out.hidden_states   # list[layers][batch, seq, dim]
-
-                    # 5. 取该 token 的每层 activation
-                    embedding_token = []
-                    for layer in range(len(h)):
-                        embedding_token.append(
-                            h[layer][:, assistant_start].detach().cpu()
-                        )
 
                 embedding_token = torch.cat(embedding_token, dim=0).cpu().clone()
                 embeddings_for_all_styles.append(embedding_token)
