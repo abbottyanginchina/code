@@ -187,10 +187,10 @@ def eval_model(cfg):
     torch.save(in_test_activations, f"{save_path}/in_test_activations_{cfg.model_name}.pt")
     torch.save(out_test_activations, f"{save_path}/out_test_activations_{cfg.model_name}.pt")
 
-    torch.save(with_sys_image_others_activations, f"{save_path}/with_sys_image_others_activations_{cfg.model_name}.pt")
-    torch.save(without_sys_image_biology_activations, f"{save_path}/without_sys_image_biology_activations_{cfg.model_name}.pt")
-    torch.save(image_in_test_activations, f"{save_path}/image_in_test_activations_{cfg.model_name}.pt")
-    torch.save(image_out_test_activations, f"{save_path}/image_out_test_activations_{cfg.model_name}.pt")
+    # torch.save(with_sys_image_others_activations, f"{save_path}/with_sys_image_others_activations_{cfg.model_name}.pt")
+    # torch.save(without_sys_image_biology_activations, f"{save_path}/without_sys_image_biology_activations_{cfg.model_name}.pt")
+    # torch.save(image_in_test_activations, f"{save_path}/image_in_test_activations_{cfg.model_name}.pt")
+    # torch.save(image_out_test_activations, f"{save_path}/image_out_test_activations_{cfg.model_name}.pt")
 
     print("Activations saved.")
 def parse_args():
