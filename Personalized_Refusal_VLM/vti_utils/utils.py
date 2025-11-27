@@ -585,13 +585,13 @@ def get_activations_inst(cfg, model, inputs_text, image, processor, system_promp
                                 {"type": "text", "text": text_list[style_id]},
                             ],
                         },
-                        {
-                            "role": "assistant", 
-                            "content": [
-                                {"type": "text",
-                                  "text": "Sure"}
-                                ],
-                        }
+                        # {
+                        #     "role": "assistant", 
+                        #     "content": [
+                        #         {"type": "text",
+                        #           "text": "Sure"}
+                        #         ],
+                        # }
                     ]
                 # text = processor.apply_chat_template(conversation, add_generation_prompt=True)
                 text = processor.apply_chat_template(conversation, add_generation_prompt=False)
