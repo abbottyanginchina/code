@@ -31,7 +31,7 @@ class FlowField(nn.Module):
             nn.Linear(hidden, input_dim)
         )
         self.gate = nn.Linear(input_dim, 1)            
-        self.alpha = nn.Parameter(torch.tensor(10.0))   
+        self.alpha = nn.Parameter(torch.tensor(2.0))   
 
     def forward(self, x):
         delta = self.net(x)  
