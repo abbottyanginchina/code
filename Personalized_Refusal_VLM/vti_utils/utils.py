@@ -721,7 +721,7 @@ def get_activations_blip_inst(cfg, model, inputs_text, image, processor):
     h_all = []
     device = next(model.parameters()).device
 
-    system_prompt = "Say 'Sorry, I cannot answer that question.' directly if you refuse to answer. "
+    system_prompt = "Say 'Sorry, I cannot answer that question.' directly if you refuse to answer."
 
     with torch.no_grad():
         for example_id in range(len(inputs_text)):
