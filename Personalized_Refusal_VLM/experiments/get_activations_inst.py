@@ -129,6 +129,8 @@ def eval_model(cfg):
         tokenizer = AutoTokenizer.from_pretrained("Qwen/Qwen-VL-Chat", trust_remote_code=True)  # 使用默认tokenizer
     elif 'idefics3-' in model_path.lower():
         processor = AutoProcessor.from_pretrained("HuggingFaceM4/Idefics3-8B-Llama3")
+    elif 'instructblip-' in model_path.lower():
+        processor = AutoProcessor.from_pretrained("Salesforce/instructblip-vicuna-7b")
     else:
         processor = AutoProcessor.from_pretrained(model_path)
 
