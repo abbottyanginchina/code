@@ -735,7 +735,7 @@ def get_activations_blip_inst(cfg, model, inputs_text, image, processor):
             for style_id in range(len(text_list)):
                 text_query = text_list[style_id]
                 if system_prompt:
-                    text_query = system_prompt + ' User:'+ text_query +'\nAssistant:Sorry'
+                    text_query = system_prompt + ' USER:'+ text_query +'\nASSISTANT:Sorry'
 
                 inputs = processor(
                     images=image[example_id],
