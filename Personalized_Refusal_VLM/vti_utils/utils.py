@@ -763,7 +763,7 @@ def get_activations_blip_inst(cfg, model, inputs_text, image, processor, system_
 
                 # 提取每层最后一个 token 的向量
                 embedding_token = [
-                    h[layer][:, -1].detach().cpu()
+                    h[layer][:, -2].detach().cpu()
                     for layer in range(len(h))
                 ]
                 embedding_token = torch.cat(embedding_token, dim=0).clone()
