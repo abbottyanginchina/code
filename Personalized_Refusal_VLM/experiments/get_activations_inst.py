@@ -163,11 +163,11 @@ def eval_model(cfg):
     with torch.no_grad():
         if 'instructblip-' in model_path.lower():
             with_sys_out_train_activations = process(get_activations_inst(cfg, model, with_sys_out_train_text, out_train_images, processor, system_prompt=True))
-            with_sys_in_train_activations = process(get_activations(model, with_sys_in_train_text, in_train_images, processor, system_prompt=True))
-            without_sys_in_train_activations = process(get_activations(model, without_sys_in_train_text, in_train_images, processor, system_prompt=False))
-            without_sys_out_train_activations = process(get_activations(model, without_sys_out_train_text, out_train_images, processor, system_prompt=False))
-            in_test_activations = process(get_activations(model, in_test_text, in_test_images, processor, system_prompt=False))
-            out_test_activations = process(get_activations(model, out_test_text, out_test_images, processor, system_prompt=False))  
+            with_sys_in_train_activations = process(get_activations_blip(model, with_sys_in_train_text, in_train_images, processor, system_prompt=True))
+            without_sys_in_train_activations = process(get_activations_blip(model, without_sys_in_train_text, in_train_images, processor, system_prompt=False))
+            without_sys_out_train_activations = process(get_activations_blip(model, without_sys_out_train_text, out_train_images, processor, system_prompt=False))
+            in_test_activations = process(get_activations_blip(model, in_test_text, in_test_images, processor, system_prompt=False))
+            out_test_activations = process(get_activations_blip(model, out_test_text, out_test_images, processor, system_prompt=False))  
         else:
             with_sys_out_train_activations = process(get_activations_inst(cfg, model, with_sys_out_train_text, out_train_images, processor, system_prompt=True))
             with_sys_in_train_activations = process(get_activations(model, with_sys_in_train_text, in_train_images, processor, system_prompt=True))
