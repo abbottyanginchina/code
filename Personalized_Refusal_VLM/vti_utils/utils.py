@@ -778,7 +778,7 @@ def get_activations_blip(model, inputs_text, image, processor, system_prompt=Fal
     device = next(model.parameters()).device
 
     with torch.no_grad():
-        for example_id in range(len(inputs_text)):
+        for example_id in tqdm(range(len(inputs_text)), total=len(inputs_text), desc="Getting activations"):
             embeddings_for_all_styles = []
 
             if isinstance(inputs_text[example_id], str):
