@@ -126,6 +126,10 @@ def eval_model(args):
             output_hidden_states=True,       
             torch_dtype=torch.float16
         ).to(device).eval()
+        elif 'instructblip-' in model_path.lower():
+        model = InstructBlipForConditionalGeneration.from_pretrained(
+            "Salesforce/instructblip-vicuna-7b"
+            ).to(device)
 
     if 'qwen-' in model_path.lower():
         processor = QWenProcessor.from_pretrained(model_path)
