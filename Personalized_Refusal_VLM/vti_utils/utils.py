@@ -744,6 +744,7 @@ def get_activations_blip_inst(cfg, model, inputs_text, image, processor):
                 )
                 input_ids = inputs["input_ids"][0]
                 tokenizer = processor.tokenizer
+                import pdb; pdb.set_trace()
 
                 # 移动到设备
                 inputs = {
