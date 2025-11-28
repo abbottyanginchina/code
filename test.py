@@ -10,7 +10,7 @@ processor = InstructBlipProcessor.from_pretrained("Salesforce/instructblip-vicun
 url = "https://raw.githubusercontent.com/salesforce/LAVIS/main/docs/_static/Confusing-Pictures.jpg"
 image = Image.open(requests.get(url, stream=True).raw).convert("RGB")
 prompt = "What is unusual about this image?"
-inputs = processor(images=image, text=prompt, return_tensors="pt").to(device)
+inputs = processor(images=image, text=prompt, return_tensors="pt")
 
 outputs = model.generate(
         **inputs,
