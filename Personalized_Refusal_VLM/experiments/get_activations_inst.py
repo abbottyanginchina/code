@@ -117,6 +117,10 @@ def eval_model(cfg):
             output_hidden_states=True,       
             torch_dtype=torch.float16
         ).to(device).eval()
+    elif 'instructblip-' in model_path.lower():
+        model = InstructBlipForConditionalGeneration.from_pretrained(
+            "Salesforce/instructblip-vicuna-7b"
+            ).to(device)
 
     # Load processor
     if 'llava-v1.6' in model_path.lower():
