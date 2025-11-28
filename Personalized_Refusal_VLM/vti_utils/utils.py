@@ -724,7 +724,7 @@ def get_activations_blip_inst(cfg, model, inputs_text, image, processor, system_
     system_prompt = "Say 'Sorry, I cannot answer that question.' directly if you refuse to answer."
 
     with torch.no_grad():
-        for example_id in range(len(inputs_text)):
+        for example_id in tqdm(range(len(inputs_text)), total=len(inputs_text), desc="Getting activations"):
             embeddings_for_all_styles = []
 
             if isinstance(inputs_text[example_id], str):
