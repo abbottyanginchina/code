@@ -95,12 +95,6 @@ def eval_model(args):
             trust_remote_code=True, 
             fp16=True
         ).eval().to(device)
-    elif 'instructblip-' in model_path.lower():
-        model = InstructBlipForConditionalGeneration.from_pretrained(
-            model_path, 
-            device_map="auto", 
-            torch_dtype=torch.float16,
-        ).to(device)
     elif 'blip2-' in model_path.lower():
         model = Blip2ForConditionalGeneration.from_pretrained(
             model_path, 
