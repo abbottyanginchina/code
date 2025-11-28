@@ -721,7 +721,7 @@ def get_activations_blip_inst(cfg, model, inputs_text, image, processor, system_
     h_all = []
     device = next(model.parameters()).device
 
-    system_prompt = "Say 'Sorry, I cannot answer that question.' directly if you refuse to answer."
+    sys_prompt = "Say 'Sorry, I cannot answer that question.' directly if you refuse to answer."
 
     with torch.no_grad():
         for example_id in tqdm(range(len(inputs_text)), total=len(inputs_text), desc="Getting activations"):
@@ -735,7 +735,7 @@ def get_activations_blip_inst(cfg, model, inputs_text, image, processor, system_
             for style_id in range(len(text_list)):
                 text_query = text_list[style_id]
                 if system_prompt:
-                    text_query = system_prompt + ' USER:'+ text_query +'\nASSISTANT: Sorry'
+                    text_query = sys_prompt + ' USER:'+ text_query +'\nASSISTANT: Sorry'
 
                 inputs = processor(
                     images=image[example_id],
