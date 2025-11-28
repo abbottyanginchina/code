@@ -717,6 +717,55 @@ def get_activations(model, inputs_text, image, processor, system_prompt=False):
 
     return h_all
 
+def get_activations_blip_inst(model, inputs_text, image, processor):
+    h_all = []
+    device = next(model.parameters()).device
+
+    with torch.no_grad():
+        for example_id in range(len(inputs_text)):
+            embeddings_for_all_styles = []
+
+            if isinstance(inputs_text[example_id], str):
+                text_list = [inputs_text[example_id]]
+            else:
+                text_list = inputs_text[example_id]
+
+            for style_id in range(len(text_list)):
+                text_query = text_list[style_id]
+
+                inputs = processor(
+                    images=image[example_id],
+                    text=text_query,
+                    return_tensors="pt"
+                )
+
+                # 移动到设备
+                inputs = {
+                    k: (v.to(device) if isinstance(v, torch.Tensor) else v)
+                    for k, v in inputs.items()
+                }
+
+                # 前向计算 hidden states
+                outputs = model(
+                    **inputs,
+                    output_hidden_states=True,
+                    return_dict=True
+                )
+                # import pdb; pdb.set_trace()
+                h = outputs.language_model_outputs.hidden_states
+
+                # 提取每层最后一个 token 的向量
+                embedding_token = [
+                    h[layer][:, -1].detach().cpu()
+                    for layer in range(len(h))
+                ]
+                embedding_token = torch.cat(embedding_token, dim=0).clone()
+
+                embeddings_for_all_styles.append(embedding_token)
+
+            h_all.append(tuple(embeddings_for_all_styles))
+
+    return h_all
 def get_activations_blip(model, inputs_text, image, processor):
     h_all = []
     device = next(model.parameters()).device
