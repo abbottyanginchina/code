@@ -742,6 +742,8 @@ def get_activations_blip_inst(cfg, model, inputs_text, image, processor):
                     text=text_query,
                     return_tensors="pt"
                 )
+                input_ids = inputs["input_ids"][0]
+                tokenizer = processor.tokenizer
 
                 # 移动到设备
                 inputs = {
