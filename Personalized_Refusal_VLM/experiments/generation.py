@@ -134,7 +134,7 @@ def eval_model(args):
     if 'qwen-' in model_path.lower():
         processor = QWenProcessor.from_pretrained(model_path)
     elif 'instructblip-' in model_path.lower():
-        processor = InstructBlipProcessor.from_pretrained(model_path)
+        processor = InstructBlipProcessor.from_pretrained("Salesforce/instructblip-vicuna-7b")
     elif 'blip2-' in model_path.lower():
         processor = Blip2Processor.from_pretrained(model_path)
     elif 'llava-v1.6' in model_path.lower():
