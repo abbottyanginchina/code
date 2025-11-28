@@ -99,12 +99,6 @@ def eval_model(cfg):
             trust_remote_code=True, 
             fp16=True,
         ).eval().to(device)
-    elif 'instructblip-' in model_path.lower():
-        model = InstructBlipForConditionalGeneration.from_pretrained(
-            model_path, 
-            device_map="auto", 
-            torch_dtype=torch.float16,
-        ).to(device)
     elif 'idefics2-' in model_path.lower():
         model = AutoModelForVision2Seq.from_pretrained(
             model_path,
