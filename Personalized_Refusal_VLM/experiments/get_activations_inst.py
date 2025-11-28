@@ -128,7 +128,6 @@ def eval_model(cfg):
     elif 'qwen2.5-' in model_path.lower():
         processor = AutoProcessor.from_pretrained("Qwen/Qwen2.5-VL-7B-Instruct")
     else:
-        import pdb; pdb.set_trace()
         processor = AutoProcessor.from_pretrained(model_path)
 
     # Load datasets
