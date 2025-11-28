@@ -643,6 +643,28 @@ def get_activations_inst(cfg, model, inputs_text, image, processor, system_promp
                         # embedding_token.append(h[layer][:, -1].detach().cpu())
                         embedding_token.append(h[layer][:, assistant_start].detach().cpu())
                     # import pdb; pdb.set_trace()
+                elif 'qwen2.5-' in cfg.model_name.lower():
+                    # assistant_token_id = tokenizer("ASSISTANT").input_ids[1]
+                    # assistant_positions = (input_ids == assistant_token_id).nonzero(as_tuple=True)[0] #position:-7
+                    # import pdb; pdb.set_trace()
+                    # assistant_start = assistant_positions[-1].item()
+                    assistant_start = -3
+                    device = next(model.parameters()).device
+                    inputs = {k: (v.to(device) if isinstance(v, torch.Tensor) else v) for k, v in inputs.items()}
+
+                    with torch.no_grad():
+                        h = model(
+                            **inputs,
+                            output_hidden_states=True,  # 关键参数！
+                            return_dict=True
+                        )
+                        h = h.hidden_states
+
+                    embedding_token = []
+                    for layer in range(len(h)):
+                        # embedding_token.append(h[layer][:, -1].detach().cpu())
+                        embedding_token.append(h[layer][:, assistant_start].detach().cpu())
+                    # import pdb; pdb.set_trace()
 
                 embedding_token = torch.cat(embedding_token, dim=0).cpu().clone()
                 embeddings_for_all_styles.append(embedding_token)
