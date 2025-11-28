@@ -717,7 +717,7 @@ def get_activations(model, inputs_text, image, processor, system_prompt=False):
 
     return h_all
 
-def get_activations_blip_inst(cfg, model, inputs_text, image, processor):
+def get_activations_blip_inst(cfg, model, inputs_text, image, processor, system_prompt=False):
     h_all = []
     device = next(model.parameters()).device
 
