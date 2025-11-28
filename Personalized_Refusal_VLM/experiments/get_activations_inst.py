@@ -126,6 +126,7 @@ def eval_model(cfg):
     elif 'idefics3-' in model_path.lower():
         processor = AutoProcessor.from_pretrained("HuggingFaceM4/Idefics3-8B-Llama3")
     else:
+        import pdb; pdb.set_trace()
         processor = AutoProcessor.from_pretrained(model_path)
 
     # Load datasets
