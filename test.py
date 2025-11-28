@@ -3,11 +3,9 @@ import torch
 from PIL import Image
 import requests
 
-model = InstructBlipForConditionalGeneration.from_pretrained("Salesforce/instructblip-vicuna-7b")
-processor = InstructBlipProcessor.from_pretrained("Salesforce/instructblip-vicuna-7b")
-
 device = "cuda" if torch.cuda.is_available() else "cpu"
-model.to(device)
+model = InstructBlipForConditionalGeneration.from_pretrained("Salesforce/instructblip-vicuna-7b").to(device)
+processor = InstructBlipProcessor.from_pretrained("Salesforce/instructblip-vicuna-7b")
 
 url = "https://raw.githubusercontent.com/salesforce/LAVIS/main/docs/_static/Confusing-Pictures.jpg"
 image = Image.open(requests.get(url, stream=True).raw).convert("RGB")
