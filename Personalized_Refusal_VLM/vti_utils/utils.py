@@ -789,7 +789,9 @@ def get_activations_blip(model, inputs_text, image, processor, system_prompt=Fal
             for style_id in range(len(text_list)):
                 text_query = text_list[style_id]
                 if system_prompt:
-                    text_query = system_prompt + ' USER:'+ text_query +'\nASSISTANT:'
+                    text_query = system_prompt + 'USER:'+ text_query +'\nASSISTANT:'
+                else system_prompt == False:
+                    text_query = ' USER:'+ text_query +'\nASSISTANT:'
 
                 inputs = processor(
                     images=image[example_id],
