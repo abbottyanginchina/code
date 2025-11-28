@@ -137,6 +137,8 @@ def eval_model(args):
         processor = LlavaNextProcessor.from_pretrained(model_path)
     elif 'idefics3-' in model_path.lower():
         processor = AutoProcessor.from_pretrained("HuggingFaceM4/Idefics3-8B-Llama3")
+    elif 'qwen2.5-' in model_path.lower():
+        processor = AutoProcessor.from_pretrained("Qwen/Qwen2.5-VL-7B-Instruct")
     else:
         processor = AutoProcessor.from_pretrained(model_path)
 
