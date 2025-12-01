@@ -159,6 +159,7 @@ def train(cfg, start_layer, end_layer):
                     sparsity = p_neg.mean()               # 鼓励 p 小
                     mag = (delta[neg_mask]**2).mean()     # 限制改动幅度
                     loss_neg = keep + 0.1 * sparsity + 0.01 * mag
+                    loss_neg = keep + 0.1 * sparsity
                 else:
                     loss_neg = torch.tensor(0.0, device=device)
 
