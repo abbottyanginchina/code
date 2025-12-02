@@ -18,13 +18,14 @@ output_dir = "../../llava_lora_output"
 # ===========================
 # Load Model & Processor
 # ===========================
-processor = LlavaProcessor.from_pretrained(model_name)
+
 model = LlavaForConditionalGeneration.from_pretrained(
     model_name,
     torch_dtype=torch.float16,
     low_cpu_mem_usage=True,
     device_map="auto",
 )
+processor = LlavaProcessor.from_pretrained(model_name)
 
 # ===========================
 # LoRA Config
