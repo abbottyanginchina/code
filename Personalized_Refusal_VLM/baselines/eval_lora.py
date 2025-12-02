@@ -54,7 +54,6 @@ def generate_answer(cfg):
 
     results = []
     save_path = f"{cfg.data.path}/{cfg.data.dataset_name}_{cfg.data.subject}_lora"
-    import pdb; pdb.set_trace()
     if not os.path.exists(save_path):
         os.makedirs(save_path)
         os.makedirs(f"{save_path}/images")
