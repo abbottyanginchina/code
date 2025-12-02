@@ -32,21 +32,6 @@ def chat_VLM(text, img):
     )
 
     return response.choices[0].message.content
-
-    response = client.chat.completions.create(
-        model="Qwen/Qwen3-VL-32B-Instruct",
-        messages=[
-            {
-                "role": "user",
-                "content": [
-                    {"type": "input_image", "image": img_b64},
-                    {"type": "text", "text": text},
-                ]
-            }
-        ]
-    )
-
-    return response.choices[0].message.content
 def generate_answer(cfg):
     original_data = get_all_datasets(cfg)
     without_sys_in_train_text = original_data["without_sys_in_train_text"]
