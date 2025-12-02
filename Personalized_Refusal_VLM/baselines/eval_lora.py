@@ -8,7 +8,7 @@ from openai import OpenAI
 import argparse
 from PIL import Image
 from tqdm import tqdm
-from transformers import LlavaForConditionalGeneration
+from transformers import LlavaForConditionalGeneration, AutoProcessor
 from vti_utils.utils import get_all_datasets
 
 client = OpenAI(api_key="sk-qltonesphqmyxhcnmddxgpncphuneffamlnzzdehyjifwaog", 
