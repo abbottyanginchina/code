@@ -16,7 +16,7 @@ def chat_VLM(text, img):
     img_b64 = pil_to_b64(img)
 
     response = client.chat.completions.create(
-        model="deepseek-ai/DeepSeek-V3",
+        model="Qwen/Qwen3-VL-32B-Instruct",
         messages=[
             {
                 "role": "user",
