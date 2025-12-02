@@ -5,4 +5,4 @@ python -m vllm.entrypoints.api_server \
     --served-model-name llava-1.5-7b-hf \
     --dtype float16 \
     --swap-space 32 \
-    --dtype float16 \
+    --tensor-parallel-size 2
