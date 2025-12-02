@@ -26,4 +26,4 @@
 # generated_text = processor.batch_decode(outputs, skip_special_tokens=True)[0].strip()
 # print(generated_text)
 
-print("hello world****===")
+print("hello world****=")
