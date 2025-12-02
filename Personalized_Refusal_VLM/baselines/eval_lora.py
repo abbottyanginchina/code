@@ -17,7 +17,7 @@ def pil_to_base64(img: Image.Image, format="PNG"):
     return f"data:image/{format.lower()};base64,{b64}"
     
 def chat_VLM(text, img=None):
-    img = Image.open("../jiaxi.jpg")
+    img = Image.open(img)
     img = pil_to_base64(img)
     # import pdb; pdb.set_trace()
 
@@ -35,7 +35,7 @@ def chat_VLM(text, img=None):
                         },
                         {
                             "type": "text",
-                            "text": "这张图片显示的是什么样的科技会议？分析参会者的表情和氛围"
+                            "text": text
                         }
                     ]
                 }
