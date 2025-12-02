@@ -24,8 +24,17 @@ def chat_VLM(text, img):
             {
                 "role": "user",
                 "content": [
-                    {"type": "image_url", "image_url": image_url},
-                    {"type": "text", "text": text},
+                    {
+                        "type": "image_url",
+                        "image_url": {
+                            "url": "https://example.com/image.jpg",
+                            "detail": "high"
+                        }
+                    },
+                    {
+                        "type": "text",
+                        "text": "描述这张图片的内容"
+                    }
                 ]
             }
         ]
