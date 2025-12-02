@@ -46,9 +46,11 @@ def chat_VLM(text, img=None):
 def generate_answer(cfg):
     original_data = get_all_datasets(cfg)
     without_sys_in_train_text = original_data["without_sys_in_train_text"]
+    import pdb; pdb.set_trace()
     in_train_images = original_data["in_train_images"]
 
     results = []
+    save_path = f"{cfg.data.path}_{cfg.data.dataset_name}_{cfg.data.subject}_lora"
     for i in range(len(without_sys_in_train_text)):
         text = without_sys_in_train_text[i]
         img = in_train_images[i]
@@ -68,8 +70,9 @@ def generate_answer(cfg):
             ]
         }
         results.append(item)
+        img.save(f"{save_path}/images/{i}.jpg")
 
-    save_path = f"{cfg.data.path}_{cfg.data.dataset_name}_{cfg.data.subject}_lora/{cfg.data.dataset_name}_{cfg.data.subject}_llm_answer.json"
+
     with open(save_path, "w", encoding="utf-8") as f:
         json.dump(results, f, indent=2, ensure_ascii=False)
 
