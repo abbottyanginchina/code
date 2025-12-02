@@ -24,7 +24,7 @@ def chat_VLM(text, img):
                     {
                         "type": "image_url",
                         "image_url": {
-                            "url": "https://example.com/image.jpg",
+                            "url": pil_to_b64(img),
                             "detail": "high"
                         }
                     },
