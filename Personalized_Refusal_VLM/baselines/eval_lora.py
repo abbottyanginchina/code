@@ -19,7 +19,6 @@ def pil_to_base64(img: Image.Image, format="PNG"):
 def chat_VLM(text, img=None):
     img = Image.open(img)
     img = pil_to_base64(img)
-    # import pdb; pdb.set_trace()
 
     response = client.chat.completions.create(
         model="Qwen/Qwen3-VL-32B-Instruct",
@@ -44,8 +43,6 @@ def chat_VLM(text, img=None):
 
     return response.choices[0].message.content
 def generate_answer(cfg):
-    response = chat_VLM(text="xx")
-    import pdb; pdb.set_trace()
     original_data = get_all_datasets(cfg)
     without_sys_in_train_text = original_data["without_sys_in_train_text"]
     in_train_images = original_data["in_train_images"]
@@ -54,7 +51,6 @@ def generate_answer(cfg):
         text = without_sys_in_train_text[i]
         img = in_train_images[i]
         response = chat_VLM(text, img)
-        import pdb; pdb.set_trace()
     print("Finished generating data")
 
 def parse_args():
