@@ -80,26 +80,26 @@ def generate_answer(cfg):
         results.append(item)
         img.save(f"{save_path}/images/{i}.jpg")
 
-    # for i in range(len(without_sys_out_train_text)):
-    #     text = without_sys_out_train_text[i]
-    #     img = out_train_images[i]
-    #     response = "Sorry, I cannot answer."
-    #     item = {
-    #         "id": f"train_{i}",
-    #         "image": f"{save_path}/images/{len(without_sys_out_train_text)+i}.jpg",  
-    #         "conversations": [
-    #             {
-    #                 "from": "user",
-    #                 "value": f"<image>\n{text}"
-    #             },
-    #             {
-    #                 "from": "assistant",
-    #                 "value": response
-    #             }
-    #         ]
-    #     }
-    #     results.append(item)
-    #     img.save(f"{save_path}/images/{len(without_sys_out_train_text)+i}.jpg")
+    for i in range(len(without_sys_out_train_text)):
+        text = without_sys_out_train_text[i]
+        img = out_train_images[i]
+        response = "Sorry, I cannot answer."
+        item = {
+            "id": f"train_{i}",
+            "image": f"{save_path}/images/{len(without_sys_out_train_text)+i}.jpg",  
+            "conversations": [
+                {
+                    "from": "user",
+                    "value": f"<image>\n{text}"
+                },
+                {
+                    "from": "assistant",
+                    "value": response
+                }
+            ]
+        }
+        results.append(item)
+        img.save(f"{save_path}/images/{len(without_sys_out_train_text)+i}.jpg")
 
     with open(os.path.join(save_path, "test_answer.json"), "w", encoding="utf-8") as f:
         json.dump(results, f, indent=2, ensure_ascii=False)
