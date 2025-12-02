@@ -2,4 +2,4 @@
 set -e
 export CUDA_VISIBLE_DEVICES=5
 
-python -m baselines.eval_lora
+python -m baselines.data_preparation
