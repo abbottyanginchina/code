@@ -57,6 +57,7 @@ def generate_answer(cfg):
     import pdb; pdb.set_trace()
     if not os.path.exists(save_path):
         os.makedirs(save_path)
+        os.makedirs(f"{save_path}/images")
 
     for i in tqdm(range(10), total=10, desc="Generating data"):
         text = without_sys_in_train_text[i]
