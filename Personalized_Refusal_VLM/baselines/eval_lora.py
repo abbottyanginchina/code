@@ -80,7 +80,7 @@ def generate_answer(cfg):
         results.append(item)
         img.save(f"{save_path}/images/{i}.jpg")
 
-    for i in range(len(without_sys_out_train_text)):
+    for i in tqdm(range(len(without_sys_out_train_text)), total=len(without_sys_out_train_text), desc="Generating data"):
         text = without_sys_out_train_text[i]
         img = out_train_images[i]
         response = "Sorry, I cannot answer."
