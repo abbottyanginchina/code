@@ -1,5 +1,6 @@
 import os
 import torch
+from PIL import Image
 from datasets import load_dataset
 from transformers import (
     LlavaProcessor,
