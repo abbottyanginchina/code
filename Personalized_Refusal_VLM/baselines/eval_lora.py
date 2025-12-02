@@ -38,7 +38,7 @@ def chat_VLM(text, img):
 
     return response.choices[0].message.content
 def generate_answer(cfg):
-    original_data = get_all_datasets(cfg)
+    # original_data = get_all_datasets(cfg)
     without_sys_in_train_text = original_data["without_sys_in_train_text"]
     in_train_images = original_data["in_train_images"]
 
