@@ -14,7 +14,7 @@ client = OpenAI(api_key="sk-qltonesphqmyxhcnmddxgpncphuneffamlnzzdehyjifwaog",
                 base_url="https://api.siliconflow.cn/v1")
 
 
-def local_VLM(text, img=None):
+def local_VLM(question, raw_image=None):
     conversation = [
                 {
                 "role": "user",
