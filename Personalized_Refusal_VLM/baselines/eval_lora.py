@@ -53,7 +53,7 @@ def generate_answer(cfg):
 
     results = []
     save_path = f"{cfg.data.path}_{cfg.data.dataset_name}_{cfg.data.subject}_lora"
-    for i in range(len(without_sys_in_train_text)):
+    for i in range(10):
         text = without_sys_in_train_text[i]
         img = in_train_images[i]
         response = chat_VLM(text, img)
