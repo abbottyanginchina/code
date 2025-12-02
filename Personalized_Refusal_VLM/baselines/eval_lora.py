@@ -15,6 +15,7 @@ client = OpenAI(api_key="sk-qltonesphqmyxhcnmddxgpncphuneffamlnzzdehyjifwaog",
                 base_url="https://api.siliconflow.cn/v1")
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
+model_path = "/gpuhome/jmy5701/gpu/models/llava-1.5-7b-hf"
 model = LlavaForConditionalGeneration.from_pretrained(
             model_path, 
             torch_dtype=torch.float16, 
