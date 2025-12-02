@@ -21,7 +21,7 @@ output_dir = "../../llava_lora_output"
 processor = LlavaProcessor.from_pretrained(model_name)
 model = LlavaForConditionalGeneration.from_pretrained(
     model_name,
-    torch_dtype="auto",
+    torch_dtype=torch.float16,
     low_cpu_mem_usage=True,
     device_map="auto",
 )
