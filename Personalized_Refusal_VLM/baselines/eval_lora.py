@@ -1,5 +1,6 @@
 import mmengine
 import base64
+import json
 import tempfile
 from io import BytesIO
 from openai import OpenAI
@@ -67,6 +68,10 @@ def generate_answer(cfg):
             ]
         }
         results.append(item)
+    with open(save_path, "w", encoding="utf-8") as f:
+        json.dump(results, f, indent=2, ensure_ascii=False)
+
+    print(f"Saved {len(results)} items to {save_path}")
         
     print("Finished generating data")
 
