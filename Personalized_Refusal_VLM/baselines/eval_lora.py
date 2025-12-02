@@ -4,6 +4,7 @@ from vti_utils.utils import get_all_datasets
 
 def generate_answer(cfg):
     original_data = get_all_datasets(cfg)
+    without_sys_in_train_text = original_data["without_sys_in_train_text"]
     import pdb; pdb.set_trace()
     print("Finished generating data")
 
