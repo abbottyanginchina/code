@@ -67,10 +67,9 @@ def preprocess(example):
         return_tensors="pt"
     )
     
-
     return {
-        "input_ids": processor.tokenizer(prompt).input_ids,
-        "pixel_values": image,
+        "input_ids": processed["input_ids"][0],
+        "pixel_values": processed["pixel_values"][0]
     }
 
 data = data.map(preprocess)
