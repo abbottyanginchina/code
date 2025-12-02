@@ -59,7 +59,7 @@ def generate_answer(cfg):
         os.makedirs(save_path)
         os.makedirs(f"{save_path}/images")
 
-    for i in tqdm(range(10), total=10, desc="Generating data"):
+    for i in tqdm(range(len(without_sys_in_train_text)), total=10, desc="Generating data"):
         text = without_sys_in_train_text[i]
         img = in_train_images[i]
         response = chat_VLM(text, img)
