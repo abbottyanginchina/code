@@ -27,7 +27,7 @@ def chat_VLM(text, img):
                         {
                             "type": "image_url",
                             "image_url": {
-                                "url": "../jiaxi.jpg"
+                                "url": "https://www.dole.com/sites/default/files/media/2025-01/banana-cavendish_0.png"
                             }
                         },
                         {
