@@ -25,7 +25,7 @@ def chat_VLM(text, img):
                         "type": "image_url",
                         "image_url": {
                             "url": '../jiaxi.jpg',
-                            "detail": "high"
+                            "detail": "auto"
                         }
                     },
                     {
