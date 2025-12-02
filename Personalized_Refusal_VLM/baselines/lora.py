@@ -60,6 +60,7 @@ def preprocess(example):
     )
 
     # Load image
+    image = Image.open(img_path).convert("RGB")
     image = processor.image_processor(img_path)
 
     return {
