@@ -120,11 +120,11 @@ def generate_answer(cfg):
             "image": f"{save_path}/images/{len(without_sys_out_train_text)+i}.jpg",  
             "conversations": [
                 {
-                    "from": "user",
+                    "role": "user",
                     "value": f"<image>\n{text}"
                 },
                 {
-                    "from": "assistant",
+                    "role": "assistant",
                     "value": response
                 }
             ]
