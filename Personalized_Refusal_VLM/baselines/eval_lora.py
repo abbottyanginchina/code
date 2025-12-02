@@ -79,6 +79,9 @@ def generate_answer(cfg):
         results.append(item)
         img.save(f"{save_path}/images/{i}.jpg")
 
+    with open(os.path.join(save_path, "test_answer.json"), "w", encoding="utf-8") as f:
+        json.dump(results, f, indent=2, ensure_ascii=False)
+
     for i in tqdm(range(len(without_sys_out_train_text)), total=len(without_sys_out_train_text), desc="Generating out of data"):
         text = without_sys_out_train_text[i]
         img = out_train_images[i]
