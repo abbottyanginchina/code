@@ -15,7 +15,7 @@ def pil_to_b64(img: 'PIL.Image.Image'):
     img.save(buffer, format="PNG")
     return base64.b64encode(buffer.getvalue()).decode()
 def chat_VLM(text, img=None):
-    img = Image.open("../jiaxi.jpy")
+    img = Image.open("../jiaxi.jpg")
     img = pil_to_b64(img)
 
     response = client.chat.completions.create(
