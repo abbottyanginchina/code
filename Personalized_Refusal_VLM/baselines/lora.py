@@ -11,7 +11,7 @@ from peft import LoraConfig, get_peft_model
 # ===========================
 # Config
 # ===========================
-model_name = "llava-hf/llava-1.5-7b-hf"
+model_name = "/gpuhome/jmy5701/gpu/models/llava-1.5-7b-hf"
 train_json = "/gpuhome/jmy5701/gpu/data/ScienceQA_biology_lora/test_answers.json"   # ← 你的数据路径
 output_dir = "../llava_lora_output"
 
