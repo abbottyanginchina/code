@@ -28,7 +28,7 @@ def chat_VLM(text, img=None):
                         {
                             "type": "image_url",
                             "image_url": {
-                                "url": "https://img1.baidu.com/it/u=1519058390,2589748143&fm=253&fmt=auto&app=120&f=JPEG?w=1200&h=800"
+                                "url": img
                             }
                         },
                         {
