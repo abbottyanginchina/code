@@ -19,21 +19,20 @@ def chat_VLM(text, img):
     img = Image.open('../jiaxi.jpg')
 
     response = client.chat.completions.create(
-        model="Qwen/Qwen3-VL-32B-Instruct",
-        messages=[
+    model="Qwen/Qwen2.5-VL-72B-Instruct",
+    messages=[
             {
                 "role": "user",
                 "content": [
                     {
                         "type": "image_url",
                         "image_url": {
-                            "url": '../jiaxi.jpg',
-                            "detail": "auto"
+                            "url": "https://example.com/tech-conference.jpg"
                         }
                     },
                     {
                         "type": "text",
-                        "text": "描述这张图片的内容"
+                        "text": "这张图片显示的是什么样的科技会议？分析参会者的表情和氛围"
                     }
                 ]
             }
