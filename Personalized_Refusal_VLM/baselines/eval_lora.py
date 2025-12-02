@@ -4,7 +4,7 @@ import tempfile
 from io import BytesIO
 from openai import OpenAI
 import argparse
-import PIL import Image
+from PIL import Image
 from vti_utils.utils import get_all_datasets
 
 client = OpenAI(api_key="sk-qltonesphqmyxhcnmddxgpncphuneffamlnzzdehyjifwaog", 
