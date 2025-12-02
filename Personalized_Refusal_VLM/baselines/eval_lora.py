@@ -79,7 +79,7 @@ def generate_answer(cfg):
         response = "Sorry, I cannot answer."
         item = {
             "id": f"train_{i}",
-            "image": img,  
+            "image": f"{save_path}/images/{len(without_sys_out_train_text)+i}.jpg",  
             "conversations": [
                 {
                     "from": "user",
