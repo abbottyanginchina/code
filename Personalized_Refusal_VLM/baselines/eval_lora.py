@@ -12,16 +12,19 @@ def pil_to_b64(img: 'PIL.Image.Image'):
     buffer = BytesIO()
     img.save(buffer, format="PNG")
     return base64.b64encode(buffer.getvalue()).decode()
-def chat_VLM(user_prompt):
-    img_b64 = pil_to_b64(pil_image)
+def chat_VLM(text, img):
+    img_b64 = pil_to_b64(img)
 
     response = client.chat.completions.create(
         model="deepseek-ai/DeepSeek-V3",
         messages=[
-            {'role': 'user', 
-            'content': user_prompt},
-            {'role': 'system', 
-            'content': sys_prompt}
+            {
+                "role": "user",
+                "content": [
+                    {"type": "input_image", "image": img_b64},
+                    {"type": "text", "text": text},
+                ]
+            }
         ]
     )
 
