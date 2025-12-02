@@ -6,7 +6,7 @@ def generate_answer(cfg):
     original_data = get_all_datasets(cfg)
 
 def parse_args():
-    parser = argparse.ArgumentParser(description="Get Activations")
+    parser = argparse.ArgumentParser(description="Lora baseline...")
     parser.add_argument(
         "--model_name",
         type=str,
