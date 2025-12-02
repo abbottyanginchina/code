@@ -27,7 +27,7 @@ def chat_VLM(text, img):
                         {
                             "type": "image_url",
                             "image_url": {
-                                "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSx_VhjQJqXuA8_yziUmqORStdNlOmPBjXzJMgHJLv1ZwIqj2F-q4SueE2kDkshklG_SAuHglWaXOZtPkj_w7JMkoz-A3jl39B18fYEIlSD&s=10"
+                                "url": "../jiaxi.jpg"
                             }
                         },
                         {
