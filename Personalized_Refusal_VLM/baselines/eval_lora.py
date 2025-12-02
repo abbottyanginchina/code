@@ -2,6 +2,7 @@ import mmengine
 import base64
 import os
 import json
+import torch
 import tempfile
 from io import BytesIO
 from openai import OpenAI
