@@ -46,8 +46,9 @@ def chat_VLM(text, img=None):
 def generate_answer(cfg):
     original_data = get_all_datasets(cfg)
     without_sys_in_train_text = original_data["without_sys_in_train_text"]
-    import pdb; pdb.set_trace()
+    without_sys_out_train_text = original_data["without_sys_out_train_text"]
     in_train_images = original_data["in_train_images"]
+    out_train_images = original_data["out_train_images"]
 
     results = []
     save_path = f"{cfg.data.path}_{cfg.data.dataset_name}_{cfg.data.subject}_lora"
