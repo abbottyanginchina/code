@@ -38,6 +38,7 @@ def local_VLM(question, raw_image=None):
         outputs = model.generate(**inputs, max_new_tokens=cfg.max_new_tokens, do_sample=False)
         generated_tokens = outputs[0, inputs['input_ids'].shape[1]:]
         answer = processor.decode(generated_tokens, skip_special_tokens=True)
+    return answer
 
 
 def pil_to_base64(img: Image.Image, format="PNG"):
