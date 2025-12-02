@@ -37,7 +37,7 @@ def generate_answer(cfg):
     for i in range(len(without_sys_in_train_text)):
         text = without_sys_in_train_text[i]
         img = in_train_images[i]
-        chat_VLM(text, img)
+        response = chat_VLM(text, img)
         import pdb; pdb.set_trace()
     print("Finished generating data")
 
