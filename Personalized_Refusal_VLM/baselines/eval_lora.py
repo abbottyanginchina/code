@@ -19,7 +19,7 @@ def pil_to_base64(img: Image.Image, format="PNG"):
 def chat_VLM(text, img=None):
     img = Image.open("../jiaxi.jpg")
     img = pil_to_base64(img)
-    import pdb; pdb.set_trace()
+    # import pdb; pdb.set_trace()
 
     response = client.chat.completions.create(
         model="Qwen/Qwen3-VL-32B-Instruct",
