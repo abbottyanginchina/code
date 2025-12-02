@@ -59,7 +59,7 @@ def generate_answer(cfg):
         os.makedirs(save_path)
         os.makedirs(f"{save_path}/images")
 
-    for i in tqdm(range(len(without_sys_in_train_text)), total=10, desc="Generating data"):
+    for i in tqdm(range(len(without_sys_in_train_text)), total=len(without_sys_in_train_text), desc="Generating in constraint data"):
         text = without_sys_in_train_text[i]
         img = in_train_images[i]
         response = chat_VLM(text, img)
@@ -80,7 +80,7 @@ def generate_answer(cfg):
         results.append(item)
         img.save(f"{save_path}/images/{i}.jpg")
 
-    for i in tqdm(range(len(without_sys_out_train_text)), total=len(without_sys_out_train_text), desc="Generating data"):
+    for i in tqdm(range(len(without_sys_out_train_text)), total=len(without_sys_out_train_text), desc="Generating out of data"):
         text = without_sys_out_train_text[i]
         img = out_train_images[i]
         response = "Sorry, I cannot answer."
