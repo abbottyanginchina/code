@@ -54,3 +54,18 @@ def parse_args():
 if __name__ == '__main__':
     config_path = f'configs/cfgs.yaml'
     cfg = mmengine.Config.fromfile(config_path)
+
+    if args.model_name is not None:
+        cfg.model_name = args.model_name
+    if args.model_path is not None:
+        cfg.model_path = args.model_path
+    if args.num_test is not None:
+        cfg.num_test = args.num_test
+    if args.num_train is not None:  
+        cfg.num_train = args.num_train
+    if args.dataset is not None:
+        cfg.data.dataset_name = args.dataset
+    if args.data_path is not None:
+        cfg.data.path = args.data_path
+    if args.subject is not None:
+        cfg.data.subject = args.subject
