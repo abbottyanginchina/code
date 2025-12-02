@@ -121,11 +121,11 @@ def generate_answer(cfg):
             "conversations": [
                 {
                     "role": "user",
-                    "value": f"<image>\n{text}"
+                    "content": f"<image>\n{text}"
                 },
                 {
                     "role": "assistant",
-                    "value": response
+                    "content": response
                 }
             ]
         }
