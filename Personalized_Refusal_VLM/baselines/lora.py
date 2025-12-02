@@ -48,7 +48,6 @@ model = get_peft_model(model, lora_config)
 # Load Dataset
 # ===========================
 data = load_dataset("json", data_files=train_json)['train']
-import pdb; pdb.set_trace()
 
 def preprocess(example):
     conv = example["conversations"]
@@ -62,7 +61,12 @@ def preprocess(example):
 
     # Load image
     image = Image.open(img_path).convert("RGB")
-    image = processor.image_processor(img_path)
+    processed = processor(
+        text=prompt,
+        images=image,
+        return_tensors="pt"
+    )
+    
 
     return {
         "input_ids": processor.tokenizer(prompt).input_ids,
