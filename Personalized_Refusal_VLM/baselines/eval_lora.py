@@ -89,7 +89,7 @@ def generate_answer(cfg):
     for i in tqdm(range(len(without_sys_in_train_text)), total=len(without_sys_in_train_text), desc="Generating in constraint data"):
         text = without_sys_in_train_text[i]
         img = in_train_images[i]
-        response = chat_VLM(text, img)
+        response = local_VLM(text, img)
         item = {
             "id": f"train_{i}",
             "image": f"{save_path}/images/{i}.jpg",
