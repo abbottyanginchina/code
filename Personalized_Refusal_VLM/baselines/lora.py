@@ -44,7 +44,7 @@ model = get_peft_model(model, lora_config)
 # ===========================
 # Load Dataset
 # ===========================
-data = load_dataset("json", data_files=train_json)["train"]
+data = load_dataset("json", data_files=train_json)
 
 def preprocess(example):
     conv = example["conversations"]
