@@ -51,6 +51,7 @@ data = load_dataset("json", data_files=train_json)['train']
 def preprocess(example):
     conv = example["conversations"]
     img_path = example["image"]
+    import pdb; pdb.set_trace()
 
     # Build chat template
     prompt = processor.apply_chat_template(
