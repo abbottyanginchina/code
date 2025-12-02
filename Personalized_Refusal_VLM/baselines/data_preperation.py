@@ -101,7 +101,10 @@ def generate_answer(cfg):
                 },
                 {
                     "role": "assistant",
-                    "content": response
+                    "content": [
+                                {"type": "image"},
+                                {"type": "text", "text": text},
+                            ],
                 }
             ]
         }
