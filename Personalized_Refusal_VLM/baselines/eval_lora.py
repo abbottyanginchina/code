@@ -10,13 +10,12 @@ from vti_utils.utils import get_all_datasets
 client = OpenAI(api_key="sk-qltonesphqmyxhcnmddxgpncphuneffamlnzzdehyjifwaog", 
                 base_url="https://api.siliconflow.cn/v1")
 
-def pil_to_b64(img, format="PNG"):
-    buf = BytesIO()
-    img.save(buf, format=format)
-    b = base64.b64encode(buf.getvalue()).decode()
-    return b
+def pil_to_b64(img: 'PIL.Image.Image'):
+    buffer = BytesIO()
+    img.save(buffer, format="PNG")
+    return base64.b64encode(buffer.getvalue()).decode()
 def chat_VLM(text, img=None):
-    img = Image.open("../jiaxi.jpg")
+    img = Image.open("../jiaxi.jpy")
     img = pil_to_b64(img)
 
     response = client.chat.completions.create(
@@ -28,7 +27,7 @@ def chat_VLM(text, img=None):
                         {
                             "type": "image_url",
                             "image_url": {
-                                "url": img
+                                "url": "https://img1.baidu.com/it/u=1519058390,2589748143&fm=253&fmt=auto&app=120&f=JPEG?w=1200&h=800"
                             }
                         },
                         {
