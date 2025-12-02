@@ -52,6 +52,7 @@ def parse_args():
     return parser.parse_args()
 
 if __name__ == '__main__':
+    args = parse_args()
     config_path = f'configs/cfgs.yaml'
     cfg = mmengine.Config.fromfile(config_path)
 
