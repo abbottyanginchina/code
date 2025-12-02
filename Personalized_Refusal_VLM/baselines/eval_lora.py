@@ -68,6 +68,8 @@ def generate_answer(cfg):
             ]
         }
         results.append(item)
+
+    save_path = f"{cfg.data.path}/{cfg.data.dataset_name}_{cfg.data.subject}_llm_answer.json"
     with open(save_path, "w", encoding="utf-8") as f:
         json.dump(results, f, indent=2, ensure_ascii=False)
 
