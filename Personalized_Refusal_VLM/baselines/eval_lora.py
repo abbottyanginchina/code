@@ -33,11 +33,11 @@ def local_VLM(question, raw_image=None):
                     ],
                 }, 
             ]
-        prompt = processor.apply_chat_template(conversation, add_generation_prompt=True)
-        inputs = processor(images=raw_image, text=prompt, return_tensors='pt').to(0, torch.float16)
-        outputs = model.generate(**inputs, max_new_tokens=cfg.max_new_tokens, do_sample=False)
-        generated_tokens = outputs[0, inputs['input_ids'].shape[1]:]
-        answer = processor.decode(generated_tokens, skip_special_tokens=True)
+    prompt = processor.apply_chat_template(conversation, add_generation_prompt=True)
+    inputs = processor(images=raw_image, text=prompt, return_tensors='pt').to(0, torch.float16)
+    outputs = model.generate(**inputs, max_new_tokens=cfg.max_new_tokens, do_sample=False)
+    generated_tokens = outputs[0, inputs['input_ids'].shape[1]:]
+    answer = processor.decode(generated_tokens, skip_special_tokens=True)
     return answer
 
 
