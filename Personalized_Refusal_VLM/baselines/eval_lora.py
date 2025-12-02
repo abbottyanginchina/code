@@ -47,10 +47,27 @@ def generate_answer(cfg):
     without_sys_in_train_text = original_data["without_sys_in_train_text"]
     in_train_images = original_data["in_train_images"]
 
+    results = []
     for i in range(len(without_sys_in_train_text)):
         text = without_sys_in_train_text[i]
         img = in_train_images[i]
         response = chat_VLM(text, img)
+        item = {
+            "id": f"train_{i}",
+            "image": img,   # 假设 img 是 "xxx.jpg"；如果是 PIL，请改成路径
+            "conversations": [
+                {
+                    "from": "user",
+                    "value": f"<image>\n{text}"
+                },
+                {
+                    "from": "assistant",
+                    "value": response
+                }
+            ]
+        }
+        results.append(item)
+        
     print("Finished generating data")
 
 def parse_args():
