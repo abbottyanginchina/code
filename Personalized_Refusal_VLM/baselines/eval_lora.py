@@ -7,6 +7,7 @@ from io import BytesIO
 from openai import OpenAI
 import argparse
 from PIL import Image
+from tqdm import tqdm
 from vti_utils.utils import get_all_datasets
 
 client = OpenAI(api_key="sk-qltonesphqmyxhcnmddxgpncphuneffamlnzzdehyjifwaog", 
