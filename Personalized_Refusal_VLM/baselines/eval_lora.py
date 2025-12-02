@@ -20,7 +20,7 @@ def pil_to_base64(img: Image.Image, format="PNG"):
     return f"data:image/{format.lower()};base64,{b64}"
     
 def chat_VLM(text, img=None):
-    img = Image.open(img)
+    # img = Image.open(img)
     img = pil_to_base64(img)
 
     response = client.chat.completions.create(
