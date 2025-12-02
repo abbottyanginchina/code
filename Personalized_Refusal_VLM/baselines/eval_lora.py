@@ -1,7 +1,6 @@
 import mmengine
 import base64
-tmp = tempfile.NamedTemporaryFile(suffix=".png", delete=False)
-    img.save(tmp.name)
+import tempfile
 from io import BytesIO
 from openai import OpenAI
 import argparse
@@ -17,6 +16,7 @@ def pil_to_b64(img: 'PIL.Image.Image'):
 def chat_VLM(text, img):
     tmp = tempfile.NamedTemporaryFile(suffix=".png", delete=False)
     img.save(tmp.name)
+    image_url = f"file://{tmp.name}"
 
     response = client.chat.completions.create(
         model="Qwen/Qwen3-VL-32B-Instruct",
@@ -24,7 +24,7 @@ def chat_VLM(text, img):
             {
                 "role": "user",
                 "content": [
-                    {"type": "input_image", "image": img_b64},
+                    {"type": "image_url", "image_url": image_url},
                     {"type": "text", "text": text},
                 ]
             }
