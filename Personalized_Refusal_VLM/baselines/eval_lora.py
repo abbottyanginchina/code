@@ -14,7 +14,7 @@ def pil_to_b64(img, format="PNG"):
     buf = BytesIO()
     img.save(buf, format=format)
     b = base64.b64encode(buf.getvalue()).decode()
-    return f"data:image/{format.lower()};base64,{b}"
+    return b
 def chat_VLM(text, img=None):
     img = Image.open("../jiaxi.jpg")
     img = pil_to_b64(img)
