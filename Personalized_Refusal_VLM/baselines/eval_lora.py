@@ -4,6 +4,7 @@ import tempfile
 from io import BytesIO
 from openai import OpenAI
 import argparse
+import PIL import Image
 from vti_utils.utils import get_all_datasets
 
 client = OpenAI(api_key="sk-qltonesphqmyxhcnmddxgpncphuneffamlnzzdehyjifwaog", 
@@ -14,7 +15,7 @@ def pil_to_b64(img: 'PIL.Image.Image'):
     img.save(buffer, format="PNG")
     return base64.b64encode(buffer.getvalue()).decode()
 def chat_VLM(text, img):
-    import PIL import Image
+    
     img = Image.open(img)
 
     response = client.chat.completions.create(
