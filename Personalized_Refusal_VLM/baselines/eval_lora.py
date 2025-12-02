@@ -53,7 +53,7 @@ def generate_answer(cfg):
     out_train_images = original_data["out_train_images"]
 
     results = []
-    save_path = f"{cfg.data.path}_{cfg.data.dataset_name}_{cfg.data.subject}_lora"
+    save_path = f"{cfg.data.path}/{cfg.data.dataset_name}_{cfg.data.subject}_lora"
     import pdb; pdb.set_trace()
     if not os.path.exists(save_path):
         os.makedirs(save_path)
