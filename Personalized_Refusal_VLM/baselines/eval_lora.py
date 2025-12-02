@@ -58,7 +58,7 @@ def generate_answer(cfg):
         response = chat_VLM(text, img)
         item = {
             "id": f"train_{i}",
-            "image": img,   # 假设 img 是 "xxx.jpg"；如果是 PIL，请改成路径
+            "image": f"{save_path}/images/{i}.jpg",
             "conversations": [
                 {
                     "from": "user",
