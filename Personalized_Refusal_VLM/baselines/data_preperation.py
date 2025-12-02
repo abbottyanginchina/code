@@ -97,7 +97,10 @@ def generate_answer(cfg):
             "conversations": [
                 {
                     "role": "user",
-                    "content": f"<image>\n{text}"
+                    "content": [
+                                {"type": "image"},
+                                {"type": "text", "text": text},
+                            ],
                 },
                 {
                     "role": "assistant",
