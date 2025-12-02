@@ -70,3 +70,5 @@ if __name__ == '__main__':
         cfg.data.path = args.data_path
     if args.subject is not None:
         cfg.data.subject = args.subject
+
+    generate_answer(cfg)
