@@ -13,6 +13,24 @@ from vti_utils.utils import get_all_datasets
 client = OpenAI(api_key="sk-qltonesphqmyxhcnmddxgpncphuneffamlnzzdehyjifwaog", 
                 base_url="https://api.siliconflow.cn/v1")
 
+
+def local_VLM(text, img=None):
+    conversation = [
+                {
+                "role": "user",
+                "content": [
+                    {"type": "text", "text": question},
+                    {"type": "image"},
+                    ],
+                }, 
+            ]
+        prompt = processor.apply_chat_template(conversation, add_generation_prompt=True)
+        inputs = processor(images=raw_image, text=prompt, return_tensors='pt').to(0, torch.float16)
+        outputs = model.generate(**inputs, max_new_tokens=cfg.max_new_tokens, do_sample=False)
+        generated_tokens = outputs[0, inputs['input_ids'].shape[1]:]
+        answer = processor.decode(generated_tokens, skip_special_tokens=True)
+
+
 def pil_to_base64(img: Image.Image, format="PNG"):
     buf = BytesIO()
     img.save(buf, format=format)
