@@ -38,7 +38,7 @@ def chat_VLM(text, img=None):
 
     return response.choices[0].message.content
 def generate_answer(cfg):
-    response = chat_VLM(text, img)
+    response = chat_VLM(text="xx")
     import pdb; pdb.set_trace()
     original_data = get_all_datasets(cfg)
     without_sys_in_train_text = original_data["without_sys_in_train_text"]
