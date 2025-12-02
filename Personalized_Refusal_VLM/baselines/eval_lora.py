@@ -17,6 +17,7 @@ def pil_to_b64(img: 'PIL.Image.Image'):
 def chat_VLM(text, img=None):
     img = Image.open("../jiaxi.jpg")
     img = pil_to_b64(img)
+    import pdb; pdb.set_trace()
 
     response = client.chat.completions.create(
         model="Qwen/Qwen3-VL-32B-Instruct",
