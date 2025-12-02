@@ -95,7 +95,7 @@ def generate_answer(cfg):
         results.append(item)
         img.save(f"{save_path}/images/{len(without_sys_out_train_text)+i}.jpg")
 
-    with open(, "w", encoding="utf-8") as f:
+    with open(os.path.join(save_path, "test_answer.json"), "w", encoding="utf-8") as f:
         json.dump(results, f, indent=2, ensure_ascii=False)
 
     print(f"Saved {len(results)} items to {save_path}")
