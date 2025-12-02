@@ -8,11 +8,19 @@ from openai import OpenAI
 import argparse
 from PIL import Image
 from tqdm import tqdm
+from transformers import LlavaForConditionalGeneration
 from vti_utils.utils import get_all_datasets
 
 client = OpenAI(api_key="sk-qltonesphqmyxhcnmddxgpncphuneffamlnzzdehyjifwaog", 
                 base_url="https://api.siliconflow.cn/v1")
 
+device = "cuda" if torch.cuda.is_available() else "cpu"
+model = LlavaForConditionalGeneration.from_pretrained(
+            model_path, 
+            torch_dtype=torch.float16, 
+            low_cpu_mem_usage=True, 
+        ).to(device)
+processor = AutoProcessor.from_pretrained(model_path)
 
 def local_VLM(question, raw_image=None):
     conversation = [
