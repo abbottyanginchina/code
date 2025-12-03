@@ -236,6 +236,7 @@ def inference():
     
     # 建议切换到评估模式
     model.eval()
+    import pdb; pdb.set_trace()
 
     # -----------------------------
     # 准备推理输入
