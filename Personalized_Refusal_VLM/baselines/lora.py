@@ -10,7 +10,7 @@ from transformers import (
     Trainer,
 )
 from peft import LoraConfig, get_peft_model, PeftModel
-from ..vti_utils.utils import get_all_datasets
+from vti_utils.utils import get_all_datasets
 
 class LLaVADataset(Dataset):
     def __init__(self, json_path, processor, max_length=2048): # <-- 新增 max_length 参数
@@ -127,7 +127,7 @@ def train():
     # -----------------------------
     model_name = "/gpuhome/jmy5701/gpu/models/llava-1.5-7b-hf"
     json_path = "/gpuhome/jmy5701/gpu/data/ScienceQA_biology_lora/test_answer.json"           # ← 你的文件
-    output_dir = "../../llava_lora_output"
+    output_dir = "../llava_lora_output"
 
     # -----------------------------
     # Processor & Model
