@@ -256,7 +256,7 @@ def inference(cfg):
         output_text = processor.decode(output_ids[0], skip_special_tokens=True)
         print(output_text)
 
-    print("Inference on in-test data:")
+    print("Inference on in-test data:-----------")
 
     for i in range(len(in_test_text)):
         inputs = processor(
