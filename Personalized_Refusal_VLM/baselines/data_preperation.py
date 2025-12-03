@@ -101,10 +101,7 @@ def generate_answer(cfg):
                 },
                 {
                     "from": "assistant",
-                    "value": [
-                            {"type": "text", 
-                            "text": response},
-                            ],
+                    "value": response
                 }
             ]
         }
