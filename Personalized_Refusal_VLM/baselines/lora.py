@@ -111,11 +111,12 @@ def train():
         print(f"===== Epoch {epoch} =====")
         for batch in dataloader:
 
-            # Move to GPU + FP16
-            batch = {
-                k: v.to(model.device, dtype=torch.float16)
-                for k, v in batch.items()
-            }
+            # 正确的 GPU / FP16 搬运方式
+            for k in batch:
+                if k == "pixel_values":
+                    batch[k] = batch[k].to(model.device, dtype=torch.float16)
+                else:
+                    batch[k] = batch[k].to(model.device)
 
             outputs = model(
                 input_ids=batch["input_ids"],
