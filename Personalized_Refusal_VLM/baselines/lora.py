@@ -30,9 +30,7 @@ class LLaVADataset(Dataset):
     def __init__(self, json_path, processor):
         with open(json_path, "r", encoding="utf-8") as f:
             self.data = json.load(f) 
-
         self.processor = processor
-
     def __len__(self):
         return len(self.data)
     def __getitem__(self, idx):
