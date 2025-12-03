@@ -12,14 +12,12 @@ from transformers import (
 from peft import LoraConfig, get_peft_model
 
 
-# ======================================================
-# Dataset（适配你的“human/gpt”格式）
-# ======================================================
 class LLaVADataset(Dataset):
-    def __init__(self, json_file, processor):
-        with open(json_file, "r", encoding="utf-8") as f:
+    def __init__(self, json_path, processor):
+        with open(json_path, "r", encoding="utf-8") as f:
             self.data = json.load(f)
         self.processor = processor
+        self.tokenizer = processor.tokenizer
 
     def __len__(self):
         return len(self.data)
@@ -27,18 +25,18 @@ class LLaVADataset(Dataset):
     def __getitem__(self, idx):
         item = self.data[idx]
 
-        # ---- image ----
+        # image
         image = Image.open(item["image"]).convert("RGB")
 
-        # ---- conversation ----
         conv = item["conversations"]
-        user_msg = conv[0]["value"]     # "from": "human"
-        assistant_msg = conv[1]["value"]  # "from": "gpt"
 
-        # prompt (已经包含 <image>)
+        user_msg = conv[0]["value"]
+        assistant_msg = conv[1]["value"]
+
+        # prompt = user message (already has <image>)
         prompt = user_msg
 
-        # ---- encode input ----
+        # ----- encode image + text input -----
         inputs = self.processor(
             images=image,
             text=prompt,
@@ -47,18 +45,19 @@ class LLaVADataset(Dataset):
             return_tensors="pt",
         )
 
-        # ---- encode labels ----
-        with self.processor.as_target_processor():
-            labels = self.processor(
-                text=assistant_msg,
-                padding="max_length",
-                truncation=True,
-                return_tensors="pt",
-            )["input_ids"]
+        # ----- encode label (assistant) -----
+        labels = self.tokenizer(
+            assistant_msg,
+            padding="max_length",
+            truncation=True,
+            return_tensors="pt",
+        )["input_ids"]
+
+        # 将 padding 的 token 设为 -100，避免 loss 计算
+        labels[labels == self.tokenizer.pad_token_id] = -100
 
         inputs["labels"] = labels
 
-        # Trainer 要求每个 key 是 1D，而不是 [1, seq]
         return {k: v.squeeze(0) for k, v in inputs.items()}
 
 
