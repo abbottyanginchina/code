@@ -3,145 +3,137 @@ import json
 import torch
 from torch.utils.data import Dataset, DataLoader
 from PIL import Image
-
 from transformers import (
+    LlavaProcessor,
     LlavaForConditionalGeneration,
-    AutoProcessor,
+    TrainingArguments,
+    Trainer,
 )
 from peft import LoraConfig, get_peft_model
 
 
-# ===============================================
-# config
-# ===============================================
-model_name = "/gpuhome/jmy5701/gpu/models/llava-1.5-7b-hf"
-train_json = "/gpuhome/jmy5701/gpu/data/ScienceQA_biology_lora/test_answer.json"
-output_dir = "../../llava_lora_output"
-
-BATCH_SIZE = 1
-LR = 2e-4
-EPOCHS = 1
-
-
-# ===============================================
-# dataset：只返回 img 和 text，不用 processor
-# ===============================================
+# ======================================================
+# Dataset（适配你的“human/gpt”格式）
+# ======================================================
 class LLaVADataset(Dataset):
-    def __init__(self, json_path):
-        with open(json_path, "r", encoding="utf-8") as f:
+    def __init__(self, json_file, processor):
+        with open(json_file, "r", encoding="utf-8") as f:
             self.data = json.load(f)
+        self.processor = processor
 
     def __len__(self):
         return len(self.data)
 
     def __getitem__(self, idx):
-        d = self.data[idx]
+        item = self.data[idx]
 
-        # image
-        image_path = d.get("image", "")
-        if image_path and os.path.exists(image_path):
-            img = Image.open(image_path).convert("RGB")
-        else:
-            img = None
+        # ---- image ----
+        image = Image.open(item["image"]).convert("RGB")
 
-        # conversation -> string
-        conv = ""
-        for c in d["conversations"]:
-            if c["from"] == "human":
-                conv += "USER: " + c["value"] + "\n"
-            else:
-                conv += "ASSISTANT: " + c["value"] + "\n"
+        # ---- conversation ----
+        conv = item["conversations"]
+        user_msg = conv[0]["value"]     # "from": "human"
+        assistant_msg = conv[1]["value"]  # "from": "gpt"
 
-        return {"image": img, "text": conv}
+        # prompt (已经包含 <image>)
+        prompt = user_msg
+
+        # ---- encode input ----
+        inputs = self.processor(
+            images=image,
+            text=prompt,
+            padding="max_length",
+            truncation=True,
+            return_tensors="pt",
+        )
+
+        # ---- encode labels ----
+        with self.processor.as_target_processor():
+            labels = self.processor(
+                text=assistant_msg,
+                padding="max_length",
+                truncation=True,
+                return_tensors="pt",
+            )["input_ids"]
+
+        inputs["labels"] = labels
+
+        # Trainer 要求每个 key 是 1D，而不是 [1, seq]
+        return {k: v.squeeze(0) for k, v in inputs.items()}
 
 
-# ===============================================
-# load model (FP16, LLaVA-HF)
-# ===============================================
-def load_model():
-    print("Loading LLaVA-1.5 FP16...")
+# ======================================================
+# 主函数
+# ======================================================
+def main():
+    # -----------------------------
+    # 配置
+    # -----------------------------
+    model_name = "/gpuhome/jmy5701/gpu/models/llava-1.5-7b-hf"
+    json_path = "./train.json"           # ← 你的文件
+    output_dir = "./llava_lora_output"
+
+    # -----------------------------
+    # Processor & Model
+    # -----------------------------
+    processor = LlavaProcessor.from_pretrained(model_name)
 
     model = LlavaForConditionalGeneration.from_pretrained(
         model_name,
         torch_dtype=torch.float16,
-        device_map="auto",
         low_cpu_mem_usage=True,
+        device_map="auto",
     )
 
-    processor = AutoProcessor.from_pretrained(model_name)
-
-    # LoRA config
-    lora_cfg = LoraConfig(
+    # -----------------------------
+    # LoRA 配置
+    # -----------------------------
+    lora_config = LoraConfig(
         r=16,
         lora_alpha=32,
+        target_modules=["q_proj", "k_proj", "v_proj", "o_proj"],
         lora_dropout=0.05,
-        target_modules=["q_proj", "v_proj"],  # llama attention
-        bias="none",
         task_type="CAUSAL_LM",
     )
 
-    model = get_peft_model(model, lora_cfg)
+    model = get_peft_model(model, lora_config)
     model.print_trainable_parameters()
 
-    return model, processor
+    # -----------------------------
+    # Dataset
+    # -----------------------------
+    dataset = LLaVADataset(json_path, processor)
 
+    # -----------------------------
+    # Trainer 参数
+    # -----------------------------
+    training_args = TrainingArguments(
+        output_dir=output_dir,
+        per_device_train_batch_size=1,
+        gradient_accumulation_steps=4,
+        learning_rate=2e-4,
+        num_train_epochs=1,
+        fp16=True,
+        logging_steps=10,
+        save_steps=200,
+        save_total_limit=2,
+        remove_unused_columns=False,   # ← 必须，否则输入会被 Trainer 过滤掉
+    )
 
-# ===============================================
-# train
-# ===============================================
-def train():
-    model, processor = load_model()
+    trainer = Trainer(
+        model=model,
+        args=training_args,
+        train_dataset=dataset,
+    )
 
-    dataset = LLaVADataset(train_json)
-    dataloader = DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=True)
+    trainer.train()
 
-    optimizer = torch.optim.AdamW(model.parameters(), lr=LR)
-
-    model.train()
-
-    for epoch in range(EPOCHS):
-        print(f"===== Epoch {epoch} =====")
-        for batch in dataloader:
-            images = [item["image"] for item in batch]
-            texts = [item["text"] for item in batch]
-
-            # 用 processor 统一构建 input_ids / pixel_values
-            inputs = processor(
-                images=images,
-                text=texts,
-                return_tensors="pt",
-                padding=True,
-                truncation=True,
-            )
-
-            # 送到 GPU：只把 pixel_values 转成 fp16，token 维持 long
-            if "pixel_values" in inputs:
-                inputs["pixel_values"] = inputs["pixel_values"].to(
-                    model.device, dtype=torch.float16
-                )
-            if "input_ids" in inputs:
-                inputs["input_ids"] = inputs["input_ids"].to(model.device)
-            if "attention_mask" in inputs:
-                inputs["attention_mask"] = inputs["attention_mask"].to(model.device)
-
-            outputs = model(
-                input_ids=inputs["input_ids"],
-                attention_mask=inputs["attention_mask"],
-                pixel_values=inputs.get("pixel_values", None),
-                labels=inputs["input_ids"],
-            )
-
-            loss = outputs.loss
-            loss.backward()
-
-            optimizer.step()
-            optimizer.zero_grad()
-
-            print("Loss:", loss.item())
-
-    print("Saving LoRA to", output_dir)
-    model.save_pretrained(output_dir)
+    # -----------------------------
+    # 保存 LoRA
+    # -----------------------------
+    trainer.save_model(output_dir)
+    print("LoRA saved to:", output_dir)
 
 
 if __name__ == "__main__":
-    train()
+    main()
