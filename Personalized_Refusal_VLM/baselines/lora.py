@@ -196,7 +196,7 @@ def inference(cfg):
     # -----------------------------
     # 配置
     # -----------------------------
-    model_name = f"/gpuhome/jmy5701/gpu/models/{cfg.model_name}_{cfg.data.dataset}_{cfg.data.subject}"
+    model_name = f"/gpuhome/jmy5701/gpu/models/{cfg.model_name}_{cfg.data.dataset_name}_{cfg.data.subject}"
     lora_dir = f"../{cfg.model_name}_lora_output" # LoRA 权重保存的路径
     
     # -----------------------------
