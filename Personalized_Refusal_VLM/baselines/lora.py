@@ -262,14 +262,7 @@ def inference():
                 # temperature=0.7,           # 如果启用采样，可以设置温度
             )
         output_text = processor.decode(output_ids[0], skip_special_tokens=True)
-    
-    # -----------------------------
-    # 结果打印
-    # -----------------------------
-    print("\n--- Inference Result ---")
-    print(f"Prompt: {SAMPLE_PROMPT.replace('<image>\\n', '[Image] ')}")
-    print(f"Generated Response: {output_text.strip()}")
-    print("------------------------")
+        print(ouptut_text)
 
 if __name__ == "__main__":
     # train()
