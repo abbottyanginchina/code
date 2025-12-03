@@ -134,10 +134,7 @@ def generate_answer(cfg):
                 # },
                 {
                     "role": "user",
-                    "content": [
-                                {"type": "image"},
-                                {"type": "text", "text": text},
-                            ],
+                    "content": f"{text}\n<image>"
                 },
                 {
                     "role": "assistant",
