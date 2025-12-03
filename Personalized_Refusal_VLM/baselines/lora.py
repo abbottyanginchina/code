@@ -30,7 +30,6 @@ class LLaVADataset(Dataset):
     def __init__(self, json_path, processor):
         with open(json_path, "r", encoding="utf-8") as f:
             self.data = json.load(f) 
-        import pdb; pdb.set_trace()
 
         self.processor = processor
 
