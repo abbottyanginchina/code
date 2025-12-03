@@ -11,7 +11,7 @@ from transformers import (
 )
 from peft import LoraConfig, get_peft_model, PeftModel
 
-os.append("../")
+os.path.append("../")
 from vti_utils.utils import get_all_datasets
 
 class LLaVADataset(Dataset):
