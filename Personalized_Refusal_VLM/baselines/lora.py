@@ -158,6 +158,7 @@ def main():
     # Dataset
     # -----------------------------
     dataset = LLaVADataset(json_path, processor)
+    import pdb; pdb.set_trace()
 
     # -----------------------------
     # Trainer 参数
