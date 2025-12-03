@@ -13,7 +13,7 @@ from peft import LoraConfig, get_peft_model
 
 
 class LLaVADataset(Dataset):
-    def __init__(self, json_path, processor):
+        def __init__(self, json_path, processor):
         self.data = json.load(open(json_path, "r"))
         self.processor = processor
         self.tokenizer = processor.tokenizer
