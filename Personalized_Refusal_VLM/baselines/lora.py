@@ -58,7 +58,7 @@ def preprocess(example):
         conv,
         add_generation_prompt=True
     )
-    import pdb; pdb.set_trace()
+    # import pdb; pdb.set_trace()
 
     # Load image
     image = Image.open(img_path).convert("RGB")
