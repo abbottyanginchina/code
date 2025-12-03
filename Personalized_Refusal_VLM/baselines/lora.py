@@ -254,7 +254,8 @@ def inference(cfg):
                 do_sample=False,             # 关闭采样，进行确定性解码
                 # temperature=0.7,           # 如果启用采样，可以设置温度
             )
-        output_text = processor.decode(output_ids[0], skip_special_tokens=True)
+        generated_only_ids = output_ids[0][input_len:]
+        output_text = processor.decode(generated_only_ids, skip_special_tokens=True)
         print(output_text)
 
     print("Inference on in-test data:-----------")
