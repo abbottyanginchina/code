@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
-export CUDA_VISIBLE_DEVICES=5
+export CUDA_VISIBLE_DEVICES=5,6
 
 num_train=200
 num_test=200
