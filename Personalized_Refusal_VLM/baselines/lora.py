@@ -12,7 +12,7 @@ from peft import LoraConfig, get_peft_model
 
 
 # ===============================================
-# 你的配置（100% 按你给的）
+# config
 # ===============================================
 model_name = "/gpuhome/jmy5701/gpu/models/llava-1.5-7b-hf"
 train_json = "/gpuhome/jmy5701/gpu/data/ScienceQA_biology_lora/test_answer.json"
@@ -24,26 +24,27 @@ EPOCHS = 1
 
 
 # ===============================================
-# dataset
+# dataset：只返回 img 和 text，不用 processor
 # ===============================================
 class LLaVADataset(Dataset):
-    def __init__(self, json_path, processor):
+    def __init__(self, json_path):
         with open(json_path, "r", encoding="utf-8") as f:
-            self.data = json.load(f) 
-        self.processor = processor
+            self.data = json.load(f)
+
     def __len__(self):
         return len(self.data)
+
     def __getitem__(self, idx):
         d = self.data[idx]
 
-        # -------- image --------
+        # image
         image_path = d.get("image", "")
         if image_path and os.path.exists(image_path):
             img = Image.open(image_path).convert("RGB")
         else:
             img = None
 
-        # -------- conversation --------
+        # conversation -> string
         conv = ""
         for c in d["conversations"]:
             if c["from"] == "human":
@@ -51,16 +52,7 @@ class LLaVADataset(Dataset):
             else:
                 conv += "ASSISTANT: " + c["value"] + "\n"
 
-        # Processor 会自动构建 input_ids / pixel_values
-        batch = self.processor(
-            images=img,
-            text=conv,
-            return_tensors="pt",
-            padding=True,
-            truncation=True,
-        )
-
-        return batch
+        return {"image": img, "text": conv}
 
 
 # ===============================================
@@ -78,12 +70,12 @@ def load_model():
 
     processor = AutoProcessor.from_pretrained(model_name)
 
-    # -------- LoRA config --------
+    # LoRA config
     lora_cfg = LoraConfig(
         r=16,
         lora_alpha=32,
         lora_dropout=0.05,
-        target_modules=["q_proj", "v_proj"],  # llama modules
+        target_modules=["q_proj", "v_proj"],  # llama attention
         bias="none",
         task_type="CAUSAL_LM",
     )
@@ -100,7 +92,7 @@ def load_model():
 def train():
     model, processor = load_model()
 
-    dataset = LLaVADataset(train_json, processor)
+    dataset = LLaVADataset(train_json)
     dataloader = DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=True)
 
     optimizer = torch.optim.AdamW(model.parameters(), lr=LR)
@@ -110,19 +102,33 @@ def train():
     for epoch in range(EPOCHS):
         print(f"===== Epoch {epoch} =====")
         for batch in dataloader:
+            images = [item["image"] for item in batch]
+            texts = [item["text"] for item in batch]
 
-            # 正确的 GPU / FP16 搬运方式
-            for k in batch:
-                if k == "pixel_values":
-                    batch[k] = batch[k].to(model.device, dtype=torch.float16)
-                else:
-                    batch[k] = batch[k].to(model.device)
+            # 用 processor 统一构建 input_ids / pixel_values
+            inputs = processor(
+                images=images,
+                text=texts,
+                return_tensors="pt",
+                padding=True,
+                truncation=True,
+            )
+
+            # 送到 GPU：只把 pixel_values 转成 fp16，token 维持 long
+            if "pixel_values" in inputs:
+                inputs["pixel_values"] = inputs["pixel_values"].to(
+                    model.device, dtype=torch.float16
+                )
+            if "input_ids" in inputs:
+                inputs["input_ids"] = inputs["input_ids"].to(model.device)
+            if "attention_mask" in inputs:
+                inputs["attention_mask"] = inputs["attention_mask"].to(model.device)
 
             outputs = model(
-                input_ids=batch["input_ids"],
-                attention_mask=batch["attention_mask"],
-                pixel_values=batch["pixel_values"],
-                labels=batch["input_ids"],
+                input_ids=inputs["input_ids"],
+                attention_mask=inputs["attention_mask"],
+                pixel_values=inputs.get("pixel_values", None),
+                labels=inputs["input_ids"],
             )
 
             loss = outputs.loss
