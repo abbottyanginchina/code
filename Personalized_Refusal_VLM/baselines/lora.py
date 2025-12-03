@@ -247,39 +247,21 @@ def inference():
     in_test_images = original_data["in_test_images"]
     out_test_images = original_data["out_test_images"]
 
+    for i in range(len(in_test_text)):
+        inputs = processor(
+            images=in_test_images[i], 
+            text=in_test_text[i], 
+            return_tensors="pt"
+        ).to(model.device, dtype=torch.float16)
 
-
-    print(f"Preparing input for inference with image: {SAMPLE_IMAGE_PATH}")
-    try:
-        image = Image.open(SAMPLE_IMAGE_PATH).convert("RGB")
-    except FileNotFoundError:
-        print("❌ 错误: 无法打开示例图片。请检查路径。")
-        return
-    
-    # 使用 processor 编码输入
-    inputs = processor(
-        images=image, 
-        text=SAMPLE_PROMPT, 
-        return_tensors="pt"
-    ).to(model.device, dtype=torch.float16)
-
-    # -----------------------------
-    # 模型生成
-    # -----------------------------
-    print("Generating response...")
-    with torch.no_grad():
-        output_ids = model.generate(
-            **inputs,
-            max_new_tokens=128,          # 限制生成的最大长度
-            do_sample=False,             # 关闭采样，进行确定性解码
-            # temperature=0.7,           # 如果启用采样，可以设置温度
-        )
-
-    # -----------------------------
-    # 解码输出
-    # -----------------------------
-    # LlavaProcessor.decode 会自动处理生成的序列
-    output_text = processor.decode(output_ids[0], skip_special_tokens=True)
+        with torch.no_grad():
+            output_ids = model.generate(
+                **inputs,
+                max_new_tokens=128,          # 限制生成最大的长度
+                do_sample=False,             # 关闭采样，进行确定性解码
+                # temperature=0.7,           # 如果启用采样，可以设置温度
+            )
+        output_text = processor.decode(output_ids[0], skip_special_tokens=True)
     
     # -----------------------------
     # 结果打印
