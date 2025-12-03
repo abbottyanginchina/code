@@ -128,7 +128,7 @@ def train(cfg):
     # 配置
     # -----------------------------
     model_name = f"/gpuhome/jmy5701/gpu/models/{cfg.model_name}"
-    json_path = f"/gpuhome/jmy5701/gpu/data/{cfg.data.dataset}_{cfg.data.subject}_lora/test_answer.json"           # ← 你的文件
+    json_path = f"/gpuhome/jmy5701/gpu/data/{cfg.data.dataset_name}_{cfg.data.subject}_lora/test_answer.json"           # ← 你的文件
     output_dir = f"../{cfg.model_name}_lora_output"
 
     # -----------------------------
