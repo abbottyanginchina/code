@@ -123,11 +123,11 @@ class LLaVADataset(Dataset):
 # ======================================================
 # 主函数
 # ======================================================
-def train():
+def train(cfg):
     # -----------------------------
     # 配置
     # -----------------------------
-    model_name = "/gpuhome/jmy5701/gpu/models/llava-1.5-7b-hf"
+    model_name = f"/gpuhome/jmy5701/gpu/models/{cfg.model_name}"
     json_path = "/gpuhome/jmy5701/gpu/data/ScienceQA_biology_lora/test_answer.json"           # ← 你的文件
     output_dir = "../llava_lora_output"
 
@@ -368,7 +368,7 @@ if __name__ == "__main__":
         cfg.data.subject = args.subject
 
 
-    # train()
+    train(cfg)
 
     inference(cfg)
 
