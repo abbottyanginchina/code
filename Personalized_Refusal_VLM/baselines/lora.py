@@ -14,8 +14,7 @@ from peft import LoraConfig, get_peft_model
 
 class LLaVADataset(Dataset):
     def __init__(self, json_path, processor):
-        with open(json_path, "r", encoding="utf-8") as f:
-            self.data = json.load(f)
+        self.data = json.load(open(json_path, "r"))
         self.processor = processor
         self.tokenizer = processor.tokenizer
 
@@ -25,40 +24,64 @@ class LLaVADataset(Dataset):
     def __getitem__(self, idx):
         item = self.data[idx]
 
-        # image
         image = Image.open(item["image"]).convert("RGB")
 
         conv = item["conversations"]
-
         user_msg = conv[0]["value"]
         assistant_msg = conv[1]["value"]
 
-        # prompt = user message (already has <image>)
-        prompt = user_msg
+        # prompt (<image> 已包含)
+        full_prompt = user_msg + "\nASSISTANT: "
+        full_answer = assistant_msg
 
-        # ----- encode image + text input -----
-        inputs = self.processor(
-            images=image,
-            text=prompt,
-            padding="max_length",
-            truncation=True,
-            return_tensors="pt",
-        )
-
-        # ----- encode label (assistant) -----
-        labels = self.tokenizer(
-            assistant_msg,
-            padding="max_length",
-            truncation=True,
-            return_tensors="pt",
+        # -------------------------
+        # 1) tokenize prompt
+        # -------------------------
+        prompt_ids = self.tokenizer(
+            full_prompt,
+            add_special_tokens=False
         )["input_ids"]
 
-        # 将 padding 的 token 设为 -100，避免 loss 计算
-        labels[labels == self.tokenizer.pad_token_id] = -100
+        # -------------------------
+        # 2) tokenize answer
+        # -------------------------
+        answer_ids = self.tokenizer(
+            full_answer,
+            add_special_tokens=False
+        )["input_ids"]
 
-        inputs["labels"] = labels
+        # -------------------------
+        # 3) 合并：input = prompt + answer
+        # -------------------------
+        input_ids = prompt_ids + answer_ids
 
-        return {k: v.squeeze(0) for k, v in inputs.items()}
+        # -------------------------
+        # 4) 构造 labels
+        #    - prompt 部分 = -100
+        #    - answer 部分 = answer_ids
+        # -------------------------
+        labels = [-100] * len(prompt_ids) + answer_ids
+
+        # pad 到固定长度（随便给一个，比如 2048，不要太小）
+        max_len = 2048
+        input_ids = input_ids[:max_len]
+        labels = labels[:max_len]
+
+        padding_len = max_len - len(input_ids)
+
+        input_ids = input_ids + [self.tokenizer.pad_token_id] * padding_len
+        labels = labels + [-100] * padding_len
+
+        # -------------------------
+        # image encoding
+        # -------------------------
+        image_tensor = self.processor.image_processor(image, return_tensors="pt")["pixel_values"][0]
+
+        return {
+            "input_ids": torch.tensor(input_ids),
+            "labels": torch.tensor(labels),
+            "pixel_values": image_tensor,   # LLaVA 必须加这个字段
+        }
 
 
 # ======================================================
