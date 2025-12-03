@@ -240,6 +240,9 @@ def inference(cfg):
     out_test_images = original_data["out_test_images"]
 
     results = []
+    answers_file = f"../baseline_results/{cfg.model_name}_{cfg.data.dataset_name}_{cfg.data.subject}/out_of_constraint_answer.jsonl"
+    os.makedirs(os.path.dirname(answers_file), exist_ok=True)
+    ans_file = open(answers_file, "w")
     for i in range(len(out_test_text)):
         inputs = processor(
             images=out_test_images[i], 
@@ -257,10 +260,15 @@ def inference(cfg):
             )
         generated_only_ids = output_ids[0][input_len:]
         output_text = processor.decode(generated_only_ids, skip_special_tokens=True)
-        results.append({
+        
+        result = {
             "response": output_text,
             "question": out_test_text[i],
-        })
+        }
+        ans_file.write(json.dumps(result) + "\n")
+        ans_file.flush()
+        
+        
         print(output_text)
 
     print("Inference on in-test data:-----------")
