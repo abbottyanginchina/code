@@ -134,7 +134,10 @@ def generate_answer(cfg):
                 },
                 {
                     "role": "assistant",
-                    "content": response
+                    "content": [
+                            {"type": "text", 
+                            "text": response},
+                            ],
                 }
             ]
         }
