@@ -199,16 +199,6 @@ def inference(cfg):
     model_name = "/gpuhome/jmy5701/gpu/models/llava-1.5-7b-hf"
     lora_dir = "../llava_lora_output" # LoRA 权重保存的路径
     
-    # 假设您的数据集中有这样一个样本的路径和问题
-    # 实际使用时，请替换为真实可用的图像路径和问题
-    # 如果您的 train.py 运行成功，请确保使用 training set 中的一个图片路径。
-    # SAMPLE_IMAGE_PATH = "/path/to/your/test/image.jpg" 
-    # SAMPLE_PROMPT = "<image>\nWhat is the main biological concept shown in this image?"
-
-    # if not os.path.exists(SAMPLE_IMAGE_PATH):
-    #     print(f"⚠️ 警告: 示例图片路径 '{SAMPLE_IMAGE_PATH}' 不存在。请替换为实际路径进行测试。")
-    #     return
-
     # -----------------------------
     # Processor & Model
     # -----------------------------
