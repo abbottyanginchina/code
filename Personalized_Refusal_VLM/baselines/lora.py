@@ -22,53 +22,53 @@ class LLaVADataset(Dataset):
         # 确保返回正确的长度
         return len(self.data)
 
-    def __getitem__(self, idx):
-        item = self.data[idx]
+    # def __getitem__(self, idx):
+    #     item = self.data[idx]
 
-        image = Image.open(item["image"]).convert("RGB")
+    #     image = Image.open(item["image"]).convert("RGB")
 
-        conv = item["conversations"]
-        user_msg = conv[0]["value"]            # e.g. "<image>\nDescribe…"
-        assistant_msg = conv[1]["value"]
+    #     conv = item["conversations"]
+    #     user_msg = conv[0]["value"]            # e.g. "<image>\nDescribe…"
+    #     assistant_msg = conv[1]["value"]
 
-        # -------------------------------
-        # 1）processor 自动生成 input_ids (使用统一的 max_length)
-        # -------------------------------
-        # 注意：对于 Llava 模型，文本是 user_msg + assistant_msg
-        # 但是这里您只用 user_msg 传入 processor，这是 Llava 官方微调的常见做法。
-        # 这里的 max_length 确保了 inputs['input_ids'] 的长度固定。
-        inputs = self.processor(
-            images=image,
-            text=user_msg,
-            return_tensors="pt",
-            padding="max_length",
-            truncation=True,
-            max_length=self.max_length,  # <--- **关键改动 1**
-        )
+    #     # -------------------------------
+    #     # 1）processor 自动生成 input_ids (使用统一的 max_length)
+    #     # -------------------------------
+    #     # 注意：对于 Llava 模型，文本是 user_msg + assistant_msg
+    #     # 但是这里您只用 user_msg 传入 processor，这是 Llava 官方微调的常见做法。
+    #     # 这里的 max_length 确保了 inputs['input_ids'] 的长度固定。
+    #     inputs = self.processor(
+    #         images=image,
+    #         text=user_msg,
+    #         return_tensors="pt",
+    #         padding="max_length",
+    #         truncation=True,
+    #         max_length=self.max_length,  # <--- **关键改动 1**
+    #     )
 
-        # -------------------------------
-        # 2）用 tokenizer 生成 label (使用统一的 max_length)
-        # -------------------------------
-        # 这里的 labels 必须和 input_ids 的长度一致！
-        labels = self.tokenizer(
-            assistant_msg,
-            return_tensors="pt",
-            padding="max_length",
-            truncation=True,
-            max_length=self.max_length,  # <--- **关键改动 2**
-        )["input_ids"]
+    #     # -------------------------------
+    #     # 2）用 tokenizer 生成 label (使用统一的 max_length)
+    #     # -------------------------------
+    #     # 这里的 labels 必须和 input_ids 的长度一致！
+    #     labels = self.tokenizer(
+    #         assistant_msg,
+    #         return_tensors="pt",
+    #         padding="max_length",
+    #         truncation=True,
+    #         max_length=self.max_length,  # <--- **关键改动 2**
+    #     )["input_ids"]
 
-        # 确保 label 序列长度一致后再处理 -100
-        # 如果模型有图像 token 占位，您可能还需要对 labels 进行进一步处理，
-        # 使得 labels 的有效部分对齐到 input_ids 的有效部分。
-        # 但是，最主要的问题是长度不一致，先解决长度。
+    #     # 确保 label 序列长度一致后再处理 -100
+    #     # 如果模型有图像 token 占位，您可能还需要对 labels 进行进一步处理，
+    #     # 使得 labels 的有效部分对齐到 input_ids 的有效部分。
+    #     # 但是，最主要的问题是长度不一致，先解决长度。
 
-        # 把 pad 位置设为 -100
-        labels[labels == self.tokenizer.pad_token_id] = -100
+    #     # 把 pad 位置设为 -100
+    #     labels[labels == self.tokenizer.pad_token_id] = -100
 
-        inputs["labels"] = labels
+    #     inputs["labels"] = labels
 
-        return {k: v.squeeze(0) for k, v in inputs.items()}
+    #     return {k: v.squeeze(0) for k, v in inputs.items()}
 
 # ======================================================
 # 主函数
