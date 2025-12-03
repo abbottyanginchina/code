@@ -133,6 +133,13 @@ def generate_answer(cfg):
                 #             ],
                 # },
                 {
+                    "role": "user",
+                    "content": [
+                                {"type": "image"},
+                                {"type": "text", "text": text},
+                            ],
+                },
+                {
                     "role": "assistant",
                     "content": [
                             {"type": "text", 
