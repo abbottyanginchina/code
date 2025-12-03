@@ -97,10 +97,7 @@ def generate_answer(cfg):
             "conversations": [
                 {
                     "from": "user",
-                    "value": [
-                                {"type": "image"},
-                                {"type": "text", "text": text},
-                            ],
+                    "value": f"<image>\n{text}"
                 },
                 {
                     "from": "assistant",
