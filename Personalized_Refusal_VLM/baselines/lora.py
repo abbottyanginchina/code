@@ -91,7 +91,7 @@ def main():
     # -----------------------------
     model_name = "/gpuhome/jmy5701/gpu/models/llava-1.5-7b-hf"
     json_path = "/gpuhome/jmy5701/gpu/data/ScienceQA_biology_lora/test_answer.json"           # ← 你的文件
-    output_dir = "./llava_lora_output"
+    output_dir = "../../llava_lora_output"
 
     # -----------------------------
     # Processor & Model
