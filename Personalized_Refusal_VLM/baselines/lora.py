@@ -28,17 +28,8 @@ EPOCHS = 1
 # ===============================================
 class LLaVADataset(Dataset):
     def __init__(self, json_path, processor):
-
-        text = open(json_path, "r", encoding="utf-8").read().strip()
-        # import pdb; pdb.set_trace()
-
-        # 如果是 JSON 数组
-        if text.startswith("["):
-            self.data = json.loads(text)
-
-        # 否则按 JSONL 解析
-        else:
-            self.data = [json.loads(l) for l in text.split("\n") if l.strip()]
+        with open(json_path, "r", encoding="utf-8") as f:
+            self.data = json.load(f) 
 
         self.processor = processor
 
