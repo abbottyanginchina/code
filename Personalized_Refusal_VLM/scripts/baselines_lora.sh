@@ -14,4 +14,4 @@ subject="biology"
 # python -m baselines.data_preperation
 
 
-python -m baselines.lora
+python -m baselines.lora --model_name $model_name --num_test $num_test --num_train $num_train --dataset $dataset --subject $subject
