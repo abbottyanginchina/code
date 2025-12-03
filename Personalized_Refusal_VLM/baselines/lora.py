@@ -1,6 +1,7 @@
 import os
 import json
 import torch
+import mmengine
 from torch.utils.data import Dataset, DataLoader
 from PIL import Image
 from transformers import (
