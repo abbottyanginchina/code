@@ -12,7 +12,7 @@ from transformers import (
 from peft import LoraConfig, get_peft_model
 
 class LLaVADataset(Dataset):
-    def __init__(self, json_path, processor, max_length=512): # <-- 新增 max_length 参数
+    def __init__(self, json_path, processor, max_length=5256): # <-- 新增 max_length 参数
         self.data = json.load(open(json_path, "r"))
         self.processor = processor
         self.tokenizer = processor.tokenizer
