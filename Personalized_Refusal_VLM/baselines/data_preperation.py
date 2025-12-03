@@ -87,35 +87,35 @@ def generate_answer(cfg):
         os.makedirs(save_path)
         os.makedirs(f"{save_path}/images")
 
-    for i in tqdm(range(len(without_sys_in_train_text)), total=len(without_sys_in_train_text), desc="Generating in constraint data"):
-        text = without_sys_in_train_text[i]
-        img = in_train_images[i]
-        response = local_VLM(text, img)
-        item = {
-            "id": f"train_{i}",
-            "image": f"{save_path}/images/{i}.jpg",
-            "conversations": [
-                {
-                    "role": "user",
-                    "content": [
-                                {"type": "image"},
-                                {"type": "text", "text": text},
-                            ],
-                },
-                {
-                    "role": "assistant",
-                    "content": [
-                            {"type": "text", 
-                            "text": response},
-                            ],
-                }
-            ]
-        }
-        results.append(item)
-        img.save(f"{save_path}/images/{i}.jpg")
+    # for i in tqdm(range(len(without_sys_in_train_text)), total=len(without_sys_in_train_text), desc="Generating in constraint data"):
+    #     text = without_sys_in_train_text[i]
+    #     img = in_train_images[i]
+    #     response = local_VLM(text, img)
+    #     item = {
+    #         "id": f"train_{i}",
+    #         "image": f"{save_path}/images/{i}.jpg",
+    #         "conversations": [
+    #             {
+    #                 "role": "user",
+    #                 "content": [
+    #                             {"type": "image"},
+    #                             {"type": "text", "text": text},
+    #                         ],
+    #             },
+    #             {
+    #                 "role": "assistant",
+    #                 "content": [
+    #                         {"type": "text", 
+    #                         "text": response},
+    #                         ],
+    #             }
+    #         ]
+    #     }
+    #     results.append(item)
+    #     img.save(f"{save_path}/images/{i}.jpg")
 
-    with open(os.path.join(save_path, "test_answer.json"), "w", encoding="utf-8") as f:
-        json.dump(results, f, indent=2, ensure_ascii=False)
+    # with open(os.path.join(save_path, "test_answer.json"), "w", encoding="utf-8") as f:
+    #     json.dump(results, f, indent=2, ensure_ascii=False)
 
     for i in tqdm(range(len(without_sys_out_train_text)), total=len(without_sys_out_train_text), desc="Generating out of data"):
         text = without_sys_out_train_text[i]
