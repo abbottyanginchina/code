@@ -125,13 +125,13 @@ def generate_answer(cfg):
             "id": f"train_{i}",
             "image": f"{save_path}/images/{len(without_sys_out_train_text)+i}.jpg",  
             "conversations": [
-                {
-                    "role": "user",
-                    "content": [
-                                {"type": "image"},
-                                {"type": "text", "text": text},
-                            ],
-                },
+                # {
+                #     "role": "user",
+                #     "content": [
+                #                 {"type": "image"},
+                #                 {"type": "text", "text": text},
+                #             ],
+                # },
                 {
                     "role": "assistant",
                     "content": [
