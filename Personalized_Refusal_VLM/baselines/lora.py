@@ -10,6 +10,8 @@ from transformers import (
     Trainer,
 )
 from peft import LoraConfig, get_peft_model, PeftModel
+
+os.append("../")
 from vti_utils.utils import get_all_datasets
 
 class LLaVADataset(Dataset):
