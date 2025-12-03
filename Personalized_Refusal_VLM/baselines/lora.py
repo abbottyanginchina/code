@@ -17,94 +17,116 @@ model_name = "/gpuhome/jmy5701/gpu/models/llava-1.5-7b-hf"
 train_json = "/gpuhome/jmy5701/gpu/data/ScienceQA_biology_lora/test_answer.json"   # ← 你的数据路径
 output_dir = "../../llava_lora_output"
 
-# ===========================
-# Load Model & Processor
-# ===========================
-
-model = LlavaForConditionalGeneration.from_pretrained(
-    model_name,
-    torch_dtype=torch.float16,
-    low_cpu_mem_usage=True,
-    device_map="auto",
+import os
+import json
+import torch
+from torch.utils.data import Dataset, DataLoader
+from PIL import Image
+from transformers import (
+    AutoTokenizer,
+    AutoModelForCausalLM,
+    AutoProcessor,
+    BitsAndBytesConfig,
 )
-processor = LlavaProcessor.from_pretrained(model_name)
+from peft import LoraConfig, get_peft_model
 
-# ===========================
-# LoRA Config
-# ===========================
-lora_config = LoraConfig(
-    r=32,
-    lora_alpha=16,
-    lora_dropout=0.05,
-    target_modules=[
-        "q_proj", "k_proj", "v_proj", "o_proj",
-        "gate_proj", "up_proj", "down_proj",
-    ],
-)
+# ====== CONFIG ======
+MODEL_NAME = "/gpuhome/jmy5701/gpu/models/llava-1.5-7b-hf"
+DATA_PATH = "data/train.jsonl"
+IMAGE_FOLDER = "images"
+OUTPUT_DIR = "lora_output"
+BATCH_SIZE = 1
+LR = 2e-4
+NUM_EPOCHS = 1
 
-model = get_peft_model(model, lora_config)
 
-# ===========================
-# Load Dataset
-# ===========================
-data = load_dataset("json", data_files=train_json)['train']
+# ====== Dataset ======
+class LLaVADataset(Dataset):
+    def __init__(self, jsonl_path, processor):
+        self.data = [json.loads(l) for l in open(jsonl_path)]
+        self.processor = processor
 
-def preprocess(example):
-    conv = example["conversations"]
-    img_path = example["image"]
+    def __len__(self):
+        return len(self.data)
 
-    # Build chat template
-    prompt = processor.apply_chat_template(
-        conv,
-        add_generation_prompt=True
+    def __getitem__(self, idx):
+        item = self.data[idx]
+
+        image_path = item["image"]
+        if image_path:
+            image_path = os.path.join(IMAGE_FOLDER, image_path)
+            image = Image.open(image_path).convert("RGB")
+        else:
+            image = None
+
+        conversations = item["conversations"]
+        prompt = ""
+        for c in conversations:
+            prefix = "USER: " if c["from"] == "human" else "ASSISTANT: "
+            prompt += prefix + c["value"] + "\n"
+
+        batch = self.processor(images=image, text=prompt, return_tensors="pt")
+        return batch
+
+
+# ====== Load Model ======
+def load_model():
+    bnb_config = BitsAndBytesConfig(
+        load_in_4bit=True,
+        bnb_4bit_compute_dtype=torch.bfloat16,
+        bnb_4bit_use_double_quant=True,
+        bnb_4bit_quant_type="nf4",
     )
-    # import pdb; pdb.set_trace()
 
-    # Load image
-    image = Image.open(img_path).convert("RGB")
-    processed = processor(
-        text=prompt,
-        images=image,
-        return_tensors="pt"
+    model = AutoModelForCausalLM.from_pretrained(
+        MODEL_NAME,
+        quantization_config=bnb_config,
+        device_map="auto",
     )
-    
-    return {
-        "input_ids": processed["input_ids"][0],
-        "pixel_values": processed["pixel_values"][0]
-    }
 
-data = data.map(preprocess)
+    tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
+    processor = AutoProcessor.from_pretrained(MODEL_NAME)
 
-# ===========================
-# Training Arguments
-# ===========================
-args = TrainingArguments(
-    output_dir=output_dir,
-    per_device_train_batch_size=1,
-    gradient_accumulation_steps=16,
-    learning_rate=2e-5,
-    num_train_epochs=2,
-    logging_steps=10,
-    save_steps=500,
-    fp16=True,
-)
+    # ===== LoRA =====
+    lora_config = LoraConfig(
+        r=16,
+        lora_alpha=32,
+        target_modules=["q_proj", "v_proj"],
+        lora_dropout=0.05,
+        bias="none",
+        task_type="CAUSAL_LM",
+    )
 
-trainer = Trainer(
-    model=model,
-    args=args,
-    train_dataset=data,
-)
+    model = get_peft_model(model, lora_config)
+    model.print_trainable_parameters()
 
-# ===========================
-# Train
-# ===========================
-trainer.train()
+    return model, tokenizer, processor
 
-# ===========================
-# Save LoRA Model
-# ===========================
-model.save_pretrained(output_dir)
-processor.save_pretrained(output_dir)
 
-print("✅ LoRA training completed.")
-print(f"📁 Saved to: {output_dir}")
+# ====== Training ======
+def train():
+    model, tokenizer, processor = load_model()
+
+    dataset = LLaVADataset(DATA_PATH, processor)
+    dataloader = DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=True)
+
+    optimizer = torch.optim.AdamW(model.parameters(), lr=LR)
+
+    model.train()
+    for epoch in range(NUM_EPOCHS):
+        for batch in dataloader:
+            batch = {k: v.cuda() for k, v in batch.items()}
+            out = model(**batch, labels=batch["input_ids"])
+            loss = out.loss
+
+            loss.backward()
+            optimizer.step()
+            optimizer.zero_grad()
+
+            print("loss:", loss.item())
+
+    model.save_pretrained(OUTPUT_DIR)
+
+
+if __name__ == "__main__":
+    train()
