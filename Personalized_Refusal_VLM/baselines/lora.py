@@ -190,8 +190,98 @@ def train():
     print("LoRA saved to:", output_dir)
 
 def inference():
-    pass
+    # -----------------------------
+    # 配置
+    # -----------------------------
+    model_name = "/gpuhome/jmy5701/gpu/models/llava-1.5-7b-hf"
+    lora_dir = "../../llava_lora_output" # LoRA 权重保存的路径
+    
+    # 假设您的数据集中有这样一个样本的路径和问题
+    # 实际使用时，请替换为真实可用的图像路径和问题
+    # 如果您的 train.py 运行成功，请确保使用 training set 中的一个图片路径。
+    SAMPLE_IMAGE_PATH = "/path/to/your/test/image.jpg" 
+    SAMPLE_PROMPT = "<image>\nWhat is the main biological concept shown in this image?"
+
+    if not os.path.exists(SAMPLE_IMAGE_PATH):
+        print(f"⚠️ 警告: 示例图片路径 '{SAMPLE_IMAGE_PATH}' 不存在。请替换为实际路径进行测试。")
+        return
+
+    # -----------------------------
+    # Processor & Model
+    # -----------------------------
+    print("Loading processor and base model...")
+    processor = LlavaProcessor.from_pretrained(model_name)
+    
+    # 加载基础模型
+    base_model = LlavaForConditionalGeneration.from_pretrained(
+        model_name,
+        torch_dtype=torch.float16,
+        low_cpu_mem_usage=True,
+        device_map="auto", # 自动分配到 GPU
+    )
+
+    # -----------------------------
+    # 加载 LoRA 权重
+    # -----------------------------
+    if not os.path.exists(lora_dir):
+        print(f"❌ 错误: LoRA 权重目录 '{lora_dir}' 不存在。请先运行 train() 方法。")
+        return
+
+    print(f"Loading LoRA weights from: {lora_dir}")
+    # 这里的 LoRA 配置不需要像训练时那么完整，但需要确保 PeftModel 能够识别
+    peft_config = LoraConfig.from_pretrained(lora_dir) 
+    
+    # 将 LoRA 权重合并到基础模型中 (作为 PeftModel)
+    model = PeftModel.from_pretrained(base_model, lora_dir)
+    
+    # 建议切换到评估模式
+    model.eval()
+
+    # -----------------------------
+    # 准备推理输入
+    # -----------------------------
+    print(f"Preparing input for inference with image: {SAMPLE_IMAGE_PATH}")
+    try:
+        image = Image.open(SAMPLE_IMAGE_PATH).convert("RGB")
+    except FileNotFoundError:
+        print("❌ 错误: 无法打开示例图片。请检查路径。")
+        return
+    
+    # 使用 processor 编码输入
+    inputs = processor(
+        images=image, 
+        text=SAMPLE_PROMPT, 
+        return_tensors="pt"
+    ).to(model.device, dtype=torch.float16)
+
+    # -----------------------------
+    # 模型生成
+    # -----------------------------
+    print("Generating response...")
+    with torch.no_grad():
+        output_ids = model.generate(
+            **inputs,
+            max_new_tokens=128,          # 限制生成的最大长度
+            do_sample=False,             # 关闭采样，进行确定性解码
+            # temperature=0.7,           # 如果启用采样，可以设置温度
+        )
+
+    # -----------------------------
+    # 解码输出
+    # -----------------------------
+    # LlavaProcessor.decode 会自动处理生成的序列
+    output_text = processor.decode(output_ids[0], skip_special_tokens=True)
+    
+    # -----------------------------
+    # 结果打印
+    # -----------------------------
+    print("\n--- Inference Result ---")
+    print(f"Prompt: {SAMPLE_PROMPT.replace('<image>\\n', '[Image] ')}")
+    print(f"Generated Response: {output_text.strip()}")
+    print("------------------------")
 
 if __name__ == "__main__":
     train()
+
+    inference()
 
