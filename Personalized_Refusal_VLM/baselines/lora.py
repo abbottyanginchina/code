@@ -239,6 +239,23 @@ def inference(cfg):
     in_test_images = original_data["in_test_images"]
     out_test_images = original_data["out_test_images"]
 
+    for i in range(len(out_test_text)):
+        inputs = processor(
+            images=out_test_images[i], 
+            text=f"<image>\n{out_test_text[i]}", 
+            return_tensors="pt"
+        ).to(model.device, dtype=torch.float16)
+
+        with torch.no_grad():
+            output_ids = model.generate(
+                **inputs,
+                max_new_tokens=128,          # 限制生成最大的长度
+                do_sample=False,             # 关闭采样，进行确定性解码
+                # temperature=0.7,           # 如果启用采样，可以设置温度
+            )
+        output_text = processor.decode(output_ids[0], skip_special_tokens=True)
+        print(output_text)
+
     for i in range(len(in_test_text)):
         inputs = processor(
             images=in_test_images[i], 
