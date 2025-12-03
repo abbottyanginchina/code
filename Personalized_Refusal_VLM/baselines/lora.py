@@ -10,9 +10,7 @@ from transformers import (
     Trainer,
 )
 from peft import LoraConfig, get_peft_model, PeftModel
-
-os.path.append("../")
-from vti_utils.utils import get_all_datasets
+from ..vti_utils.utils import get_all_datasets
 
 class LLaVADataset(Dataset):
     def __init__(self, json_path, processor, max_length=2048): # <-- 新增 max_length 参数
