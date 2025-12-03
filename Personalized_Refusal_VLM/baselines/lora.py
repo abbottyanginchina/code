@@ -5,16 +5,15 @@ from torch.utils.data import Dataset, DataLoader
 from PIL import Image
 
 from transformers import (
-    AutoTokenizer,
-    AutoModelForCausalLM,
+    LlavaForConditionalGeneration,
     AutoProcessor,
 )
 from peft import LoraConfig, get_peft_model
 
 
-# ============================
-# your config
-# ============================
+# ===============================================
+# 你的配置（100% 按你给的）
+# ===============================================
 model_name = "/gpuhome/jmy5701/gpu/models/llava-1.5-7b-hf"
 train_json = "/gpuhome/jmy5701/gpu/data/ScienceQA_biology_lora/test_answer.json"
 output_dir = "../../llava_lora_output"
@@ -24,12 +23,12 @@ LR = 2e-4
 EPOCHS = 1
 
 
-# ============================
-# Dataset
-# ============================
+# ===============================================
+# dataset
+# ===============================================
 class LLaVADataset(Dataset):
     def __init__(self, json_path, processor):
-        self.data = [json.loads(line) for line in open(json_path)]
+        self.data = [json.loads(l) for l in open(json_path)]
         self.processor = processor
 
     def __len__(self):
@@ -37,14 +36,15 @@ class LLaVADataset(Dataset):
 
     def __getitem__(self, idx):
         d = self.data[idx]
-        image_path = d.get("image", "")
 
-        if image_path:
+        # -------- image --------
+        image_path = d.get("image", "")
+        if image_path and os.path.exists(image_path):
             img = Image.open(image_path).convert("RGB")
         else:
             img = None
 
-        # Construct dialog
+        # -------- conversation --------
         conv = ""
         for c in d["conversations"]:
             if c["from"] == "human":
@@ -52,6 +52,7 @@ class LLaVADataset(Dataset):
             else:
                 conv += "ASSISTANT: " + c["value"] + "\n"
 
+        # Processor 会自动构建 input_ids / pixel_values
         batch = self.processor(
             images=img,
             text=conv,
@@ -59,29 +60,31 @@ class LLaVADataset(Dataset):
             padding=True,
             truncation=True,
         )
+
         return batch
 
 
-# ============================
-# Load FP16 LLaVA model
-# ============================
+# ===============================================
+# load model (FP16, LLaVA-HF)
+# ===============================================
 def load_model():
     print("Loading LLaVA-1.5 FP16...")
-    model = AutoModelForCausalLM.from_pretrained(
+
+    model = LlavaForConditionalGeneration.from_pretrained(
         model_name,
-        torch_dtype=torch.float16,    # FP16!
+        torch_dtype=torch.float16,
         device_map="auto",
+        low_cpu_mem_usage=True,
     )
 
-    tokenizer = AutoTokenizer.from_pretrained(model_name)
     processor = AutoProcessor.from_pretrained(model_name)
 
-    # LoRA config — standard for LLAMA/LLaVA
+    # -------- LoRA config --------
     lora_cfg = LoraConfig(
         r=16,
         lora_alpha=32,
-        target_modules=["q_proj", "v_proj"],  # LLAMA structure
         lora_dropout=0.05,
+        target_modules=["q_proj", "v_proj"],  # llama modules
         bias="none",
         task_type="CAUSAL_LM",
     )
@@ -89,32 +92,42 @@ def load_model():
     model = get_peft_model(model, lora_cfg)
     model.print_trainable_parameters()
 
-    return model, tokenizer, processor
+    return model, processor
 
 
-# ============================
-# Train
-# ============================
+# ===============================================
+# train
+# ===============================================
 def train():
-    model, tokenizer, processor = load_model()
+    model, processor = load_model()
 
     dataset = LLaVADataset(train_json, processor)
     dataloader = DataLoader(dataset, batch_size=BATCH_SIZE, shuffle=True)
 
     optimizer = torch.optim.AdamW(model.parameters(), lr=LR)
 
-    print("Start training...")
-
     model.train()
+
     for epoch in range(EPOCHS):
+        print(f"===== Epoch {epoch} =====")
         for batch in dataloader:
-            for k in batch:
-                batch[k] = batch[k].cuda().half()
 
-            outputs = model(**batch, labels=batch["input_ids"])
+            # Move to GPU + FP16
+            batch = {
+                k: v.to(model.device, dtype=torch.float16)
+                for k, v in batch.items()
+            }
+
+            outputs = model(
+                input_ids=batch["input_ids"],
+                attention_mask=batch["attention_mask"],
+                pixel_values=batch["pixel_values"],
+                labels=batch["input_ids"],
+            )
+
             loss = outputs.loss
-
             loss.backward()
+
             optimizer.step()
             optimizer.zero_grad()
 
