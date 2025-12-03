@@ -54,7 +54,7 @@ class LLaVADataset(Dataset):
 
         image_path = item["image"]
         if image_path:
-            image_path = os.path.join(IMAGE_FOLDER, image_path)
+            # image_path = os.path.join(IMAGE_FOLDER, image_path)
             image = Image.open(image_path).convert("RGB")
         else:
             image = None
