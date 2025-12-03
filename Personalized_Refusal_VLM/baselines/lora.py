@@ -242,6 +242,14 @@ def inference():
     # -----------------------------
     # 准备推理输入
     # -----------------------------
+    original_data = get_all_datasets(cfg)
+    in_test_text = original_data["in_test_text"]
+    out_test_text = original_data["out_test_text"]
+    in_test_images = original_data["in_test_images"]
+    out_test_images = original_data["out_test_images"]
+
+
+
     print(f"Preparing input for inference with image: {SAMPLE_IMAGE_PATH}")
     try:
         image = Image.open(SAMPLE_IMAGE_PATH).convert("RGB")
