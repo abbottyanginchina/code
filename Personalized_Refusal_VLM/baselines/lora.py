@@ -54,6 +54,7 @@ class LLaVADataset(Dataset):
 
         image_path = item["image"]
         if image_path:
+            import pdb; pdb.set_trace()
             # image_path = os.path.join(IMAGE_FOLDER, image_path)
             image = Image.open(image_path).convert("RGB")
         else:
