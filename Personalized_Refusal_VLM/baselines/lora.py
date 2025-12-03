@@ -32,9 +32,9 @@ from peft import LoraConfig, get_peft_model
 
 # ====== CONFIG ======
 MODEL_NAME = "/gpuhome/jmy5701/gpu/models/llava-1.5-7b-hf"
-DATA_PATH = "data/train.jsonl"
+DATA_PATH = "/gpuhome/jmy5701/gpu/data/ScienceQA_biology_lora/test_answer.json"
 IMAGE_FOLDER = "images"
-OUTPUT_DIR = "lora_output"
+OUTPUT_DIR = "../../llava_lora_output"
 BATCH_SIZE = 1
 LR = 2e-4
 NUM_EPOCHS = 1
