@@ -145,10 +145,7 @@ def generate_answer(cfg):
                 # }
                 {
                     "role": "assistant",
-                    "content": [
-                            {"type": "text", 
-                            "text": response},
-                            ],
+                    "content": respose
                 }
             ]
         }
