@@ -192,7 +192,7 @@ def train():
     trainer.save_model(output_dir)
     print("LoRA saved to:", output_dir)
 
-def inference():
+def inference(cfg):
     # -----------------------------
     # 配置
     # -----------------------------
