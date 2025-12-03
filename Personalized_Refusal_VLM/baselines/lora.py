@@ -271,6 +271,7 @@ def inference(cfg):
         
         print(output_text)
 
+    ans_file.close()
     print("Inference on in-test data:-----------")
 
     for i in range(len(in_test_text)):
