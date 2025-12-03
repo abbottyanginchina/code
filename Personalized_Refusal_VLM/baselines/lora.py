@@ -275,7 +275,7 @@ def inference(cfg):
                 # temperature=0.7,           # 如果启用采样，可以设置温度
             )
         generated_only_ids = output_ids[0][input_len:]
-        output_text = processor.decode(generated_only_ids = output_ids[0][input_len:], skip_special_tokens=True)
+        output_text = processor.decode(generated_only_ids, skip_special_tokens=True)
         print(output_text)
 
 def parse_args():
