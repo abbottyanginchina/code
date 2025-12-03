@@ -195,7 +195,7 @@ def inference():
     # 配置
     # -----------------------------
     model_name = "/gpuhome/jmy5701/gpu/models/llava-1.5-7b-hf"
-    lora_dir = "../../llava_lora_output" # LoRA 权重保存的路径
+    lora_dir = "../llava_lora_output" # LoRA 权重保存的路径
     
     # 假设您的数据集中有这样一个样本的路径和问题
     # 实际使用时，请替换为真实可用的图像路径和问题
