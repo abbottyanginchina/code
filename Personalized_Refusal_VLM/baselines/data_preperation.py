@@ -130,8 +130,8 @@ def generate_answer(cfg):
                     "value": f"<image>\n{text}"
                 },
                 {
-                    "role": "assistant",
-                    "content": response
+                    "from": "assistant",
+                    "value": response
                 }
             ]
         }
