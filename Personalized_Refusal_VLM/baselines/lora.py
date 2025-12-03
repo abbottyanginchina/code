@@ -24,7 +24,6 @@ class LLaVADataset(Dataset):
         item = self.data[idx]
 
         image = Image.open(item["image"]).convert("RGB")
-        import pdb; pdb.set_trace()
 
         conv = item["conversations"]
         user_msg = conv[0]["value"]            # e.g. "<image>\nDescribe…"
