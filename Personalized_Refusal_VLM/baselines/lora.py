@@ -242,7 +242,7 @@ def inference(cfg):
     for i in range(len(in_test_text)):
         inputs = processor(
             images=in_test_images[i], 
-            text=in_test_text[i], 
+            text=f"<image>\n{in_test_text[i]}", 
             return_tensors="pt"
         ).to(model.device, dtype=torch.float16)
 
