@@ -239,6 +239,7 @@ def inference(cfg):
     in_test_images = original_data["in_test_images"]
     out_test_images = original_data["out_test_images"]
 
+    results = []
     for i in range(len(out_test_text)):
         inputs = processor(
             images=out_test_images[i], 
@@ -256,6 +257,10 @@ def inference(cfg):
             )
         generated_only_ids = output_ids[0][input_len:]
         output_text = processor.decode(generated_only_ids, skip_special_tokens=True)
+        results.append({
+            "response": output_text,
+            "question": out_test_text[i],
+        })
         print(output_text)
 
     print("Inference on in-test data:-----------")
