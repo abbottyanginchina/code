@@ -3,6 +3,26 @@ import json
 import torch
 from torch.utils.data import Dataset, DataLoader
 from PIL import Image
+
+from transformers import (
+    LlavaForConditionalGeneration,
+    AutoProcessor,
+)
+from peft import LoraConfig, get_peft_model
+
+
+# ===============================================
+# config
+# ===============================================
+model_name = "/gpuhome/jmy5701/gpu/models/llava-1.5-7b-hf"
+train_json = "/gpuhome/jmy5701/gpu/data/ScienceQA_biology_lora/test_answer.json"
+output_dir = "../../llava_lora_output"
+
+import os
+import json
+import torch
+from torch.utils.data import Dataset, DataLoader
+from PIL import Image
 from transformers import (
     LlavaProcessor,
     LlavaForConditionalGeneration,
@@ -70,7 +90,7 @@ def main():
     # 配置
     # -----------------------------
     model_name = "/gpuhome/jmy5701/gpu/models/llava-1.5-7b-hf"
-    json_path = "./train.json"           # ← 你的文件
+    json_path = "/gpuhome/jmy5701/gpu/data/ScienceQA_biology_lora/test_answer.json"           # ← 你的文件
     output_dir = "./llava_lora_output"
 
     # -----------------------------
