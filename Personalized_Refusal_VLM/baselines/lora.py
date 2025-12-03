@@ -35,6 +35,7 @@ class LLaVADataset(Dataset):
         return len(self.data)
     def __getitem__(self, idx):
         d = self.data[idx]
+        import pdb; pdb.set_trace()
 
         # -------- image --------
         image_path = d.get("image", "")
