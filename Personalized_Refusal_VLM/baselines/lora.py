@@ -267,8 +267,6 @@ def inference(cfg):
         }
         ans_file.write(json.dumps(result) + "\n")
         ans_file.flush()
-        
-        
         print(output_text)
 
     ans_file.close()
