@@ -265,6 +265,8 @@ def inference(cfg):
             return_tensors="pt"
         ).to(model.device, dtype=torch.float16)
 
+        input_len = inputs["input_ids"].shape[1]
+
         with torch.no_grad():
             output_ids = model.generate(
                 **inputs,
@@ -272,6 +274,7 @@ def inference(cfg):
                 do_sample=False,             # 关闭采样，进行确定性解码
                 # temperature=0.7,           # 如果启用采样，可以设置温度
             )
+        generated_only_ids = output_ids[0][input_len:]
         output_text = processor.decode(output_ids[0], skip_special_tokens=True)
         print(output_text)
 
