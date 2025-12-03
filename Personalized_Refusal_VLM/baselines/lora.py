@@ -71,46 +71,49 @@ class LLaVADataset(Dataset):
     #     return {k: v.squeeze(0) for k, v in inputs.items()}
     def __getitem__(self, idx):
         item = self.data[idx]
-
         image = Image.open(item["image"]).convert("RGB")
-
         conv = item["conversations"]
         user_msg = conv[0]["value"]            # e.g. "<image>\nDescribe…"
         assistant_msg = conv[1]["value"]
-        
-        # 1. 构造 Prompt（用户消息）的完整输入，找到其长度
-        # 这一步是为了确定助手回复的起始位置
+
+        # ------------------------------------------------
+        # 步骤 1：调用 processor 获取图像输入（pixel_values）
+        # ------------------------------------------------
+        # 即使我们不使用它的 input_ids/attention_mask，也需要调用它来获取图像数据
+        inputs = self.processor(
+            images=image,
+            text=user_msg,
+            return_tensors="pt",
+            max_length=self.max_length,
+            padding="max_length", 
+            truncation=True,
+        )
+
+        # ------------------------------------------------
+        # 步骤 2：构造 Prompt 的有效长度（用于掩码）
+        # ------------------------------------------------
         prompt_inputs = self.processor(
             images=image,
             text=user_msg,
             return_tensors="pt",
             max_length=self.max_length,
             truncation=True,
-            padding="max_length", # 确保长度一致，但我们只取有效长度
+            # 不用 padding，方便计算有效长度
         )
-        # LlavaProcessor 可能会在末尾自动添加 EOS token。
-        # 我们需要找到 Prompt 序列的有效长度 (不含 PAD)
         prompt_ids = prompt_inputs["input_ids"].squeeze(0)
-        
-        # 找到第一个 PAD token 之前的长度作为 Prompt 的有效长度
-        # 如果没有 PAD，则取 max_length
+        # 计算 Prompt 的有效长度（不含 PAD token）
         prompt_len = (prompt_ids != self.tokenizer.pad_token_id).sum().item()
-        
-        # 2. 构造 Response（助手回复）的输入
-        # 注意：这里我们仅对 assistant_msg 编码，不加 padding/truncation
+        prompt_ids_valid = prompt_ids[:prompt_len]
+
+        # ------------------------------------------------
+        # 步骤 3：构造 Response 和完整的序列
+        # ------------------------------------------------
         response_inputs = self.tokenizer(
             assistant_msg, 
-            add_special_tokens=False, # 助手回复不加 BOS/EOS
+            add_special_tokens=False,
             return_tensors="pt"
         )["input_ids"].squeeze(0)
 
-        # 3. 拼接序列：Prompt IDs + Response IDs + EOS
-        # 使用 EOS token 来分隔 Prompt 和 Response，并作为结束标记
-        # Llava 1.5 通常使用 LLama 的格式：[Prompt] + [Response] + EOS
-        
-        # 找到 Prompt 序列中实际非 PAD 的部分
-        prompt_ids_valid = prompt_ids[:prompt_len]
-        
         # 拼接最终的 input_ids
         input_ids = torch.cat([
             prompt_ids_valid, 
@@ -118,51 +121,49 @@ class LLaVADataset(Dataset):
             torch.tensor([self.tokenizer.eos_token_id], dtype=torch.long)
         ])
 
-        # 4. 构造 Labels 并进行掩码 (Masking)
-        # Labels = [-100]*len(Prompt) + [Response Tokens] + [EOS Token ID]
+        # ------------------------------------------------
+        # 步骤 4：构造 Labels 和进行掩码
+        # ------------------------------------------------
         labels = torch.cat([
-            torch.full((prompt_len,), -100, dtype=torch.long), # Prompt 部分设为 -100
+            torch.full((prompt_len,), -100, dtype=torch.long), # Prompt Masking
             response_inputs,
             torch.tensor([self.tokenizer.eos_token_id], dtype=torch.long)
         ])
         
-        # 5. 统一长度（Padding/Truncation）
-        
-        # Truncation
+        # ------------------------------------------------
+        # 步骤 5：统一长度（Padding/Truncation）
+        # ------------------------------------------------
         if input_ids.shape[0] > self.max_length:
             input_ids = input_ids[:self.max_length]
             labels = labels[:self.max_length]
         
-        # Padding
         padding_len = self.max_length - input_ids.shape[0]
         if padding_len > 0:
-            # PAD input_ids
             input_ids = torch.cat([
                 input_ids, 
                 torch.full((padding_len,), self.tokenizer.pad_token_id, dtype=torch.long)
             ])
-            # PAD labels (全部设为 -100)
             labels = torch.cat([
                 labels, 
-                torch.full((padding_len,), -100, dtype=torch.long)
+                torch.full((padding_len,), -100, dtype=torch.long) # PAD Labels 也要设为 -100
             ])
         
-        # 6. 更新 inputs 字典
+        # ------------------------------------------------
+        # 步骤 6：更新 inputs 字典（修复 NameError 的关键）
+        # ------------------------------------------------
+        
+        # 将我们手动构造的序列替换掉 processor 自动生成的序列
         inputs["input_ids"] = input_ids.unsqueeze(0)
         
-        # 注意力掩码 (Attention Mask)
-        # 1 表示有效 token，0 表示 PAD token
+        # 构造 Attention Mask
         attention_mask = (input_ids != self.tokenizer.pad_token_id).int().unsqueeze(0)
         inputs["attention_mask"] = attention_mask
         
+        # 添加 labels
         inputs["labels"] = labels.unsqueeze(0)
         
-        # 由于 LlavaProcessor 编码 Prompt 时已经处理了 pixel_values，
-        # 我们需要确保 inputs 中只包含正确的 pixel_values
-        
-        # 确保 pixel_values 形状不变 (仍保持 [1, C, H, W] 或 [1, N, C, H, W])
-        
-        return {k: v.squeeze(0) for k, v in inputs.items() if k != 'input_ids' and k != 'attention_mask' and k != 'labels'}
+        # 确保返回字典中的所有值都是单批次的 Tensor
+        return {k: v.squeeze(0) for k, v in inputs.items()}
 
 # ======================================================
 # 主函数
