@@ -196,8 +196,8 @@ def inference(cfg):
     # -----------------------------
     # 配置
     # -----------------------------
-    model_name = "/gpuhome/jmy5701/gpu/models/llava-1.5-7b-hf"
-    lora_dir = "../llava_lora_output" # LoRA 权重保存的路径
+    model_name = f"/gpuhome/jmy5701/gpu/models/{cfg.model_name}"
+    lora_dir = f"../{cfg.model_name}_lora_output" # LoRA 权重保存的路径
     
     # -----------------------------
     # Processor & Model
