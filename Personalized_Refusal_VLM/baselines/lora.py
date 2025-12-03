@@ -189,6 +189,9 @@ def train():
     trainer.save_model(output_dir)
     print("LoRA saved to:", output_dir)
 
+def inference():
+    pass
 
 if __name__ == "__main__":
-    main()
+    train()
+
