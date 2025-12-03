@@ -47,7 +47,6 @@ class LLaVADataset(Dataset):
         # -------- conversation --------
         conv = ""
         for c in d["conversations"]:
-            import pdb; pdb.set_trace()
             if c["from"] == "human":
                 conv += "USER: " + c["value"] + "\n"
             else:
