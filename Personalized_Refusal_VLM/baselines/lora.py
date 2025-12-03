@@ -246,6 +246,7 @@ def inference(cfg):
             return_tensors="pt"
         ).to(model.device, dtype=torch.float16)
 
+        input_len = inputs["input_ids"].shape[1]
         with torch.no_grad():
             output_ids = model.generate(
                 **inputs,
