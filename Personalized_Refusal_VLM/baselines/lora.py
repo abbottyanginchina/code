@@ -9,7 +9,7 @@ from transformers import (
     TrainingArguments,
     Trainer,
 )
-from peft import LoraConfig, get_peft_model
+from peft import LoraConfig, get_peft_model, PeftModel
 
 class LLaVADataset(Dataset):
     def __init__(self, json_path, processor, max_length=2048): # <-- 新增 max_length 参数
