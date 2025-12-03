@@ -30,7 +30,7 @@ class LLaVADataset(Dataset):
     def __init__(self, json_path, processor):
 
         text = open(json_path, "r", encoding="utf-8").read().strip()
-        import pdb; pdb.set_trace()
+        # import pdb; pdb.set_trace()
 
         # 如果是 JSON 数组
         if text.startswith("["):
