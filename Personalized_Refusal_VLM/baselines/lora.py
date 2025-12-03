@@ -254,7 +254,7 @@ def inference(cfg):
                 # temperature=0.7,           # 如果启用采样，可以设置温度
             )
         output_text = processor.decode(output_ids[0], skip_special_tokens=True)
-        print(ouptut_text)
+        print(output_text)
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Lora baseline...")
