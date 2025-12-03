@@ -18,7 +18,9 @@ class LLaVADataset(Dataset):
         self.tokenizer = processor.tokenizer
         self.max_length = max_length # <-- 保存 max_length
     
-    # ... (省略 __len__)
+    def __len__(self):
+        # 确保返回正确的长度
+        return len(self.data)
 
     def __getitem__(self, idx):
         item = self.data[idx]
