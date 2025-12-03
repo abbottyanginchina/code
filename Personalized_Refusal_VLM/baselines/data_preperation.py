@@ -132,6 +132,10 @@ def generate_answer(cfg):
                                 {"type": "text", "text": text},
                             ],
                 },
+                {
+                    "role": "user",
+                    "content": text
+                }
                 # {
                 #     "role": "assistant",
                 #     "content": [
