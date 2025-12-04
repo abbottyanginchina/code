@@ -271,7 +271,7 @@ def inference(cfg):
     ans_file.close()
     print("Inference on in-test data:-----------")
 
-    answers_file = f"../baseline_results/{cfg.model_name}_{cfg.data.dataset_name}_{cfg.data.subject}/out_of_constraint_answer.jsonl"
+    answers_file = f"../baseline_results/{cfg.model_name}_{cfg.data.dataset_name}_{cfg.data.subject}/in_constraint_answer.jsonl"
     os.makedirs(os.path.dirname(answers_file), exist_ok=True)
     ans_file = open(answers_file, "w")
     for i in range(len(in_test_text)):
