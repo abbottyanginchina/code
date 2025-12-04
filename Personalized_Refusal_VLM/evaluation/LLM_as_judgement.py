@@ -23,7 +23,7 @@ def chat_LLM(user_prompt):
 
 if __name__ == '__main__':
     # read .jsonl file
-    data_path = '/Users/abbottyang/Library/Mobile Documents/com~apple~CloudDocs/PhD_Study/code/autodl/output/baseline_results/prompt-based/sysprompt_biology_answer_llava-1.5-7b-hf.jsonl'
+    data_path = '/Users/abbottyang/Library/Mobile Documents/com~apple~CloudDocs/PhD_Study/code/autodl/output/baseline_results/prompt-based/sysprompt_geography_answer_llava-1.5-7b-hf.jsonl'
     with open(data_path, 'r') as f:
         data_lines = f.readlines()
     data = [json.loads(line) for line in data_lines]
