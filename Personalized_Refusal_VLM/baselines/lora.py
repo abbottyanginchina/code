@@ -368,7 +368,7 @@ if __name__ == "__main__":
         cfg.data.subject = args.subject
 
 
-    # train(cfg)
+    train(cfg)
 
     inference(cfg)
 
