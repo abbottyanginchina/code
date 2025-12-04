@@ -32,7 +32,7 @@ if __name__ == '__main__':
     correct_count = 0
     error_count = 0
     for item in tqdm(data, total=len(data)):
-        user_response = item['model_answer']
+        user_response = item['response']
         judgement = chat_LLM(user_response)
         print(judgement)
 
