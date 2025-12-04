@@ -24,7 +24,7 @@ def chat_LLM(user_prompt):
 
 if __name__ == '__main__':
     # read .jsonl file
-    data_path = '/Users/abbottyang/Library/Mobile Documents/com~apple~CloudDocs/PhD_Study/code/autodl/output/baseline_results/baseline_results/llava-1.5-7b-hf_ScienceQA_physics/out_of_constraint_answer.jsonl'
+    data_path = '/Users/abbottyang/Library/Mobile Documents/com~apple~CloudDocs/PhD_Study/code/autodl/output/baseline_results/baseline_results/llava-1.5-7b-hf_ScienceQA_physics/in_of_constraint_answer.jsonl'
     with open(data_path, 'r') as f:
         data_lines = f.readlines()
     data = [json.loads(line) for line in data_lines]
