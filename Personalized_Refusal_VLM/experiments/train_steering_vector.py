@@ -197,9 +197,9 @@ def train(cfg, start_layer, end_layer):
 
         # Save model
         save_dir = f"../output_{cfg.model_name}_{cfg.data.dataset_name}_{cfg.data.subject}"
-        if not os.path.exists(f"../output_{cfg.model_name}_{cfg.data.dataset_name}_{cfg.data.subject}/models/"):
-            os.makedirs(f"../output_{cfg.model_name}_{cfg.data.dataset_name}_{cfg.data.subject}/models/")
-        torch.save(model, f"../output_{cfg.model_name}_{cfg.data.dataset_name}_{cfg.data.subject}/models/steering_model_layer{layer}_{cfg.model_name}.pt")
+        if not os.path.exists(f"{save_dir}/models/"):
+            os.makedirs(f"{save_dir}/models/")
+        torch.save(model, f"{save_dir}/models/steering_model_layer{layer}_{cfg.model_name}.pt")
         print(f"✅ Saved model for layer {layer}")
 
         # ========== 推理阶段 ==========
