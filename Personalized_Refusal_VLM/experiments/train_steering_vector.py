@@ -196,6 +196,7 @@ def train(cfg, start_layer, end_layer):
         print(f"✅ Training finished for layer {layer}")
 
         # Save model
+        save_dir = f"../output_{cfg.model_name}_{cfg.data.dataset_name}_{cfg.data.subject}"
         if not os.path.exists(f"../output_{cfg.model_name}_{cfg.data.dataset_name}_{cfg.data.subject}/models/"):
             os.makedirs(f"../output_{cfg.model_name}_{cfg.data.dataset_name}_{cfg.data.subject}/models/")
         torch.save(model, f"../output_{cfg.model_name}_{cfg.data.dataset_name}_{cfg.data.subject}/models/steering_model_layer{layer}_{cfg.model_name}.pt")
