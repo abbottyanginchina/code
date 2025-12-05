@@ -59,6 +59,7 @@ def inference(cfg, model, layer):
     # print("Biology intervention probabilities:", p.squeeze().tolist())
     pred_other,  p = infer_dataset(model, oth_x_test, cfg.training.batch_size)
     # print("Other intervention probabilities:", p.squeeze().tolist())
+    import pdb; pdb.set_trace()
     image_pred_other,  p = infer_dataset(model, image_others_x_test, cfg.training.batch_size)
     image_pred_biology, p = infer_dataset(model, image_biology_x_test, cfg.training.batch_size)
 
