@@ -217,12 +217,12 @@ def train(cfg, start_layer, end_layer):
         torch.save(steering_vec_biology, f"{save_dir}/activations/steering_vec_biology_layer{layer}_{cfg.model_name}.pt")
 
 
-        save_dir = f"{save_dir}/visualizations/"
-        if not os.path.exists(save_dir):
-            os.makedirs(save_dir)
+        save_img = f"{save_dir}/visualizations/"
+        if not os.path.exists(save_img):
+            os.makedirs(save_img)
         visualize_distributions(train_other_target=oth_target, train_biology_target=bio_x_test,
                                 pred_other=pred_other, pred_biology=pred_biology, steered_other=oth_x_test+steering_vec.unsqueeze(0), original_other=oth_x_test,
-                                save_path=f"{save_dir}/activations_{layer}_{cfg.model_name}.png")
+                                save_path=f"{save_img}/activations_{layer}_{cfg.model_name}.png")
         print(f"✅ Saved steering vectors for layer {layer}")
 
 def parse_args():
