@@ -314,6 +314,7 @@ def eval_model(args):
             generated_tokens = outputs[0, inputs['input_ids'].shape[1]:]
             answer = processor.decode(generated_tokens, skip_special_tokens=True)
         
+        print(answer)
         img_save = {
             "model_answer": answer,
             "question": question
