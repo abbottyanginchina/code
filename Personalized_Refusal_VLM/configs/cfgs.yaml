@@ -19,6 +19,5 @@ data:
   filter_data: False
   subject: "biology"
 
-output_dir: f"../results/output_{cfg.model_name}_{cfg.data.dataset_name}_{cfg.data.subject}"
 
   
