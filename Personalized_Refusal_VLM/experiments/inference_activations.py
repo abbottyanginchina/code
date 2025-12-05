@@ -86,6 +86,8 @@ def main(cfg):
 
         pred_other, pred_biology, bio_x_test, oth_x_test, steering_vec_refusal = inference(cfg, model, layer, output_dir)
 
+        if not os.path.exists(f"{output_dir}/visualizations/"):
+            os.makedirs(f"{output_dir}/visualizations/")
         visualize_distributions(train_other_target=oth_target, train_biology_target=bio_x_test,
                             pred_other=pred_other, pred_biology=pred_biology, steered_other=oth_x_test+steering_vec.unsqueeze(0), original_other=oth_x_test,
                             save_path=f"{output_dir}/visualizations/activations_{layer}_{cfg.model_name}.png")
