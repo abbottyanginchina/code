@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 from PIL import Image
 from transformers import set_seed, AutoModelForVision2Seq, LlavaNextProcessor, LlavaNextForConditionalGeneration, InstructBlipForConditionalGeneration, InstructBlipProcessor, Qwen2_5_VLForConditionalGeneration, Qwen2VLForConditionalGeneration, AutoTokenizer, AutoModel, AutoProcessor, AutoModelForCausalLM, LlavaForConditionalGeneration, Qwen3VLForConditionalGeneration, CLIPImageProcessor, LlavaOnevisionForConditionalGeneration, Blip2Processor, Blip2ForConditionalGeneration
 import numpy as np
-from code.Personalized_Refusal_VLM.experiments.train_steering_vector import output_dir
+from Personalized_Refusal_VLM.experiments.train_steering_vector import output_dir
 from vti_utils.utils import get_demos, get_customer_demos, obtain_textual_vti, obtain_visual_vti, obtain_negative_vector, obtain_positive_vector, obtain_test_vector, get_all_datasets_filter, get_all_datasets
 from vti_utils.llm_layers import add_vti_layers, remove_vti_layers, add_one_layer, remove_one_layer, add_multiple_layers, remove_multiple_layers
 from vti_utils.conversation import conv_templates
