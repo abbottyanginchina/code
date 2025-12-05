@@ -50,7 +50,6 @@ def infer_dataset(model, X, batch_size=None):
 
 def inference(cfg, model, layer):
     # ========== 推理阶段 ==========
-    
     output_dir = os.path.join(cfg.output_dir, f"output_{cfg.model_name}_{cfg.data.dataset_name}_{cfg.data.subject}")
     bio_x_test = torch.load(f"{output_dir}/activations/in_test_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device).double()
     oth_x_test = torch.load(f"{output_dir}/activations/out_test_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device).double()
