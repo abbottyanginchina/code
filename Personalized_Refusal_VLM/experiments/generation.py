@@ -191,6 +191,7 @@ def eval_model(args):
     # import pdb; pdb.set_trace()
     # V_dict = compute_layerwise_V_k(oth_target, oth_x, device, k=16)
 
+    biology_vector = bio_target.mean(dim=0) - bio_x.mean(dim=0)
     refusal_vector = oth_target.mean(dim=0) - oth_x.mean(dim=0)
     # refusal_vector = refusal_vector.mean(dim=0)[1:]
 
@@ -273,7 +274,7 @@ def eval_model(args):
         raw_image = load_image(in_test_images[img_id]) #########
         question = in_test_text[img_id] ##########
         add_multiple_layers(model, torch.stack([biology_all[img_id]],dim=1).cuda(), alpha = [cfg.alpha_text], layer_indices = target_layers, cfg = cfg)
-        # add_multiple_layers(model, torch.stack([refusal_vector],dim=1).cuda(), alpha = [cfg.alpha_text], layer_indices = target_layers, cfg=cfg)
+        add_multiple_layers(model, torch.stack([refusal_vector],dim=1).cuda(), alpha = [cfg.alpha_text], layer_indices = target_layers, cfg=cfg)
         # 只在一层加
         # add_one_layer(model, torch.stack([refusal_vector]).cuda(), alpha = [args.alpha_text], layer_idx = layer)
         # add_one_layer(model, torch.stack([steering_vec_refusal[img_id]]).cuda(), alpha = [args.alpha_text], layer_idx = layer)
