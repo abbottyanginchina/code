@@ -81,7 +81,7 @@ def main(cfg):
         bio_x, oth_x, bio_target, oth_target, steering_vec = load_activations(cfg, layer)
 
         model = FlowField(input_dim=bio_x.shape[1], hidden=1024, ref_vec=steering_vec.to(device)).to(device).double()
-        model.load_state_dict(torch.load(f"../output_{cfg.model_name}_{cfg.data.dataset_name}_{cfg.data.subject}/models/steering_model_layer{layer}_{cfg.model_name}.pt", weights_only=False).state_dict())
+        model.load_state_dict(torch.load(f"{output_dir}/models/steering_model_layer{layer}_{cfg.model_name}.pt", weights_only=False).state_dict())
         model.eval()
 
         pred_other, pred_biology, bio_x_test, oth_x_test, steering_vec_refusal = inference(cfg, model, layer)
