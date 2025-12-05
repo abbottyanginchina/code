@@ -166,7 +166,7 @@ def eval_model(args):
     qwen_max_layer = 29
     llava_max_layer = 33
     blip_max_layer = 33
-    max_layer = llava_max_layer if 'llava-1.5' in model_path.lower() else qwen_max_layer if 'qwen' in model_path.lower() else blip_max_layer
+    # max_layer = llava_max_layer if 'llava-1.5' in model_path.lower() else qwen_max_layer if 'qwen' in model_path.lower() else blip_max_layer
 
     for layer in range(1, args.max_layer): # Must start from 1
         path1 = f"{base_path}/steering_vec_nonbiology_refusal_layer{layer}_{cfg.model_name}.pt"
