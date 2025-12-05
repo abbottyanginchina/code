@@ -177,8 +177,7 @@ def eval_model(args):
         steering_list2.append(vec2)
     refusal_all = torch.stack(steering_list1, dim=1)
     biology_all = torch.stack(steering_list2, dim=1)
-    
-    import pdb; pdb.set_trace()
+
     # layer = 25
     
     # 这里最大层数是前面减1，因为第零层不取
