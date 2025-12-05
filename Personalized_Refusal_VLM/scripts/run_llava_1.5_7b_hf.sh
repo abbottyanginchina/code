@@ -41,7 +41,7 @@ python -m experiments.train_steering_vector --model_name $model_name --start_lay
 # wait
 
 # echo "✅ Step 3: Inference activations with steering vectors applied..."
-python -m experiments.inference_activations --start_layer 25 --end_layer 26
+# python -m experiments.inference_activations --start_layer 25 --end_layer 26
 
 echo "✅ All layer groups finished!"
 
