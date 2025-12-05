@@ -203,8 +203,8 @@ def train(cfg, start_layer, end_layer):
         print(f"✅ Saved model for layer {layer}")
 
         # ========== 推理阶段 ==========
-        bio_x_test = torch.load(f"../output_{cfg.model_name}_{cfg.data.dataset_name}_{cfg.data.subject}/activations/in_test_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device).double()
-        oth_x_test = torch.load(f"../output_{cfg.model_name}_{cfg.data.dataset_name}_{cfg.data.subject}/activations/out_test_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device).double()
+        bio_x_test = torch.load(f"{save_dir}/activations/in_test_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device).double()
+        oth_x_test = torch.load(f"{save_dir}/activations/out_test_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device).double()
 
         pred_biology, p = infer_dataset(model, bio_x_test, cfg.training.batch_size)
         # print("Biology intervention probabilities:", p.squeeze().tolist())
