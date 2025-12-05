@@ -23,7 +23,7 @@ echo "🚀 Step 1: Extracting activations..."
 # wait
 
 
-for ((layer=0; layer<num_layers; layer+=step)); do
+for ((layer=12; layer<num_layers; layer+=step)); do
     end_layer=$((layer + step))
 
     if [ $end_layer -gt $num_layers ]; then
