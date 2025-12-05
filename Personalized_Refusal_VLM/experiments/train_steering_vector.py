@@ -217,7 +217,7 @@ def train(cfg, start_layer, end_layer):
         torch.save(steering_vec_biology, f"{save_dir}/activations/steering_vec_biology_layer{layer}_{cfg.model_name}.pt")
 
 
-        save_dir = f"../output_{cfg.model_name}_{cfg.data.dataset_name}_{cfg.data.subject}/visualizations/"
+        save_dir = f"{save_dir}/visualizations/"
         if not os.path.exists(save_dir):
             os.makedirs(save_dir)
         visualize_distributions(train_other_target=oth_target, train_biology_target=bio_x_test,
