@@ -8,11 +8,11 @@ from vti_utils.nets import FlowField
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
-def load_activations(cfg, layer):
-    bio_x = torch.load(f"../output_{cfg.model_name}_{cfg.data.dataset_name}_{cfg.data.subject}/activations/without_sys_in_train_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device, dtype=torch.float64)
-    oth_x = torch.load(f"../output_{cfg.model_name}_{cfg.data.dataset_name}_{cfg.data.subject}/activations/without_sys_out_train_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device, dtype=torch.float64)
+def load_activations(cfg, layer, output_dir):
+    bio_x = torch.load(f"{output_dir}/activations/without_sys_in_train_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device, dtype=torch.float64)
+    oth_x = torch.load(f"{output_dir}/activations/without_sys_out_train_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device, dtype=torch.float64)
     bio_target = bio_x
-    oth_target = torch.load(f"../output_{cfg.model_name}_{cfg.data.dataset_name}_{cfg.data.subject}/activations/with_sys_out_train_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device, dtype=torch.float64)
+    oth_target = torch.load(f"{output_dir}/activations/with_sys_out_train_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device, dtype=torch.float64)
 
     steering_vec = oth_target.mean(dim=0) - oth_x.mean(dim=0)
     oth_steering = oth_x + steering_vec.unsqueeze(0)
