@@ -175,6 +175,7 @@ def eval_model(args):
         vec2 = torch.load(path2, weights_only=False)
         steering_list1.append(vec1)
         steering_list2.append(vec2)
+        import pdb; pdb.set_trace()
     refusal_all = torch.stack(steering_list1, dim=1)
     biology_all = torch.stack(steering_list2, dim=1)
 
