@@ -19,7 +19,7 @@ echo "🚀 Step 1: Extracting activations..."
 # echo "🧠 Step 2: Training steering vector model..."
 python -m experiments.train_steering_vector --model_name $model_name --start_layer 12 --end_layer 19 &
 python -m experiments.train_steering_vector --model_name $model_name --start_layer 19 --end_layer 26 &
-python -m experiments.train_steering_vector --model_name $model_name --start_layer 26 --end_layer 32 &
+python -m experiments.train_steering_vector --model_name $model_name --start_layer 26 --end_layer 33 &
 # wait
 
 
