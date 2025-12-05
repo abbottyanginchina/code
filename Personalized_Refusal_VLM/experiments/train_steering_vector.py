@@ -265,4 +265,4 @@ if __name__ == '__main__':
     if args.subject is not None:
         cfg.data.subject = args.subject
 
-    train(cfg, args.start_layer, args.end_layer, output_dir)
+    train(cfg, args.start_layer, args.end_layer, cfg.output_dir)
