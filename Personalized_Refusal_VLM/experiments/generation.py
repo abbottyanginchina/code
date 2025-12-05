@@ -264,6 +264,7 @@ def eval_model(args):
     '''
 
     # 生成in-domain测试集
+    print("Generating biology answer...")
     answers_file = f"../output_{cfg.model_name}_{cfg.data.dataset_name}/results/biology_answer_{cfg.model_name}.jsonl"
     os.makedirs(os.path.dirname(answers_file), exist_ok=True)
     ans_file = open(answers_file, "w")
