@@ -65,10 +65,10 @@ def inference(cfg, model, layer):
 
     steering_vec_refusal = pred_other - oth_x_test
     steering_vec_biology = pred_biology - bio_x_test
-    torch.save(steering_vec_refusal, f"../output_{cfg.model_name}_{cfg.data.dataset_name}_{cfg.data.subject}/activations/steering_vec_nonbiology_refusal_layer{layer}_{cfg.model_name}.pt")
-    torch.save(steering_vec_biology, f"../output_{cfg.model_name}_{cfg.data.dataset_name}_{cfg.data.subject}/activations/steering_vec_biology_layer{layer}_{cfg.model_name}.pt")
-    torch.save(image_pred_other, f"../output_{cfg.model_name}_{cfg.data.dataset_name}_{cfg.data.subject}/activations/image_pred_other_layer{layer}_{cfg.model_name}.pt")
-    torch.save(image_pred_biology, f"../output_{cfg.model_name}_{cfg.data.dataset_name}_{cfg.data.subject}/activations/image_pred_biology_layer{layer}_{cfg.model_name}.pt")
+    torch.save(steering_vec_refusal, f"{output_dir}/activations/steering_vec_nonbiology_refusal_layer{layer}_{cfg.model_name}.pt")
+    torch.save(steering_vec_biology, f"{output_dir}/activations/steering_vec_biology_layer{layer}_{cfg.model_name}.pt")
+    torch.save(image_pred_other, f"{output_dir}/activations/image_pred_other_layer{layer}_{cfg.model_name}.pt")
+    torch.save(image_pred_biology, f"{output_dir}/activations/image_pred_biology_layer{layer}_{cfg.model_name}.pt")
 
     # if not os.path.exists(cfg.save_dir):
     #     os.makedirs(cfg.save_dir)
