@@ -326,7 +326,6 @@ def eval_model(args):
         # remove_one_layer(model, layer_idx = layer)
     ans_file.close()
 
-    '''
     ############ 只有图片没有文字 #############
     answers_file = f"../output_{cfg.model_name}_{cfg.data.dataset_name}/results/image_nonbiology_answer_{cfg.model_name}.jsonl"
     os.makedirs(os.path.dirname(answers_file), exist_ok=True)
@@ -450,7 +449,6 @@ def eval_model(args):
         remove_multiple_layers(model, layer_indices = target_layers, cfg = cfg)
         # remove_one_layer(model, layer_idx = layer)
     ans_file.close()
-    '''
 
 if __name__ == "__main__":
     config_path = 'configs/cfgs.yaml'
