@@ -95,7 +95,7 @@ def train(cfg, start_layer, end_layer):
 
     for layer in range(start_layer, end_layer): 
         print(f"\n===== Training on layer {layer} =====")
-        bio_x, oth_x, bio_target, oth_target, steering_vec = load_activations(cfg, layer)
+        bio_x, oth_x, bio_target, oth_target, steering_vec = load_activations(cfg, layer, output_dir)
         num_sample = bio_x.size(0)
 
         # 原始 others 的 ground-truth（只对应 200 个 others）
