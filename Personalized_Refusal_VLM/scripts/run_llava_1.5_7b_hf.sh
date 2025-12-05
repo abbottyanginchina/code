@@ -23,25 +23,25 @@ echo "🚀 Step 1: Extracting activations..."
 # wait
 
 
-for ((layer=0; layer<num_layers; layer+=step)); do
-    end_layer=$((layer + step))
+# for ((layer=0; layer<num_layers; layer+=step)); do
+#     end_layer=$((layer + step))
 
-    if [ $end_layer -gt $num_layers ]; then
-        end_layer=$num_layers
-    fi
+#     if [ $end_layer -gt $num_layers ]; then
+#         end_layer=$num_layers
+#     fi
 
-    echo "🔄 Training layers $layer → $end_layer ..."
+#     echo "🔄 Training layers $layer → $end_layer ..."
     
-    python -m experiments.train_steering_vector \
-        --model_name $model_name \
-        --subject $subject \
-        --start_layer $layer \
-        --end_layer $end_layer & # ← 并行运行
-done
-wait
+#     python -m experiments.train_steering_vector \
+#         --model_name $model_name \
+#         --subject $subject \
+#         --start_layer $layer \
+#         --end_layer $end_layer & # ← 并行运行
+# done
+# wait
 
-echo "✅ Step 3: Inference activations with steering vectors applied..."
-python -m experiments.inference_activations --start_layer 0 --end_layer 33
+# echo "✅ Step 3: Inference activations with steering vectors applied..."
+# python -m experiments.inference_activations --start_layer 0 --end_layer 33
 
 echo "✅ All layer groups finished!"
 
