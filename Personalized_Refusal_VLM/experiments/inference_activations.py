@@ -56,7 +56,7 @@ def inference(cfg, model, layer):
     image_biology_x_test = torch.load(f"../output_{cfg.model_name}_{cfg.data.dataset_name}_{cfg.data.subject}/activations/image_in_test_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device).double()
 
     pred_biology, p = infer_dataset(model, bio_x_test, cfg.training.batch_size)
-    image.png
+    import pdb; pdb.set_trace()
     # print("Biology intervention probabilities:", p.squeeze().tolist())
     pred_other,  p = infer_dataset(model, oth_x_test, cfg.training.batch_size)
     # print("Other intervention probabilities:", p.squeeze().tolist())
