@@ -19,6 +19,6 @@ data:
   filter_data: False
   subject: "biology"
 
-output_dir: "./results"
+output_dir: "../results"
 
   
