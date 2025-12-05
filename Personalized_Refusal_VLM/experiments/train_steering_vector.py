@@ -266,5 +266,4 @@ if __name__ == '__main__':
         cfg.data.subject = args.subject
 
     output_dir = os.path.join(cfg.output_dir, f"output_{cfg.model_name}_{cfg.data.dataset_name}_{cfg.data.subject}")
-    
     train(cfg, args.start_layer, args.end_layer, output_dir)
