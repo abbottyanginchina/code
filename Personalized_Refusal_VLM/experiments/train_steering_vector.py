@@ -214,7 +214,7 @@ def train(cfg, start_layer, end_layer):
         steering_vec_refusal = pred_other - oth_x_test
         steering_vec_biology = pred_biology - bio_x_test
         torch.save(steering_vec_refusal, f"{save_dir}/activations/steering_vec_nonbiology_refusal_layer{layer}_{cfg.model_name}.pt")
-        torch.save(steering_vec_biology, f"../output_{cfg.model_name}_{cfg.data.dataset_name}_{cfg.data.subject}/activations/steering_vec_biology_layer{layer}_{cfg.model_name}.pt")
+        torch.save(steering_vec_biology, f"{save_dir}/activations/steering_vec_biology_layer{layer}_{cfg.model_name}.pt")
 
 
         save_dir = f"../output_{cfg.model_name}_{cfg.data.dataset_name}_{cfg.data.subject}/visualizations/"
