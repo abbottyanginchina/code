@@ -328,7 +328,7 @@ def eval_model(args, output_dir):
     ans_file.close()
 
     ############ 只有图片没有文字 #############
-    answers_file = f"../output_{cfg.model_name}_{cfg.data.dataset_name}/results/image_nonbiology_answer_{cfg.model_name}.jsonl"
+    answers_file = f"{output_dir}/results/image_nonbiology_answer_{cfg.model_name}.jsonl"
     os.makedirs(os.path.dirname(answers_file), exist_ok=True)
     ans_file = open(answers_file, "w")
     for img_id in range(len(out_test_images)):
