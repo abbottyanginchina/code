@@ -202,28 +202,28 @@ def train(cfg, start_layer, end_layer):
         torch.save(model, f"{save_dir}/models/steering_model_layer{layer}_{cfg.model_name}.pt")
         print(f"✅ Saved model for layer {layer}")
 
-        # ========== 推理阶段 ==========
-        bio_x_test = torch.load(f"{save_dir}/activations/in_test_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device).double()
-        oth_x_test = torch.load(f"{save_dir}/activations/out_test_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device).double()
+        # # ========== 推理阶段 ==========
+        # bio_x_test = torch.load(f"{save_dir}/activations/in_test_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device).double()
+        # oth_x_test = torch.load(f"{save_dir}/activations/out_test_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device).double()
 
-        pred_biology, p = infer_dataset(model, bio_x_test, cfg.training.batch_size)
-        # print("Biology intervention probabilities:", p.squeeze().tolist())
-        pred_other,  p = infer_dataset(model, oth_x_test, cfg.training.batch_size)
-        # print("Other intervention probabilities:", p.squeeze().tolist())
+        # pred_biology, p = infer_dataset(model, bio_x_test, cfg.training.batch_size)
+        # # print("Biology intervention probabilities:", p.squeeze().tolist())
+        # pred_other,  p = infer_dataset(model, oth_x_test, cfg.training.batch_size)
+        # # print("Other intervention probabilities:", p.squeeze().tolist())
 
-        steering_vec_refusal = pred_other - oth_x_test
-        steering_vec_biology = pred_biology - bio_x_test
-        torch.save(steering_vec_refusal, f"{save_dir}/activations/steering_vec_nonbiology_refusal_layer{layer}_{cfg.model_name}.pt")
-        torch.save(steering_vec_biology, f"{save_dir}/activations/steering_vec_biology_layer{layer}_{cfg.model_name}.pt")
+        # steering_vec_refusal = pred_other - oth_x_test
+        # steering_vec_biology = pred_biology - bio_x_test
+        # torch.save(steering_vec_refusal, f"{save_dir}/activations/steering_vec_nonbiology_refusal_layer{layer}_{cfg.model_name}.pt")
+        # torch.save(steering_vec_biology, f"{save_dir}/activations/steering_vec_biology_layer{layer}_{cfg.model_name}.pt")
 
 
-        save_img = f"{save_dir}/visualizations/"
-        if not os.path.exists(save_img):
-            os.makedirs(save_img)
-        visualize_distributions(train_other_target=oth_target, train_biology_target=bio_x_test,
-                                pred_other=pred_other, pred_biology=pred_biology, steered_other=oth_x_test+steering_vec.unsqueeze(0), original_other=oth_x_test,
-                                save_path=f"{save_img}/activations_{layer}_{cfg.model_name}.png")
-        print(f"✅ Saved steering vectors for layer {layer}")
+        # save_img = f"{save_dir}/visualizations/"
+        # if not os.path.exists(save_img):
+        #     os.makedirs(save_img)
+        # visualize_distributions(train_other_target=oth_target, train_biology_target=bio_x_test,
+        #                         pred_other=pred_other, pred_biology=pred_biology, steered_other=oth_x_test+steering_vec.unsqueeze(0), original_other=oth_x_test,
+        #                         save_path=f"{save_img}/activations_{layer}_{cfg.model_name}.png")
+        # print(f"✅ Saved steering vectors for layer {layer}")
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Get Activations")
