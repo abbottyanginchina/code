@@ -185,7 +185,8 @@ def eval_model(args):
 
     oth_target = torch.load(f"{base_path}/with_sys_out_train_activations_{cfg.model_name}.pt", weights_only=False).double() # Shape: torch.Size([200, 33, 4096]) [num_samples, num_layers, hidden_size]
     oth_x = torch.load(f"{base_path}/without_sys_out_train_activations_{cfg.model_name}.pt", weights_only=False).double()   # Shape: torch.Size([200, 33, 4096]) [num_samples, num_layers, hidden_size]
-
+    bio_target = torch.load(f"{base_path}/with_sys_in_train_activations_{cfg.model_name}.pt", weights_only=False).double() # Shape: torch.Size([200, 33, 4096]) [num_samples, num_layers, hidden_size]
+    bio_x = torch.load(f"{base_path}/without_sys_in_train_activations_{cfg.model_name}.pt", weights_only=False).double() 
     # SVD
     # import pdb; pdb.set_trace()
     # V_dict = compute_layerwise_V_k(oth_target, oth_x, device, k=16)
