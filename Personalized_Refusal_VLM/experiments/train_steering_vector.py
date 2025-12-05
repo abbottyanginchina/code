@@ -182,7 +182,7 @@ def train(cfg, start_layer, end_layer):
                 if neg_mask.any():
                     loss_gate += F.binary_cross_entropy_with_logits(logits[neg_mask], torch.zeros_like(p[neg_mask]))
 
-                loss = loss_pos + loss_neg + 0.1* loss_ortho + loss_gate
+                loss = loss_pos + loss_neg + 0.1 * loss_ortho + loss_gate
 
                 opt.zero_grad()
                 loss.backward()
