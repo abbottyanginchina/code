@@ -49,6 +49,7 @@ def infer_dataset(model, X, batch_size=None):
     return X_pred, P
 
 def inference(cfg, model, layer, output_dir):
+    import pdb; pdb.set_trace()
     # ========== 推理阶段 ==========
     bio_x_test = torch.load(f"{output_dir}/activations/in_test_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device).double()
     oth_x_test = torch.load(f"{output_dir}/activations/out_test_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device).double()
