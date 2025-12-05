@@ -11,7 +11,7 @@ inter_start_layer=12
 inter_end_layer=32
 alpha_text=1.3
 dataset="ScienceQA"
-subject="biology"
+subject="physics"
 
 echo "🚀 Step 1: Extracting activations..."
 # python -m experiments.get_activations_inst --model_name $model_name --num_test $num_test --num_train $num_train --dataset $dataset --subject $subject
