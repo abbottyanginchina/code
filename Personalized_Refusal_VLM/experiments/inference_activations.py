@@ -51,10 +51,10 @@ def infer_dataset(model, X, batch_size=None):
 def inference(cfg, model, layer):
     # ========== 推理阶段 ==========
     output_dir = f"../output_{cfg.model_name}_{cfg.data.dataset_name}_{cfg.data.subject}"
-    bio_x_test = torch.load(f"../output_{cfg.model_name}_{cfg.data.dataset_name}_{cfg.data.subject}/activations/in_test_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device).double()
-    oth_x_test = torch.load(f"../output_{cfg.model_name}_{cfg.data.dataset_name}_{cfg.data.subject}/activations/out_test_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device).double()
-    image_others_x_test = torch.load(f"../output_{cfg.model_name}_{cfg.data.dataset_name}_{cfg.data.subject}/activations/image_out_test_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device).double()
-    image_biology_x_test = torch.load(f"../output_{cfg.model_name}_{cfg.data.dataset_name}_{cfg.data.subject}/activations/image_in_test_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device).double()
+    bio_x_test = torch.load(f"{output_dir}/activations/in_test_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device).double()
+    oth_x_test = torch.load(f"{output_dir}/activations/out_test_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device).double()
+    image_others_x_test = torch.load(f"{output_dir}/activations/image_out_test_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device).double()
+    image_biology_x_test = torch.load(f"{output_dir}/activations/image_in_test_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device).double()
 
     pred_biology, p = infer_dataset(model, bio_x_test, cfg.training.batch_size)
     # print("Biology intervention probabilities:", p.squeeze().tolist())
