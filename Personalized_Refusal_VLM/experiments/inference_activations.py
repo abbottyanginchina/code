@@ -76,6 +76,7 @@ def inference(cfg, model, layer, output_dir):
     
 
 def main(cfg):
+    output_dir = os.path.join(cfg.output_dir, f"output_{cfg.model_name}_{cfg.data.dataset_name}_{cfg.data.subject}")
     for layer in range(cfg.start_layer, cfg.end_layer): 
         bio_x, oth_x, bio_target, oth_target, steering_vec = load_activations(cfg, layer)
 
@@ -83,7 +84,7 @@ def main(cfg):
         model.load_state_dict(torch.load(f"{output_dir}/models/steering_model_layer{layer}_{cfg.model_name}.pt", weights_only=False).state_dict())
         model.eval()
 
-        pred_other, pred_biology, bio_x_test, oth_x_test, steering_vec_refusal = inference(cfg, model, layer)
+        pred_other, pred_biology, bio_x_test, oth_x_test, steering_vec_refusal = inference(cfg, model, layer, output_dir)
 
         visualize_distributions(train_other_target=oth_target, train_biology_target=bio_x_test,
                             pred_other=pred_other, pred_biology=pred_biology, steered_other=oth_x_test+steering_vec.unsqueeze(0), original_other=oth_x_test,
