@@ -499,4 +499,6 @@ if __name__ == "__main__":
         cfg.data.subject = args.subject
 
     set_seed(cfg.seed)
+
+    output_dir = f"{cfg.output_dir}/output_{cfg.model_name}_{cfg.data.dataset_name}"
     eval_model(cfg)
