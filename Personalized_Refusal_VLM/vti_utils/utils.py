@@ -615,7 +615,6 @@ def get_activations_inst(cfg, model, inputs_text, image, processor, system_promp
                             return_dict=True
                         )
                         h = h.hidden_states
-                        import pdb; pdb.set_trace()
 
                     embedding_token = []
                     for layer in range(len(h)):
