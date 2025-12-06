@@ -181,7 +181,7 @@ def get_all_datasets(args):
         # --- 定义领域 ---
         in_domain = []
         in_domain.append(args.data.subject)
-        out_of_domain = ['Accounting', 'Geography', 'Art_Theory', 'Psychology', 'Computer_Science', 'Finance', 'Energy_and_Power']
+        out_of_domain = ['Accounting', 'Geography', 'Art_Theory', 'Psychology', 'Computer_Science']
         out_of_domain = [domain for domain in out_of_domain if domain not in in_domain]
         all_domains = in_domain + out_of_domain
 
