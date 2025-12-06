@@ -14,8 +14,9 @@ dataset="ScienceQA"
 subject="biology"
 
 process_subject() {
-    subject=$1
-    dataset=$2
+    dataset=$1
+    subject=$2
+    
 
 echo "🚀 Step 1: Extracting activations..."
 python -m experiments.get_activations_inst --model_name $model_name --num_test $num_test --num_train $num_train --dataset $dataset --subject $subject
