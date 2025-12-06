@@ -179,8 +179,10 @@ def get_all_datasets(args):
         out_train = dataset.filter(lambda example: example["topic"] in out_of_domain)
     elif args.data.dataset_name == "MMMU":
         # --- 定义领域 ---
-        in_domain = ['Biology']
+        in_domain = []
+        in_domain.append(args.data.subject)
         out_of_domain = ['Accounting', 'Psychology', 'Computer_Science', 'Finance', 'Energy_and_Power']
+        out_of_domain = [domain for domain in out_of_domain if domain not in in_domain]
         all_domains = in_domain + out_of_domain
 
         # --- 分开存储 ---
