@@ -251,6 +251,12 @@ def parse_args():
         default="biology",
         help="Subject to use",
     )
+    parser.add_argument(
+        "--dataset",
+        type=str,
+        default="ScienceQA",
+        help="Dataset to use",
+    )
    
     return parser.parse_args()
 
