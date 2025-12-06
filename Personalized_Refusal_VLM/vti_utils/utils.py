@@ -167,13 +167,50 @@ def get_prompts(args, model, tokenizer, data_demos, model_is_llaval=True):
     return inputs
 
 def get_all_datasets(args):
-    in_domain = ['physics']
-    out_of_domain = ['biology', 'geography', 'writing-strategies', 'figurative-language', 'economics', 'earth-science']
-    dataset = load_dataset(f"{args.data.path}/ScienceQA")["train"].filter(lambda e: e["image"] is not None)
-    in_train = dataset.filter(lambda example: example["topic"] in in_domain)
-    out_train = dataset.filter(lambda example: example["topic"] in out_of_domain)
+    if args.data.dataset_name == "ScienceQA":
+        in_domain = ['physics']
+        out_of_domain = ['biology', 'geography', 'writing-strategies', 'figurative-language', 'economics', 'earth-science']
+        dataset = load_dataset(f"{args.data.path}/ScienceQA")["train"].filter(lambda e: e["image"] is not None)
+        in_train = dataset.filter(lambda example: example["topic"] in in_domain)
+        out_train = dataset.filter(lambda example: example["topic"] in out_of_domain)
+    elif args.data.dataset_name == "MMMU":
+        # --- 定义领域 ---
+        in_domain = ['Biology']
+        out_of_domain = ['Accounting', 'Psychology', 'Computer_Science', 'Finance', 'Energy_and_Power']
+        all_domains = in_domain + out_of_domain
+
+        # --- 分开存储 ---
+        all_in_splits, all_out_splits = [], []
+
+        for domain in all_domains:
+            try:
+                dataset_dict = load_dataset(f"{cfg.data.path}/MMMU", domain)
+                domain_splits = []
+
+                # 拼接 dev / validation / test
+                for split in ['dev', 'validation', 'test']:
+                    if split in dataset_dict:
+                        domain_splits.append(dataset_dict[split])
+
+                if domain_splits:
+                    merged = concatenate_datasets(domain_splits)
+                    merged = merged.filter(lambda e: e.get("image_1") is not None)  # 保留有图样本
+
+                    # ✅ 根据领域分类存储
+                    if domain in in_domain:
+                        all_in_splits.append(merged)
+                    else:
+                        all_out_splits.append(merged)
+
+            except Exception as e:
+                print(f"⚠️ Skipped {domain}: {e}")
+
+        # --- 合并各类数据 ---
+        in_train = concatenate_datasets(all_in_splits)
+        out_train = concatenate_datasets(all_out_splits)
+
     sample_in = in_train.shuffle(seed=args.seed).select([i for i in list(range(args.num_train+args.num_test))])
-    sample_out = out_train.shuffle(seed=args.seed).select([i for i in list(range(args.num_train+args.num_test))])
+        sample_out = out_train.shuffle(seed=args.seed).select([i for i in list(range(args.num_train+args.num_test))])
 
     with_sys_in_train_text = []
     with_sys_out_train_text = []
