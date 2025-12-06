@@ -184,7 +184,7 @@ def get_all_datasets(args):
 
         for domain in all_domains:
             try:
-                dataset_dict = load_dataset(f"{cfg.data.path}/MMMU", domain)
+                dataset_dict = load_dataset(f"{args.data.path}/MMMU", domain)
                 domain_splits = []
 
                 # 拼接 dev / validation / test
