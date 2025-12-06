@@ -167,17 +167,17 @@ def get_prompts(args, model, tokenizer, data_demos, model_is_llaval=True):
     return inputs
 
 def get_all_datasets(args):
-    if cfg.data.dataset_name == "ScienceQA":
+    if args.data.dataset_name == "ScienceQA":
         in_domain = []
-        in_domain.append(cfg.data.subject)
+        in_domain.append(args.data.subject)
         out_of_domain = ['physics', 'biology', 'geography', 'writing-strategies', 'figurative-language', 'economics', 'earth-science']
         # Exclude in domain from out domain
         out_of_domain = [domain for domain in out_of_domain if domain not in in_domain]
         
-        dataset = load_dataset(f"{cfg.data.path}/ScienceQA")["train"].filter(lambda e: e["image"] is not None)
+        dataset = load_dataset(f"{args.data.path}/ScienceQA")["train"].filter(lambda e: e["image"] is not None)
         in_train = dataset.filter(lambda example: example["topic"] in in_domain)
         out_train = dataset.filter(lambda example: example["topic"] in out_of_domain)
-    elif cfg.data.dataset_name == "MMMU":
+    elif args.data.dataset_name == "MMMU":
         # --- 定义领域 ---
         in_domain = ['Biology']
         out_of_domain = ['Accounting', 'Psychology', 'Computer_Science', 'Finance', 'Energy_and_Power']
@@ -188,7 +188,7 @@ def get_all_datasets(args):
 
         for domain in all_domains:
             try:
-                dataset_dict = load_dataset(f"{cfg.data.path}/MMMU", domain)
+                dataset_dict = load_dataset(f"{args.data.path}/MMMU", domain)
                 domain_splits = []
 
                 # 拼接 dev / validation / test
