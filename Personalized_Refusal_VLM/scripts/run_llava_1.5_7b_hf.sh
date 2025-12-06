@@ -66,7 +66,7 @@ for subject in "${subjects[@]}"; do
 done
 
 dataset="ScienceQA"
-subjects=("Math" "chemistry" "physics")  # 根据需要修改这里的 subjects
+subjects=("Math" "Geography" "Art_Theory")  # 根据需要修改这里的 subjects
 for subject in "${subjects[@]}"; do
     process_subject "$dataset" "$subject"
 done
