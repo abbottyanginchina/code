@@ -120,6 +120,12 @@ def parse_args():
         help="Directory to save inference results",
     )
     parser.add_argument(
+        "--dataset",
+        type=str,
+        default="ScienceQA",
+        help="Dataset to use",
+    )
+    parser.add_argument(
          "--subject", 
          type=str, 
          default="biology", 
