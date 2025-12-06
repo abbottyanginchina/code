@@ -228,8 +228,12 @@ def get_all_datasets(args):
         with_sys_out_train = sys_prompt + sample_out[i]['question']
         without_sys_in_train_= sample_in[i]['question']
         without_sys_out_train = sample_out[i]['question']
-        in_img_train = sample_in[i]['image']
-        out_img_train = sample_out[i]['image']
+        if args.data.dataset_name == "ScienceQA":
+            in_img_train = sample_in[i]['image']
+            out_img_train = sample_out[i]['image']
+        elif args.data.dataset_name == "MMMU":
+            in_img_train = sample_in[i]['image_1']
+            out_img_train = sample_out[i]['image_1']
 
         with_sys_in_train_text.append(with_sys_in_train)
         with_sys_out_train_text.append(with_sys_out_train)
