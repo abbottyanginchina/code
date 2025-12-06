@@ -10,8 +10,6 @@ model_name="llava-1.5-7b-hf"
 inter_start_layer=12
 inter_end_layer=32
 alpha_text=1.3
-dataset="ScienceQA"
-subject="biology"
 
 process_subject() {
     dataset=$1
