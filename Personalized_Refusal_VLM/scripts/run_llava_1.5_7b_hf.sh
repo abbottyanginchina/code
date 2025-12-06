@@ -25,7 +25,6 @@ echo "🧠 Step 2: Training steering vector model..."
 # python -m experiments.train_steering_vector --model_name $model_name --start_layer 26 --end_layer 33 &
 # wait
 
-
 for ((layer=0; layer<num_layers; layer+=step)); do
     end_layer=$((layer + step))
 
@@ -54,6 +53,11 @@ python -m experiments.generation --model_name $model_name --num_test $num_test -
     --inter_start_layer $inter_start_layer --inter_end_layer $inter_end_layer --alpha_text $alpha_text --dataset $dataset --subject $subject
 
 }
+
+subjects=("biology" "chemistry" "physics")  # 根据需要修改这里的 subjects
+for subject in "${subjects[@]}"; do
+    process_subject "$subject"
+done
 
 echo "🎉 All steps completed!"
 
