@@ -55,6 +55,7 @@ python -m experiments.generation --model_name $model_name --num_test $num_test -
 
 }
 
+datasets=("ScienceQA" "MMMU")
 subjects=("biology" "chemistry" "physics")  # 根据需要修改这里的 subjects
 for subject in "${subjects[@]}"; do
     process_subject "$subject"
