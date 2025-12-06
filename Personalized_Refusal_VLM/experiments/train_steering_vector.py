@@ -270,6 +270,8 @@ if __name__ == '__main__':
         cfg.model_name = args.model_name
     if args.subject is not None:
         cfg.data.subject = args.subject
+    if args.dataset is not None:
+        cfg.data.dataset_name = args.dataset
 
     output_dir = os.path.join(cfg.output_dir, f"output_{cfg.model_name}_{cfg.data.dataset_name}_{cfg.data.subject}")
     train(cfg, args.start_layer, args.end_layer, output_dir)
