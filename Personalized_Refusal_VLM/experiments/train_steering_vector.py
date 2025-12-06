@@ -145,8 +145,8 @@ def train(cfg, start_layer, end_layer, output_dir):
                     delta_pred = F.normalize(x_pred_pos - x[pos_mask], dim=-1)
                     loss_vision = 1 - F.cosine_similarity(delta_pred, gt_vec_pos, dim=-1).mean()
 
-                    # loss_pos = align + recon + loss_vision
-                    loss_pos = align + recon
+                    loss_pos = align + recon + loss_vision
+                    # loss_pos = align + recon
                 else:
                     loss_pos = torch.tensor(0.0, device=device)
 
