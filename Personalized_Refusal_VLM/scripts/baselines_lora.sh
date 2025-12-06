@@ -8,13 +8,23 @@ model_name="llava-1.5-7b-hf"
 dataset="ScienceQA"
 subject="biology"
 
-python -m baselines.data_preperation --model_name $model_name --num_test $num_test --num_train $num_train --dataset $dataset --subject $subject
-python -m baselines.lora --model_name $model_name --num_test $num_test --num_train $num_train --dataset $dataset --subject $subject
+process() {
+    python -m baselines.data_preperation --model_name $model_name --num_test $num_test --num_train $num_train --dataset $dataset --subject $subject &
+    wait
+    python -m baselines.lora --model_name $model_name --num_test $num_test --num_train $num_train --dataset $dataset --subject $subject &
+    wait
+}
 
-subject="physics"
-python -m baselines.data_preperation --model_name $model_name --num_test $num_test --num_train $num_train --dataset $dataset --subject $subject
-python -m baselines.lora --model_name $model_name --num_test $num_test --num_train $num_train --dataset $dataset --subject $subject
+dataset="ScienceQA"
+subjects=("biology" "geography" "physics")  # 根据需要修改这里的 subjects
+for subject in "${subjects[@]}"; do
+    process "$dataset" "$subject"
+done
 
-subject="geography"
-python -m baselines.data_preperation --model_name $model_name --num_test $num_test --num_train $num_train --dataset $dataset --subject $subject
-python -m baselines.lora --model_name $model_name --num_test $num_test --num_train $num_train --dataset $dataset --subject $subject
+dataset="MMMU"
+subjects=("Math" "Geography" "Art_Theory")  # 根据需要修改这里的 subjects
+for subject in "${subjects[@]}"; do
+    process "$dataset" "$subject"
+done
+
+echo "🎉 All steps completed!"
