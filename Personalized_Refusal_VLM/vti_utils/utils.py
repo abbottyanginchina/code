@@ -241,8 +241,14 @@ def get_all_datasets(args):
     for i in range(args.num_test):
         in_test= sample_in[i+args.num_train]['question']
         out_test = sample_out[i+args.num_train]['question']
-        in_img_test = sample_in[i+args.num_train]['image']
-        out_img_test = sample_out[i+args.num_train]['image']
+
+        if args.data.dataset_name == "ScienceQA":
+            in_img_test = sample_in[i+args.num_train]['image']
+            out_img_test = sample_out[i+args.num_train]['image']
+        elif args.data.dataset_name == "MMMU":
+            in_img_train = sample_in[i]['image_1']
+        
+        
 
         in_test_text.append(in_test)
         out_test_text.append(out_test)
