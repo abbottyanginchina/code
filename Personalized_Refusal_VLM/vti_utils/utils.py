@@ -256,7 +256,7 @@ def get_all_datasets(args):
             in_img_test = sample_in[i+args.num_train]['image']
             out_img_test = sample_out[i+args.num_train]['image']
         elif args.data.dataset_name == "MMMU":
-            in_img_train = sample_in[i]['image_1']
+            in_img_test = sample_in[i]['image_1']
             out_img_test = sample_out[i]['image_1']
         
         
