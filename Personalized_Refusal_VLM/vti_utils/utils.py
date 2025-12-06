@@ -210,7 +210,7 @@ def get_all_datasets(args):
         out_train = concatenate_datasets(all_out_splits)
 
     sample_in = in_train.shuffle(seed=args.seed).select([i for i in list(range(args.num_train+args.num_test))])
-        sample_out = out_train.shuffle(seed=args.seed).select([i for i in list(range(args.num_train+args.num_test))])
+    sample_out = out_train.shuffle(seed=args.seed).select([i for i in list(range(args.num_train+args.num_test))])
 
     with_sys_in_train_text = []
     with_sys_out_train_text = []
