@@ -226,7 +226,7 @@ def get_all_datasets(args):
     out_test_text = []
     in_test_images = []
     out_test_images = []
-    sys_prompt = "Say 'I cannot answer' if the question is NOT related to 'physics'. "
+    sys_prompt = f"Say 'I cannot answer' if the question is NOT related to '{in_domain[0]}'. "
     for i in range(args.num_train):
         with_sys_in_train = sample_in[i]['question']
         with_sys_out_train = sys_prompt + sample_out[i]['question']
