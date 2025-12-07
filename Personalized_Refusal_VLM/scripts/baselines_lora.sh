@@ -17,6 +17,7 @@ process() {
     wait
     python -m baselines.lora --model_name $model_name --num_test $num_test --num_train $num_train --dataset $dataset --subject $subject
     wait
+    echo "🎉 Dataset $dataset, subject $subject completed!"
 }
 
 dataset="ScienceQA"
