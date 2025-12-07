@@ -4,7 +4,7 @@ export CUDA_VISIBLE_DEVICES=7
 
 num_train=200
 num_test=200
-model_name="llava-1.5-7b-hf"
+model_name="llava-1.5-13b-hf"
 dataset="ScienceQA"
 subject="biology"
 
