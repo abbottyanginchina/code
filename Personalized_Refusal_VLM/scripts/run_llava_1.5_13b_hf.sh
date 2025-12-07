@@ -65,7 +65,7 @@ process_subject() {
 # done
 
 dataset="MMMU"
-# subjects=("Math" "Geography" "Art_Theory")  # 根据需要修改这里的 subjects
+subjects=("Math" "Geography" "Art_Theory")  # 根据需要修改这里的 subjects
 subjects=("Math")
 for subject in "${subjects[@]}"; do
     process_subject "$dataset" "$subject"
