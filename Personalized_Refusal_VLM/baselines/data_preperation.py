@@ -106,6 +106,7 @@ def generate_answer(cfg):
             ]
         }
         results.append(item)
+        img = img.convert("RGB")
         img.save(f"{save_path}/images/{i}.jpg")
 
     with open(os.path.join(save_path, "test_answer.json"), "w", encoding="utf-8") as f:
