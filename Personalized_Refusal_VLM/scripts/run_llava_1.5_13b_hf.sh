@@ -43,14 +43,14 @@ process_subject() {
     done
     wait
 
-    echo "✅ Step 3: Inference activations with steering vectors applied..."
-    python -m experiments.inference_activations --start_layer 0 --end_layer $num_layers --subject $subject
+    # echo "✅ Step 3: Inference activations with steering vectors applied..."
+    # python -m experiments.inference_activations --start_layer 0 --end_layer $num_layers --subject $subject
 
-    echo "✅ All layer groups finished!"
+    # echo "✅ All layer groups finished!"
 
-    echo "🎯 Step 4: Generating responses with steering vectors applied..."
-    python -m experiments.generation --model_name $model_name --num_test $num_test --num_train $num_train \
-        --inter_start_layer $inter_start_layer --inter_end_layer $inter_end_layer --alpha_text $alpha_text --dataset $dataset --subject $subject
+    # echo "🎯 Step 4: Generating responses with steering vectors applied..."
+    # python -m experiments.generation --model_name $model_name --num_test $num_test --num_train $num_train \
+    #     --inter_start_layer $inter_start_layer --inter_end_layer $inter_end_layer --alpha_text $alpha_text --dataset $dataset --subject $subject
 
     echo "🎉 Dataset $dataset, subject $subject completed!"
     echo ""
