@@ -366,7 +366,8 @@ if __name__ == "__main__":
         cfg.data.path = args.data_path
     if args.subject is not None:
         cfg.data.subject = args.subject
-        
+    
+    import ipdb; ipdb.set_trace()
     # train(cfg)
 
     inference(cfg)
