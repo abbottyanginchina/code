@@ -64,11 +64,11 @@ process_subject() {
 #     process_subject "$dataset" "$subject"
 # done
 
-# dataset="MMMU"
-# subjects=("Math" "Geography" "Art_Theory")  # 根据需要修改这里的 subjects
-# for subject in "${subjects[@]}"; do
-#     process_subject "$dataset" "$subject"
-# done
+dataset="MMMU"
+subjects=("Math" "Geography" "Art_Theory")  # 根据需要修改这里的 subjects
+for subject in "${subjects[@]}"; do
+    process_subject "$dataset" "$subject"
+done
 
-# echo "🎉 All steps completed!"
+echo "🎉 All steps completed!"
 
