@@ -57,7 +57,7 @@ process_subject() {
 }
 
 
-# dataset="ScienceQA"
+# ddataset="ScienceQA"
 # subjects=("biology" "geography" "physics")  # 根据需要修改这里的 subjects
 # for subject in "${subjects[@]}"; do
 #     process_subject "$dataset" "$subject"
