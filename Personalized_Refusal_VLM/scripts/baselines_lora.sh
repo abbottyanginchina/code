@@ -20,7 +20,6 @@ process() {
 
 dataset="ScienceQA"
 subjects=("biology" "geography" "physics")  # 根据需要修改这里的 subjects
-subjects=("physics")
 for subject in "${subjects[@]}"; do
     process "$dataset" "$subject"
 done
