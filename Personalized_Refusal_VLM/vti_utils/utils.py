@@ -174,7 +174,6 @@ def get_all_datasets(args):
         # Exclude in domain from out domain
         out_of_domain = [domain for domain in out_of_domain if domain not in in_domain]
         
-        import pdb; pdb.set_trace()
         dataset = load_dataset(f"{args.data.path}/ScienceQA")["train"].filter(lambda e: e["image"] is not None)
         in_train = dataset.filter(lambda example: example["topic"] in in_domain)
         out_train = dataset.filter(lambda example: example["topic"] in out_of_domain)
