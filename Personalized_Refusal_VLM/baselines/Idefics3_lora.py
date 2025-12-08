@@ -143,8 +143,9 @@ def train(cfg):
     model = AutoModelForVision2Seq.from_pretrained(
             model_name,
             output_hidden_states=True,       
-            torch_dtype=torch.float16
-        ).to(device).eval()
+            torch_dtype=torch.float16,
+            device_map="auto",
+        ).eval()
 
     # -----------------------------
     # LoRA 配置
