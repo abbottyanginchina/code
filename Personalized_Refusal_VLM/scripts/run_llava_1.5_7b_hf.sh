@@ -9,7 +9,7 @@ num_test=200
 model_name="llava-1.5-7b-hf"
 inter_start_layer=12
 inter_end_layer=32
-alpha_text=1.5
+alpha_text=1.8
 
 process_subject() {
     dataset=$1
@@ -57,16 +57,17 @@ process_subject() {
 
 
 dataset="ScienceQA"
-subjects=("biology" "geography" "physics")  # 根据需要修改这里的 subjects
+# subjects=("biology" "geography" "physics") 
+subjects=("biology") 
 for subject in "${subjects[@]}"; do
     process_subject "$dataset" "$subject"
 done
 
-dataset="MMMU"
-subjects=("Math" "Geography" "Art_Theory")  # 根据需要修改这里的 subjects
-for subject in "${subjects[@]}"; do
-    process_subject "$dataset" "$subject"
-done
+# dataset="MMMU"
+# subjects=("Math" "Geography" "Art_Theory") 
+# for subject in "${subjects[@]}"; do
+#     process_subject "$dataset" "$subject"
+# done
 
 echo "🎉 All steps completed!"
 
