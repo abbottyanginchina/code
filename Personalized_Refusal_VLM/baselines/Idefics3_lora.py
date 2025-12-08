@@ -206,7 +206,7 @@ def inference(cfg):
     # Processor & Model
     # -----------------------------
     print("Loading processor and base model...")
-    processor = LlavaProcessor.from_pretrained(model_name)
+    processor = AutoProcessor.from_pretrained(model_name)
     
     # 加载基础模型
     base_model = LlavaForConditionalGeneration.from_pretrained(
