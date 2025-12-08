@@ -9,7 +9,7 @@ seed: 40
 max_new_tokens: 40
 alpha_text: 1.2
 num_train: 200
-num_test: 100
+num_test: 200
 start_layer: 0
 end_layer: 32
 
