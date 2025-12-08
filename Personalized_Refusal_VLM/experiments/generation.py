@@ -143,8 +143,10 @@ def eval_model(args, output_dir):
     print("----------Inference----------")
 
     # Load datasets
-
-    original_data = get_all_datasets(args)
+    if cfg.data.filter_data:
+        original_data = get_all_datasets_filter(cfg)
+    else:
+        original_data = get_all_datasets(cfg)
     with_sys_in_train_text = original_data["with_sys_in_train_text"]
     with_sys_out_train_text = original_data["with_sys_out_train_text"]
     without_sys_in_train_text = original_data["without_sys_in_train_text"]
@@ -167,8 +169,8 @@ def eval_model(args, output_dir):
     # max_layer = llava_max_layer if 'llava-1.5' in model_path.lower() else qwen_max_layer if 'qwen' in model_path.lower() else blip_max_layer
 
     for layer in range(0, args.max_layer): # Must start from 1
-        path1 = f"{base_path}/steering_vec_nonbiology_refusal_layer{layer}_{args.model_name}.pt"
-        path2 = f"{base_path}/steering_vec_biology_layer{layer}_{args.model_name}.pt"
+        path1 = f"{base_path}/steering_vec_nonbiology_refusal_layer{layer}_{cfg.model_name}.pt"
+        path2 = f"{base_path}/steering_vec_biology_layer{layer}_{cfg.model_name}.pt"
         vec1 = torch.load(path1, weights_only=False)
         vec2 = torch.load(path2, weights_only=False)
         steering_list1.append(vec1)
