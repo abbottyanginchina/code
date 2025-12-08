@@ -6,7 +6,7 @@ pos: -1
 model_name: "llava-1.5-7b-hf"
 model_path: "../../models"
 seed: 40
-max_new_tokens: 30
+max_new_tokens: 40
 alpha_text: 1.2
 num_train: 200
 num_test: 200
