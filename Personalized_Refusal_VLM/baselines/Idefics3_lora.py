@@ -7,6 +7,7 @@ from torch.utils.data import Dataset, DataLoader
 from PIL import Image
 from transformers import (
     LlavaProcessor,
+    AutoProcessor,
     LlavaForConditionalGeneration,
     AutoModelForVision2Seq,
     TrainingArguments,
