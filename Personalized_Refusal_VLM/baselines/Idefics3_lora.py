@@ -162,7 +162,7 @@ def train(cfg):
     # -----------------------------
     # Dataset
     # -----------------------------
-    dataset = LLaVADataset(json_path, processor)
+    dataset = Idefics3Dataset(json_path, processor)
 
     # -----------------------------
     # Trainer 参数
