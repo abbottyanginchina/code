@@ -143,7 +143,7 @@ def eval_model(args, output_dir):
     print("----------Inference----------")
 
     # Load datasets
-    if cfg.data.filter_data:
+    if args.data.filter_data:
         original_data = get_all_datasets_filter(args)
     else:
         original_data = get_all_datasets(args)
