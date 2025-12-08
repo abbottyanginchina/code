@@ -494,6 +494,7 @@ if __name__ == "__main__":
         cfg.data.subject = args.subject
 
     set_seed(cfg.seed)
+    import pdb; pdb.set_trace()
 
     output_dir = f"{cfg.output_dir}/output_{cfg.model_name}_{cfg.data.dataset_name}_{cfg.data.subject}"
     eval_model(cfg, output_dir)
