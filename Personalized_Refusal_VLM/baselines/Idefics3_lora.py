@@ -145,13 +145,6 @@ def train(cfg):
             torch_dtype=torch.float16
         ).to(device).eval()
 
-    # model = LlavaForConditionalGeneration.from_pretrained(
-    #     model_name,
-    #     torch_dtype=torch.float16,
-    #     low_cpu_mem_usage=True,
-    #     device_map="auto",
-    # )
-
     # -----------------------------
     # LoRA 配置
     # -----------------------------
