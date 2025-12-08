@@ -15,7 +15,7 @@ process() {
     echo "🎉 Dataset $dataset, subject $subject started!"
     python -m baselines.data_preperation --model_name $model_name --num_test $num_test --num_train $num_train --dataset $dataset --subject $subject
     wait
-    python -m baselines.lora --model_name $model_name --num_test $num_test --num_train $num_train --dataset $dataset --subject $subject
+    python -m baselines.llava_lora --model_name $model_name --num_test $num_test --num_train $num_train --dataset $dataset --subject $subject
     wait
     echo "🎉 Dataset $dataset, subject $subject completed!"
 }
