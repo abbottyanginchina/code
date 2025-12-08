@@ -476,9 +476,9 @@ if __name__ == "__main__":
     if args.seed is not None:
         cfg.seed = args.seed
     if args.num_train is not None:
-        cfg.training.num_train = args.num_train
+        cfg.num_train = args.num_train
     if args.num_test is not None:
-        cfg.training.num_test = args.num_test
+        cfg.num_test = args.num_test
     if args.max_layer is not None:
         cfg.max_layer = args.max_layer
     if args.inter_start_layer is not None:
