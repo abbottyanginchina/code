@@ -8,6 +8,7 @@ from PIL import Image
 from transformers import (
     LlavaProcessor,
     LlavaForConditionalGeneration,
+    AutoModelForVision2Seq,
     TrainingArguments,
     Trainer,
 )
@@ -135,6 +136,12 @@ def train(cfg):
     # Processor & Model
     # -----------------------------
     processor = LlavaProcessor.from_pretrained(model_name)
+
+    model = AutoModelForVision2Seq.from_pretrained(
+            "HuggingFaceM4/Idefics3-8B-Llama3",
+            output_hidden_states=True,       
+            torch_dtype=torch.float16
+        ).to(device).eval()
 
     model = LlavaForConditionalGeneration.from_pretrained(
         model_name,
