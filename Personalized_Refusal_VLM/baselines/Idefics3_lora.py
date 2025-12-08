@@ -210,12 +210,18 @@ def inference(cfg):
     processor = AutoProcessor.from_pretrained(model_name)
     
     # 加载基础模型
-    base_model = LlavaForConditionalGeneration.from_pretrained(
-        model_name,
-        torch_dtype=torch.float16,
-        low_cpu_mem_usage=True,
-        device_map="auto", # 自动分配到 GPU
-    )
+    # base_model = LlavaForConditionalGeneration.from_pretrained(
+    #     model_name,
+    #     torch_dtype=torch.float16,
+    #     low_cpu_mem_usage=True,
+    #     device_map="auto", # 自动分配到 GPU
+    # )
+    base_model = AutoModelForVision2Seq.from_pretrained(
+            model_name,
+            output_hidden_states=True,       
+            torch_dtype=torch.float16,
+            device_map="auto",
+        ).eval()
 
     # -----------------------------
     # 加载 LoRA 权重
