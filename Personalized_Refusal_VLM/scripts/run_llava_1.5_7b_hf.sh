@@ -9,7 +9,7 @@ num_test=200
 model_name="llava-1.5-7b-hf"
 inter_start_layer=12
 inter_end_layer=32
-alpha_text=1.98
+alpha_text=1.8
 
 process_subject() {
     dataset=$1
