@@ -1,12 +1,27 @@
 #!/bin/bash
 set -e
+export CUDA_VISIBLE_DEVICES=7
+
+num_layers=33 
+step=17
+num_train=200
+num_test=100
+model_name="Idefics3-8B-Llama3"
+inter_start_layer=18
+inter_end_layer=32
+alpha_text=1.0
+dataset="ScienceQA"
+subject="biology"
+
+#!/bin/bash
+set -e
 export CUDA_VISIBLE_DEVICES=6
 
 num_layers=33 # Example number of layers for llava-1.5-7b-hf
 step=11
 num_train=200
 num_test=200
-model_name="llava-1.5-7b-hf"
+model_name="Idefics3-8B-Llama3"
 inter_start_layer=18
 inter_end_layer=32
 alpha_text=1.0
