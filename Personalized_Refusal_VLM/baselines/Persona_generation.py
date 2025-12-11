@@ -269,9 +269,6 @@ def eval_model(args, output_dir):
         question = in_test_text[img_id] ##########
         # add_multiple_layers(model, torch.stack([biology_all[img_id]],dim=1).cuda(), alpha = [cfg.alpha_text], layer_indices = target_layers, cfg = cfg)
         add_multiple_layers(model, torch.stack([biology_vector],dim=1).cuda(), alpha = [cfg.alpha_text], layer_indices = target_layers, cfg=cfg)
-        # 只在一层加
-        # add_one_layer(model, torch.stack([refusal_vector]).cuda(), alpha = [args.alpha_text], layer_idx = layer)
-        # add_one_layer(model, torch.stack([steering_vec_refusal[img_id]]).cuda(), alpha = [args.alpha_text], layer_idx = layer)
         
         torch.cuda.empty_cache()
         if 'instructblip-' in model_path.lower():
