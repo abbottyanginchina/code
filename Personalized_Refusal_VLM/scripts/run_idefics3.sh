@@ -9,7 +9,7 @@ num_test=200
 model_name="Idefics3-8B-Llama3"
 inter_start_layer=18
 inter_end_layer=32
-alpha_text=1.0
+alpha_text=1.5
 
 process_subject() {
     dataset=$1
