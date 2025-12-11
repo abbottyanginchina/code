@@ -205,8 +205,8 @@ def eval_model(args, output_dir):
     for img_id in range(len(out_test_images)):
         raw_image = load_image(out_test_images[img_id])
         question = out_test_text[img_id]
-        add_multiple_layers(model, torch.stack([refusal_all[img_id]],dim=1).cuda(), alpha = [cfg.alpha_text], layer_indices = target_layers, cfg = cfg)
-        # add_multiple_layers(model, torch.stack([refusal_vector],dim=1).cuda(), alpha = [cfg.alpha_text], layer_indices = target_layers, cfg=cfg)
+        # add_multiple_layers(model, torch.stack([refusal_all[img_id]],dim=1).cuda(), alpha = [cfg.alpha_text], layer_indices = target_layers, cfg = cfg)
+        add_multiple_layers(model, torch.stack([refusal_vector],dim=1).cuda(), alpha = [cfg.alpha_text], layer_indices = target_layers, cfg=cfg)
         
         torch.cuda.empty_cache()
         if 'instructblip-' in model_path.lower():
