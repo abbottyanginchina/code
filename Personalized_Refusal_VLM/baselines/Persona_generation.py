@@ -495,5 +495,5 @@ if __name__ == "__main__":
 
     set_seed(cfg.seed)
 
-    output_dir = f"{cfg.output_dir}/output_{cfg.model_name}_{cfg.data.dataset_name}_{cfg.data.subject}"
+    output_dir = f"{cfg.output_dir}/Persona_output_{cfg.model_name}_{cfg.data.dataset_name}_{cfg.data.subject}"
     eval_model(cfg, output_dir)
