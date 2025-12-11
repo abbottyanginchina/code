@@ -1,5 +1,7 @@
 import numpy as np
 import torch
+import pandas as pd
+import seaborn as sns
 import matplotlib.pyplot as plt
 
 def _to_tensor(x):
@@ -33,6 +35,78 @@ def pca_project_2d(datasets):
         proj_list.append(proj.cpu())
         start += t.shape[0]
     return proj_list, V2.cpu(), mean.cpu()
+
+def visualize_distributions_RQ3(
+    test_other_original, test_biology_original, pred_other, pred_biology,
+    title="Idefics3-8B-Llama3 on ScienceQA (Biology)",
+    save_path=None
+):
+    '''
+    Input: test_other_original, test_biology_original, pred_other, pred_biology
+    '''
+    ds = [
+        test_other_original, test_biology_original, pred_other, pred_biology
+    ]
+    proj_list, V2, mean = pca_project_2d(ds)
+
+    # === 使用 seaborn 绘图 ===
+    # 设置 seaborn 样式
+    sns.set_style("whitegrid")
+    sns.set_palette("husl")
+    sns.set_theme(style="ticks")
+    
+    # 准备数据用于 seaborn
+    data_list = []
+    sizes = [60, 90, 60, 25]  
+    labels = ["Original Out", "Original In", "Pred Out", "Pred In"]
+    markers = ["o", "o", "o", "D"]
+    colors = ["#1F77B4", "#FF7F0E", "#2CA02C", "#D62728"]
+    # colors = ["#636EFA", "#EF553B", "#00CC96", "#AB63FA"]
+    
+    for proj, lab in zip(proj_list, labels):
+        P = proj.detach().cpu().numpy()
+        df = pd.DataFrame({
+            'PC1': P[:, 0],
+            'PC2': P[:, 1],
+            'Label': lab
+        })
+        data_list.append(df)
+    
+    # 合并所有数据
+    df_combined = pd.concat(data_list, ignore_index=True)
+    
+    # 创建图形
+    plt.figure(figsize=(8, 7))
+    
+    
+    # 使用 seaborn 的 scatterplot
+    for i, (lab, marker, color) in enumerate(zip(labels, markers, colors)):
+        df_subset = df_combined[df_combined['Label'] == lab]
+        sns.scatterplot(
+            data=df_subset,
+            x='PC1',
+            y='PC2',
+            label=lab,
+            marker=marker,
+            color=color,
+            alpha=0.7,
+            s=sizes[i],
+            edgecolor='white',
+            linewidth=0.5
+        )
+    sns.set_theme(style="ticks")
+    
+    plt.xlabel("")
+    plt.ylabel("")
+    plt.title(title, fontsize=23, fontweight='bold', pad=20)
+    plt.legend(title='', title_fontsize=16, fontsize=20, loc='best', frameon=True, fancybox=True, shadow=True)
+    plt.grid(True, alpha=0.3, linestyle='--')
+    plt.tight_layout()
+    
+    if save_path:
+        plt.savefig(save_path, dpi=160, bbox_inches="tight", facecolor='white')
+    plt.savefig(save_path, dpi=160, bbox_inches="tight")
+    # plt.close()
 
 def visualize_distributions(train_other_target, train_biology_target,
                             pred_other, pred_biology,
