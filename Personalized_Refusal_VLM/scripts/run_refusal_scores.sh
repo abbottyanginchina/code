@@ -10,7 +10,12 @@ alpha_text=1.7
 dataset="ScienceQA"
 subject="biology"
 
-python -m experiments.generate_refusal_score --model_name $model_name --num_test $num_test --num_train $num_train \
+process_subject() {
+    dataset=$1
+    subject=$2
+    model_name=$3
+    
+    python -m experiments.generate_refusal_score --model_name $model_name --num_test $num_test --num_train $num_train \
         --inter_start_layer $inter_start_layer --inter_end_layer $inter_end_layer --alpha_text $alpha_text --dataset $dataset --subject $subject
 
 
