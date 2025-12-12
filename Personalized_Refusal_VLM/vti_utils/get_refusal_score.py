@@ -112,10 +112,13 @@ def get_generation_refusal_scores(cfg, model, processor, tokenizer, test_text, t
     for i in tqdm(range(0, len(test_text)), desc="Getting generation refusal scores", total=len(test_text)):
         import pdb; pdb.set_trace()
         conversation = [
-            {"role": "user", "content": [
+            [
+                {"role": "user", "content": [
                 {"type": "text", "text": test_text},
                 {"type": "image"},
             ]}
+            ]
+            
         ]
         refusal_phrases = ["I"]
         refusal_toks = torch.tensor([
