@@ -32,7 +32,7 @@ done
 
 dataset="MMMU"
 subjects=("Math" "Geography" "Art_Theory") 
-model_names=("llava-1.5-7b-hf" "llava-v1.6-vicuna-7b-hf" "Idefics3-8B-Llama3")
+model_names=("llava-1.5-7b-hf" "llava-1.5-13b-hf" "Idefics3-8B-Llama3")
 for subject in "${subjects[@]}"; do
     for model_name in "${model_names[@]}"; do
         process_subject "$dataset" "$subject" "$model_name"
