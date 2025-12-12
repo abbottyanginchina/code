@@ -204,6 +204,7 @@ def eval_model(args, output_dir):
     # os.makedirs(os.path.dirname(answers_file), exist_ok=True)
     # ans_file = open(answers_file, "w")
 
+    out_refusal_scores = []
     for img_id in tqdm(range(len(out_test_images)), desc="Generating refusal scores", total=len(out_test_images)):
         raw_image = load_image(out_test_images[img_id])
         question = out_test_text[img_id]
