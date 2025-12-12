@@ -31,7 +31,6 @@ process_subject() {
 
 dataset="ScienceQA"
 subjects=("biology" "geography" "physics")  
-# subjects=("biology")  
 for subject in "${subjects[@]}"; do
     process_subject "$dataset" "$subject"
 done
