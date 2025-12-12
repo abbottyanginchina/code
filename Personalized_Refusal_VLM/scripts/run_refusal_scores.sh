@@ -13,7 +13,6 @@ subject="biology"
 process_subject() {
     dataset=$1
     subject=$2
-    model_name=$3
     
     echo "🎉 Dataset $dataset, subject $subject, model $model_name started!"
     python -m experiments.generate_refusal_score --model_name $model_name --num_test $num_test --num_train $num_train \
