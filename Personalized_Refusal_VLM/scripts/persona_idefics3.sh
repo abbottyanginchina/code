@@ -20,9 +20,9 @@ process_subject() {
     python -m experiments.get_activations --model_name $model_name --num_test $num_test --num_train $num_train --dataset $dataset --subject $subject
 
 
-    echo "🎯 Step 2: Generating responses with steering vectors applied..."
-    python -m baselines.Persona_generation --model_name $model_name --num_test $num_test --num_train $num_train \
-        --inter_start_layer $inter_start_layer --inter_end_layer $inter_end_layer --alpha_text $alpha_text --dataset $dataset --subject $subject
+    # echo "🎯 Step 2: Generating responses with steering vectors applied..."
+    # python -m baselines.Persona_generation --model_name $model_name --num_test $num_test --num_train $num_train \
+    #     --inter_start_layer $inter_start_layer --inter_end_layer $inter_end_layer --alpha_text $alpha_text --dataset $dataset --subject $subject
 
     echo "🎉 Dataset $dataset, subject $subject completed!"
     echo ""
