@@ -127,7 +127,7 @@ def get_generation_refusal_scores(cfg, model, processor, tokenizer, test_text, t
                 model,
                 processor,
                 [image, image],
-                conversations,
+                conversation,
                 tokenizer,
                 refusal_toks
             )
