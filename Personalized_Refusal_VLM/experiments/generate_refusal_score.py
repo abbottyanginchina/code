@@ -217,6 +217,7 @@ def eval_model(args, output_dir):
     # Save out_refusal_scores (List)
     with open(f"{output_dir}/results/refusal_scores/out_refusal_scores_{cfg.model_name}.pkl", "wb") as f:
         pickle.dump(out_refusal_scores, f)
+    import pdb; pdb.set_trace()
         
     #         answer = processor.batch_decode(outputs, skip_special_tokens=True)[0].strip()
     #     elif 'blip2-' in model_path.lower():
