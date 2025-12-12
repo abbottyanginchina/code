@@ -210,6 +210,7 @@ def eval_model(args, output_dir):
         add_multiple_layers(model, torch.stack([refusal_all[img_id]],dim=1).cuda(), alpha = [cfg.alpha_text], layer_indices = target_layers, cfg = cfg)
         # add_multiple_layers(model, torch.stack([refusal_vector],dim=1).cuda(), alpha = [cfg.alpha_text], layer_indices = target_layers, cfg=cfg)
         scores = get_generation_refusal_scores(cfg, model, processor, processor.tokenizer, question, raw_image)
+        remove_one_layer(model, layer_idx = layer)
         import pdb; pdb.set_trace()
         
     #         answer = processor.batch_decode(outputs, skip_special_tokens=True)[0].strip()
