@@ -218,6 +218,16 @@ def eval_model(args, output_dir):
     # Save out_refusal_scores as a pickle file (List)
     with open(f"../results/output_{cfg.model_name}_{cfg.data.dataset_name}/refusal_scores/out_refusal_scores_{cfg.model_name}.pkl", "wb") as f:
         pickle.dump(out_refusal_scores, f)
+
+    # In-domain测试集
+    in_refusal_scores = []
+    for img_id in tqdm(range(len(in_test_images)), desc="Generating refusal scores", total=len(in_test_images)):
+        raw_image = load_image(in_test_images[img_id])
+        question = in_test_text[img_id]
+        add_multiple_layers(model, torch.stack([biology_all[img_id]],dim=1).cuda(), alpha = [cfg.alpha_text], layer_indices = target_layers, cfg = cfg)
+        score = get_generation_refusal_scores(cfg, model, processor, processor.tokenizer, question, raw_image)
+        in_refusal_scores.append(score)
+        remove_multiple_layers(model, layer_indices = target_layers, cfg = cfg)
         
     #         answer = processor.batch_decode(outputs, skip_special_tokens=True)[0].strip()
     #     elif 'blip2-' in model_path.lower():
