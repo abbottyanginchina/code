@@ -4,6 +4,7 @@ import os
 import json
 from tqdm import tqdm
 import sys
+import pickle
 import os
 import mmengine
 import numpy as np
@@ -214,7 +215,7 @@ def eval_model(args, output_dir):
         out_refusal_scores.append(score)
         remove_multiple_layers(model, layer_indices = target_layers, cfg = cfg)
 
-    # Save out_refusal_scores (List)
+    # Save out_refusal_scores as a pickle file (List)
     with open(f"{output_dir}/results/refusal_scores/out_refusal_scores_{cfg.model_name}.pkl", "wb") as f:
         pickle.dump(out_refusal_scores, f)
     import pdb; pdb.set_trace()
