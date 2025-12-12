@@ -3,7 +3,7 @@ import torch
 import mmengine
 import argparse
 
-from vti_utils.visualization import visualize_distributions
+from vti_utils.visualization import visualize_distributions, visualize_distributions_RQ3
 from vti_utils.nets import FlowField
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
