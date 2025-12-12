@@ -18,13 +18,17 @@ dataset="ScienceQA"
 subjects=("biology" "geography" "physics")  
 model_name=("llava-1.5-7b-hf" "llava-v1.6-vicuna-7b-hf" "Idefics3-8B-Llama3")
 for subject in "${subjects[@]}"; do
-    process_subject "$dataset" "$subject"
+    for model_name in "${model_names[@]}"; do
+        process_subject "$dataset" "$subject" "$model_name"
+    done
 done
 
 dataset="MMMU"
 subjects=("Math" "Geography" "Art_Theory") 
 model_name=("llava-1.5-7b-hf" "llava-v1.6-vicuna-7b-hf" "Idefics3-8B-Llama3")
 for subject in "${subjects[@]}"; do
-    process_subject "$dataset" "$subject"
+    for model_name in "${model_names[@]}"; do
+        process_subject "$dataset" "$subject" "$model_name"
+    done
 done
 echo "✅ All finished!"
