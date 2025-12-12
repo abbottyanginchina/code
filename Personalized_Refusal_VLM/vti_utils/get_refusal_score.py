@@ -65,7 +65,7 @@ def refusal_score(logits, refusal_toks, epsilon=1e-8, tokenizer=None):
     refusal_probs = probs[:, refusal_toks].sum(dim=-1)
     nonrefusal_probs = 1 - refusal_probs
     return torch.log(refusal_probs + epsilon) - torch.log(nonrefusal_probs + epsilon)
-
+    
 def get_refusal_scores_llava(
     model,
     processor,
