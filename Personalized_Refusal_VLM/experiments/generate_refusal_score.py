@@ -228,6 +228,10 @@ def eval_model(args, output_dir):
         score = get_generation_refusal_scores(cfg, model, processor, processor.tokenizer, question, raw_image)
         in_refusal_scores.append(score)
         remove_multiple_layers(model, layer_indices = target_layers, cfg = cfg)
+    
+    # Save in_refusal_scores as a pickle file (List)
+    with open(f"../results/output_{cfg.model_name}_{cfg.data.dataset_name}/refusal_scores/in_refusal_scores_{cfg.model_name}.pkl", "wb") as f:
+        pickle.dump(in_refusal_scores, f)
         
     #         answer = processor.batch_decode(outputs, skip_special_tokens=True)[0].strip()
     #     elif 'blip2-' in model_path.lower():
