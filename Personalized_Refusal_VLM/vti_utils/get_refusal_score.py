@@ -133,7 +133,7 @@ def get_generation_refusal_scores(cfg, model, processor, tokenizer, test_text, t
                 tokenizer,
                 refusal_toks
             )
-        scores.append(score)
+        scores.append(score.item())
         import pdb; pdb.set_trace()
     return scores
 
