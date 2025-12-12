@@ -200,9 +200,9 @@ def eval_model(args, output_dir):
         os.makedirs(f"../output_{cfg.model_name}_{cfg.data.dataset_name}/results/")
   
     # 生成拒绝测试集
-    answers_file = f"{output_dir}/results/nonbiology_answer_{cfg.model_name}.jsonl"
-    os.makedirs(os.path.dirname(answers_file), exist_ok=True)
-    ans_file = open(answers_file, "w")
+    # answers_file = f"{output_dir}/results/nonbiology_answer_{cfg.model_name}.jsonl"
+    # os.makedirs(os.path.dirname(answers_file), exist_ok=True)
+    # ans_file = open(answers_file, "w")
 
 
     add_multiple_layers(model, torch.stack([refusal_all[img_id]],dim=1).cuda(), alpha = [cfg.alpha_text], layer_indices = target_layers, cfg = cfg)
