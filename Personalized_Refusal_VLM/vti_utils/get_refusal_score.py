@@ -118,7 +118,6 @@ def get_generation_refusal_scores(cfg, model, processor, tokenizer, test_text, t
                 {"type": "image"},
             ]}
             ]
-            
         ]
         refusal_phrases = ["I"]
         refusal_toks = torch.tensor([
