@@ -2,14 +2,14 @@
 set -e
 export CUDA_VISIBLE_DEVICES=6
 
-num_layers=33 # Example number of layers for llava-1.5-7b-hf
+num_layers=41 # Example number of layers for llava-1.5-7b-hf
 step=11
 num_train=200
 num_test=200
-model_name="llava-1.5-7b-hf"
+model_name="llava-1.5-13b-hf"
 inter_start_layer=12
-inter_end_layer=32
-alpha_text=1.3
+inter_end_layer=40
+alpha_text=1.7
 
 process_subject() {
     dataset=$1
