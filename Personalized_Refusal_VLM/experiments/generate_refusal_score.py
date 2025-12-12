@@ -210,7 +210,7 @@ def eval_model(args, output_dir):
         add_multiple_layers(model, torch.stack([refusal_all[img_id]],dim=1).cuda(), alpha = [cfg.alpha_text], layer_indices = target_layers, cfg = cfg)
         # add_multiple_layers(model, torch.stack([refusal_vector],dim=1).cuda(), alpha = [cfg.alpha_text], layer_indices = target_layers, cfg=cfg)
         get_generation_refusal_scores(cfg, model, processor, processor.tokenizer, question, raw_image)
-        import pdb; pdb.set_trace()
+    import pdb; pdb.set_trace()
         
     #     torch.cuda.empty_cache()
     #     if 'instructblip-' in model_path.lower():
