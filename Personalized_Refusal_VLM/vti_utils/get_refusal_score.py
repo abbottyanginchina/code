@@ -108,7 +108,6 @@ def get_refusal_scores_llava(
     return refusal_scores
 
 def get_generation_refusal_scores(cfg, model, processor, tokenizer, test_text, test_images):
-    scores = []
     conversation = [
         [
             {"role": "user", "content": [
