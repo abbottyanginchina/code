@@ -113,7 +113,7 @@ def get_generation_refusal_scores(cfg, model, processor, tokenizer, test_text, t
         import pdb; pdb.set_trace()
         conversation = [
             {"role": "user", "content": [
-                {"type": "text", "text": test_text[i]},
+                {"type": "text", "text": test_text},
                 {"type": "image"},
             ]}
         ]
