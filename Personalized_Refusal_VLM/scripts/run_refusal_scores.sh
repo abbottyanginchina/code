@@ -16,6 +16,7 @@ python -m experiments.generate_refusal_score --model_name $model_name --num_test
 
 dataset="ScienceQA"
 subjects=("biology" "geography" "physics")  
+model_name=("llava-1.5-7b-hf" "llava-v1.6-vicuna-7b-hf" "Idefics3-8B-Llama3")
 for subject in "${subjects[@]}"; do
     process_subject "$dataset" "$subject"
 done
