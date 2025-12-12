@@ -197,8 +197,8 @@ def eval_model(args, output_dir):
     refusal_vector = oth_target.mean(dim=0) - oth_x.mean(dim=0)
     # refusal_vector = refusal_vector.mean(dim=0)[1:]
 
-    if not os.path.exists(f"../output_{cfg.model_name}_{cfg.data.dataset_name}/results/"):
-        os.makedirs(f"../output_{cfg.model_name}_{cfg.data.dataset_name}/results/")
+    if not os.path.exists(f"../output_{cfg.model_name}_{cfg.data.dataset_name}/refusal_scores/"):
+        os.makedirs(f"../output_{cfg.model_name}_{cfg.data.dataset_name}/refusal_scores/")
 
     # 生成拒绝测试集
     # answers_file = f"{output_dir}/results/nonbiology_answer_{cfg.model_name}.jsonl"
