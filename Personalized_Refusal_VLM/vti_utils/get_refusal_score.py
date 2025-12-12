@@ -126,7 +126,7 @@ def get_generation_refusal_scores(cfg, model, processor, tokenizer, test_text, t
             scores = get_refusal_scores_llava(
                 model,
                 processor,
-                [image, image],
+                [image],
                 conversation,
                 tokenizer,
                 refusal_toks
