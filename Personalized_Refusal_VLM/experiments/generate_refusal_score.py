@@ -214,8 +214,6 @@ def eval_model(args, output_dir):
         out_refusal_scores.append(score)
         remove_multiple_layers(model, layer_indices = target_layers, cfg = cfg)
         
-        import pdb; pdb.set_trace()
-        
     #         answer = processor.batch_decode(outputs, skip_special_tokens=True)[0].strip()
     #     elif 'blip2-' in model_path.lower():
     #         inputs = processor(images=raw_image, text=question, return_tensors="pt").to(device)
