@@ -197,6 +197,7 @@ def eval_model(args, output_dir):
     refusal_vector = oth_target.mean(dim=0) - oth_x.mean(dim=0)
     # refusal_vector = refusal_vector.mean(dim=0)[1:]
 
+    save_dir = f"../results/output_{cfg.model_name}_{cfg.data.dataset_name}_{cfg.data.subject}/refusal_scores/"
     if not os.path.exists(f"../results/output_{cfg.model_name}_{cfg.data.dataset_name}/refusal_scores/"):
         os.makedirs(f"../results/output_{cfg.model_name}_{cfg.data.dataset_name}/refusal_scores/")
 
