@@ -216,7 +216,7 @@ def eval_model(args, output_dir):
         remove_multiple_layers(model, layer_indices = target_layers, cfg = cfg)
 
     # Save out_refusal_scores as a pickle file (List)
-    with open(f"{output_dir}/results/out_refusal_scores_{cfg.model_name}.pkl", "wb") as f:
+    with open(f"{output_dir}/refusal_scores/out_refusal_scores_{cfg.model_name}.pkl", "wb") as f:
         pickle.dump(out_refusal_scores, f)
     import pdb; pdb.set_trace()
         
