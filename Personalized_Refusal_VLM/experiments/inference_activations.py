@@ -88,10 +88,18 @@ def main(cfg):
 
         if not os.path.exists(f"{output_dir}/visualizations/"):
             os.makedirs(f"{output_dir}/visualizations/")
-        visualize_distributions(train_other_target=oth_target, train_biology_target=bio_x_test,
-                            pred_other=pred_other, pred_biology=pred_biology, steered_other=oth_x_test+steering_vec.unsqueeze(0), original_other=oth_x_test,
-                            save_path=f"{output_dir}/visualizations/activations_{layer}_{cfg.model_name}.png")
-        print(f"✅ Saved steering vectors for layer {layer}")
+        # visualize_distributions(train_other_target=oth_target, train_biology_target=bio_x_test,
+        #                     pred_other=pred_other, pred_biology=pred_biology, steered_other=oth_x_test+steering_vec.unsqueeze(0), original_other=oth_x_test,
+        #                     save_path=f"{output_dir}/visualizations/activations_{layer}_{cfg.model_name}.png")
+
+        visualize_distributions_RQ3(
+            test_other_original=oth_x_test,
+            test_biology_original=bio_x_test,
+            pred_other=pred_other,
+            pred_biology=pred_biology,
+            save_path=f"{output_dir}/visualizations/activations_{layer}_{cfg.model_name}.png"
+        )
+        # print(f"✅ Saved visualizations for layer {layer}")
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Get Activations")
