@@ -109,7 +109,6 @@ def get_refusal_scores_llava(
 
 def get_generation_refusal_scores(cfg, model, processor, tokenizer, test_text, test_images):
     scores = []
-    import pdb; pdb.set_trace()
     for i in tqdm(range(0, len(test_text)), desc="Getting generation refusal scores", total=len(test_text)):
         image = load_image(test_images[i])
         conversation = [
