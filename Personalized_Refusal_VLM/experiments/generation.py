@@ -471,8 +471,6 @@ if __name__ == "__main__":
         cfg.model_path = args.model_path
     if args.alpha_image is not None:
         cfg.alpha_image = args.alpha_image
-    if args.seed is not None:
-        cfg.seed = args.seed
     if args.num_train is not None:
         cfg.num_train = args.num_train
     if args.num_test is not None:
