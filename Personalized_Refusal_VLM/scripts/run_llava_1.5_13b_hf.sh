@@ -64,7 +64,7 @@ for subject in "${subjects[@]}"; do
 done
 
 dataset="MMMU"
-subjects=("Geography" "Art_Theory")  
+subjects=("Math" "Geography" "Art_Theory")  
 for subject in "${subjects[@]}"; do
     process_subject "$dataset" "$subject"
 done
