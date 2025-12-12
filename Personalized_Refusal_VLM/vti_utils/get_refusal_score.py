@@ -108,8 +108,29 @@ def get_refusal_scores_llava(
     return refusal_scores
 
 def get_generation_refusal_scores(cfg, model, processor, tokenizer, test_text, test_images):
-
-    pass
+    for i in tqdm(range(0, len(test_text)), desc="Getting generation refusal scores", total=len(test_text)):
+        image = load_image(test_images[i])
+        conversation = [
+            {"role": "user", "content": [
+                {"type": "text", "text": test_text[i]},
+                {"type": "image"},
+            ]}
+        ]
+        refusal_phrases = ["I"]
+        refusal_toks = torch.tensor([
+            tokenizer.convert_tokens_to_ids(tokenizer.tokenize(p)[0])
+            for p in refusal_phrases
+        ], device=model.device)
+    
+        with torch.no_grad():
+            scores = get_refusal_scores_llava(
+                model,
+                processor,
+                [image, image],
+                conversations,
+                tokenizer,
+                refusal_toks
+            )
 
 def filter_data(cfg, model, processor, tokenizer, with_sys_out_train_text, without_sys_out_train_text, out_train_images):
 
