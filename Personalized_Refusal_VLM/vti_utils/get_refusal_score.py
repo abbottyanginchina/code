@@ -134,6 +134,7 @@ def get_generation_refusal_scores(cfg, model, processor, tokenizer, test_text, t
             )
         scores.append(score)
     
+    import pdb; pdb.set_trace()
     return scores
 
 def filter_data(cfg, model, processor, tokenizer, with_sys_out_train_text, without_sys_out_train_text, out_train_images):
