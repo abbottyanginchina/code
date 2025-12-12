@@ -207,6 +207,7 @@ def eval_model(args, output_dir):
 
     add_multiple_layers(model, torch.stack([refusal_vector],dim=1).cuda(), alpha = [cfg.alpha_text], layer_indices = target_layers, cfg=cfg)
     scores = get_generation_refusal_scores(cfg, model, processor, processor.tokenizer, out_test_text, out_test_images)
+    remove_multiple_layers(model, layer_indices = target_layers, cfg = cfg)
 
     # for img_id in range(len(out_test_images)):
     #     raw_image = load_image(out_test_images[img_id])
