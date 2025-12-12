@@ -134,7 +134,7 @@ def get_generation_refusal_scores(cfg, model, processor, tokenizer, test_text, t
 
 def filter_data(cfg, model, processor, tokenizer, with_sys_out_train_text, without_sys_out_train_text, out_train_images):
 
-    score_list = []
+    score_with_list, score_no_list, gap_list = [], [], []
     for i in tqdm(range(0, len(with_sys_out_train_text)), desc="Filtering samples", total=len(with_sys_out_train_text)):
         image = load_image(out_train_images[i])
     
