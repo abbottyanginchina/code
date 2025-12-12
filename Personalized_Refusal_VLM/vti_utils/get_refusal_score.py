@@ -107,7 +107,8 @@ def get_refusal_scores_llava(
 
     return refusal_scores
 
-def get_generation_refusal_scores(model, processor, images, conversations, tokenizer, refusal_toks, fwd_pre_hooks=[], fwd_hooks=[], batch_size=1):
+def get_generation_refusal_scores(cfg, model, processor, tokenizer, with_sys_out_train_text, without_sys_out_train_text, out_train_images):
+
     pass
 
 def filter_data(cfg, model, processor, tokenizer, with_sys_out_train_text, without_sys_out_train_text, out_train_images):
