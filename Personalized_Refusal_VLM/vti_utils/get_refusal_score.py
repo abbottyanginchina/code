@@ -116,7 +116,7 @@ def get_generation_refusal_scores(cfg, model, processor, tokenizer, test_text, t
                 {"role": "user", "content": [
                 {"type": "text", "text": test_text},
                 {"type": "image"},
-            ]}
+                ]}
             ]
         ]
         refusal_phrases = ["I"]
