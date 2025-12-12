@@ -198,8 +198,8 @@ def eval_model(args, output_dir):
     # refusal_vector = refusal_vector.mean(dim=0)[1:]
 
     save_dir = f"../results/output_{cfg.model_name}_{cfg.data.dataset_name}_{cfg.data.subject}/refusal_scores/"
-    if not os.path.exists(f"../results/output_{cfg.model_name}_{cfg.data.dataset_name}/refusal_scores/"):
-        os.makedirs(f"../results/output_{cfg.model_name}_{cfg.data.dataset_name}/refusal_scores/")
+    if not os.path.exists(save_dir):
+        os.makedirs(save_dir)
 
     # 生成拒绝测试集
     # answers_file = f"{output_dir}/results/nonbiology_answer_{cfg.model_name}.jsonl"
@@ -217,7 +217,7 @@ def eval_model(args, output_dir):
         remove_multiple_layers(model, layer_indices = target_layers, cfg = cfg)
 
     # Save out_refusal_scores as a pickle file (List)
-    with open(f"../results/output_{cfg.model_name}_{cfg.data.dataset_name}/refusal_scores/out_refusal_scores_{cfg.model_name}.pkl", "wb") as f:
+    with open(f"{save_dir}/out_refusal_scores_{cfg.model_name}.pkl", "wb") as f:
         pickle.dump(out_refusal_scores, f)
 
     # In-domain测试集
@@ -231,7 +231,7 @@ def eval_model(args, output_dir):
         remove_multiple_layers(model, layer_indices = target_layers, cfg = cfg)
     
     # Save in_refusal_scores as a pickle file (List)
-    with open(f"../results/output_{cfg.model_name}_{cfg.data.dataset_name}/refusal_scores/in_refusal_scores_{cfg.model_name}.pkl", "wb") as f:
+    with open(f"{save_dir}/in_refusal_scores_{cfg.model_name}.pkl", "wb") as f:
         pickle.dump(in_refusal_scores, f)
         
 
