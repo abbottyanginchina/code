@@ -36,7 +36,7 @@ def pca_project_2d(datasets):
         start += t.shape[0]
     return proj_list, V2.cpu(), mean.cpu()
 
-def visualize_distributions_RQ3(
+def visualize_distributions_RQ3(cfg,
     test_other_original, test_biology_original, pred_other, pred_biology,
     title="Idefics3-8B-Llama3 on ScienceQA (Biology)",
     save_path=None
