@@ -242,7 +242,6 @@ def eval_model(args, output_dir):
                     ],
                 }, 
             ]
-            import pdb; pdb.set_trace()
             prompt = processor.apply_chat_template(conversation, add_generation_prompt=True)
             inputs = processor(images=raw_image, text=prompt, return_tensors='pt').to(0, torch.float16)
             outputs = model.generate(**inputs, max_new_tokens=cfg.max_new_tokens, do_sample=False)
