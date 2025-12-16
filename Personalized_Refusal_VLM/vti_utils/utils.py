@@ -627,7 +627,7 @@ def get_activations_inst(cfg, model, inputs_text, image, processor, system_promp
                             "role": "assistant", 
                             "content": [
                                 {"type": "text",
-                                  "text": "Sorry"}
+                                  "text": "Sorry,"}
                                 ],
                         }
                     ]
