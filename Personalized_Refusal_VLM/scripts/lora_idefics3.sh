@@ -13,7 +13,7 @@ process() {
     subject=$2
     
     echo "🎉 Dataset $dataset, subject $subject started!"
-    # python -m baselines.data_preperation --model_name $model_name --num_test $num_test --num_train $num_train --dataset $dataset --subject $subject
+    python -m baselines.data_preperation --model_name $model_name --num_test $num_test --num_train $num_train --dataset $dataset --subject $subject
     # wait
     python -m baselines.Idefics3_lora --model_name $model_name --num_test $num_test --num_train $num_train --dataset $dataset --subject $subject
     wait
