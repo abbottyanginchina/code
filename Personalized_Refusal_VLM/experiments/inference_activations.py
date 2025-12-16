@@ -97,7 +97,7 @@ def main(cfg):
             test_biology_original=bio_x_test,
             pred_other=pred_other,
             pred_biology=pred_biology,
-            title = f"{cfg.model_name} on {cfg.data.dataset_name} (Biology)",
+            title = f"{cfg.model_name} on {cfg.data.dataset_name} ({cfg.data.subject})",
             save_path=f"{output_dir}/visualizations/activations_{layer}_{cfg.model_name}.png"
         )
         # print(f"✅ Saved visualizations for layer {layer}")
