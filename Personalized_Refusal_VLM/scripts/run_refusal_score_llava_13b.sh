@@ -20,6 +20,7 @@ process_subject() {
 
 }
 
+
 dataset="ScienceQA"
 subjects=("biology" "geography" "physics")  
 for subject in "${subjects[@]}"; do
