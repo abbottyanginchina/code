@@ -1,4 +1,4 @@
-export CUDA_VISIBLE_DEVICES=1
+export CUDA_VISIBLE_DEVICES=5
 
 echo "Running llava-1.5-7b-hf..."
 bash scripts/persona_llava_1.5_7b_hf.sh
