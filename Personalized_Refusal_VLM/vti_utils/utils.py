@@ -830,6 +830,7 @@ def get_activations_blip_inst(cfg, model, inputs_text, image, processor, system_
             h_all.append(tuple(embeddings_for_all_styles))
 
     return h_all
+    
 def get_activations_blip(model, inputs_text, image, processor, system_prompt=False):
     h_all = []
     device = next(model.parameters()).device
