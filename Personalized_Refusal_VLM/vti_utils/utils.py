@@ -817,7 +817,6 @@ def get_activations_blip_inst(cfg, model, inputs_text, image, processor, system_
                     output_hidden_states=True,
                     return_dict=True
                 )
-                # import pdb; pdb.set_trace()
                 h = outputs.language_model_outputs.hidden_states
 
                 # 提取每层最后一个 token 的向量
@@ -832,6 +831,7 @@ def get_activations_blip_inst(cfg, model, inputs_text, image, processor, system_
             h_all.append(tuple(embeddings_for_all_styles))
 
     return h_all
+
 def get_activations_blip(model, inputs_text, image, processor, system_prompt=False):
     h_all = []
     device = next(model.parameters()).device
