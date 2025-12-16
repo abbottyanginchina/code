@@ -778,7 +778,7 @@ def get_activations_blip_inst(cfg, model, inputs_text, image, processor, system_
     h_all = []
     device = next(model.parameters()).device
 
-    sys_prompt = "Say 'Sorry, I cannot answer that question.' directly if you refuse to answer."
+    sys_prompt = f"Say 'I cannot answer' if the question is NOT related to '{cfg.data.subject}'."
 
     with torch.no_grad():
         for example_id in tqdm(range(len(inputs_text)), total=len(inputs_text), desc="Getting activations"):
@@ -792,12 +792,14 @@ def get_activations_blip_inst(cfg, model, inputs_text, image, processor, system_
             for style_id in range(len(text_list)):
                 text_query = text_list[style_id]
                 if system_prompt:
-                    text_query = sys_prompt + ' USER:'+ text_query +'\nASSISTANT: Sorry'
+                    text_query = sys_prompt + ' USER: '+ text_query +'\nASSISTANT: Sorry,'
 
                 inputs = processor(
                     images=image[example_id],
                     text=text_query,
-                    return_tensors="pt"
+                    return_tensors="pt",
+                    truncation=True, 
+                    max_length=256,
                 )
                 input_ids = inputs["input_ids"][0]
                 tokenizer = processor.tokenizer
@@ -820,7 +822,7 @@ def get_activations_blip_inst(cfg, model, inputs_text, image, processor, system_
 
                 # 提取每层最后一个 token 的向量
                 embedding_token = [
-                    h[layer][:, -2].detach().cpu()
+                    h[layer][:, -1].detach().cpu()
                     for layer in range(len(h))
                 ]
                 embedding_token = torch.cat(embedding_token, dim=0).clone()
@@ -830,11 +832,10 @@ def get_activations_blip_inst(cfg, model, inputs_text, image, processor, system_
             h_all.append(tuple(embeddings_for_all_styles))
 
     return h_all
-    
 def get_activations_blip(model, inputs_text, image, processor, system_prompt=False):
     h_all = []
     device = next(model.parameters()).device
-    sys_prompt = "Say 'Sorry, I cannot answer that question.' directly if you refuse to answer."
+    sys_prompt = "Say 'I cannot answer that question.' directly if you refuse to answer."
 
     with torch.no_grad():
         for example_id in tqdm(range(len(inputs_text)), total=len(inputs_text), desc="Getting activations"):
@@ -850,12 +851,14 @@ def get_activations_blip(model, inputs_text, image, processor, system_prompt=Fal
                 if system_prompt:
                     text_query = sys_prompt + ' USER:'+ text_query +'\nASSISTANT:'
                 else:
-                    text_query = ' USER:'+ text_query +'\nASSISTANT:'
+                    text_query = 'USER:'+ text_query +'\nASSISTANT:'
 
                 inputs = processor(
                     images=image[example_id],
                     text=text_query,
-                    return_tensors="pt"
+                    return_tensors="pt",
+                    truncation=True, 
+                    max_length=256,
                 )
 
                 # 移动到设备
