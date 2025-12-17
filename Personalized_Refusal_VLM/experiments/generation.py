@@ -452,7 +452,7 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
     parser.add_argument("--model_name", type=str, default="llava", help="Name of the model to use")
-    parser.add_argument("--model_path", type=str, default="/gpuhome/jmy5701/gpu/models", help="Path to the model")
+    parser.add_argument("--model_path", type=str, default="../../models", help="Path to the model")
     parser.add_argument("--alpha_image", type=float, default=0)
     parser.add_argument("--num_train", type=int, default=200)
     parser.add_argument("--num_test", type=int, default=200)
