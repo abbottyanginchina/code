@@ -159,8 +159,8 @@ def eval_model(cfg, output_dir):
     base_path = f"{output_dir}/activations"
     
 
-    if not os.path.exists(f"../output_{cfg.model_name}_{cfg.data.dataset_name}/results/"):
-        os.makedirs(f"../output_{cfg.model_name}_{cfg.data.dataset_name}/results/")
+    if not os.path.exists(f"{output_dir}/results/"):
+        os.makedirs(f"{output_dir}/results/")
 
     
     
