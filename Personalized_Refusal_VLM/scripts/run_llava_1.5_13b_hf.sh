@@ -63,11 +63,11 @@ for subject in "${subjects[@]}"; do
     process_subject "$dataset" "$subject"
 done
 
-dataset="MMMU"
-subjects=("Math" "Geography" "Art_Theory")  
-for subject in "${subjects[@]}"; do
-    process_subject "$dataset" "$subject"
-done
+# dataset="MMMU"
+# subjects=("Math" "Geography" "Art_Theory")  
+# for subject in "${subjects[@]}"; do
+#     process_subject "$dataset" "$subject"
+# done
 
 echo "🎉 All steps completed!"
 
