@@ -1,4 +1,4 @@
-export CUDA_VISIBLE_DEVICES=6
+export CUDA_VISIBLE_DEVICES=5,6
 
 echo "🎉 Baseline Lora started!"
 
