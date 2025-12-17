@@ -167,6 +167,7 @@ def get_prompts(args, model, tokenizer, data_demos, model_is_llaval=True):
     return inputs
 
 def get_all_datasets(args):
+    import pdb; pdb.set_trace()
     if args.data.dataset_name == "ScienceQA":
         in_domain = []
         in_domain.append(args.data.subject)
