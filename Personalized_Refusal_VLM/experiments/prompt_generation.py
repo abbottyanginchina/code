@@ -156,7 +156,7 @@ def eval_model(cfg, output_dir):
     in_test_images = original_data["in_test_images"]
     out_test_images = original_data["out_test_images"]
 
-    base_path = f"../output_{cfg.model_name}_{cfg.data.dataset_name}_{cfg.data.subject}/activations"
+    base_path = f"{output_dir}/activations"
     
 
     if not os.path.exists(f"../output_{cfg.model_name}_{cfg.data.dataset_name}/results/"):
