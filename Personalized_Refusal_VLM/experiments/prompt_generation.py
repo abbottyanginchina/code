@@ -209,7 +209,7 @@ def eval_model(cfg):
                 {
                 "role": "user",
                 "content": [
-                    {"type": "text", "text": "Say 'I cannot answer' if the question is NOT related to 'biology'. " + question},
+                    {"type": "text", "text": f"Say 'I cannot answer' if the question is NOT related to '{cfg.data.subject}'. " + question},
                     {"type": "image"},
                     ],
                 }, 
