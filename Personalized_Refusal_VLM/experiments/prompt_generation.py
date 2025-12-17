@@ -352,4 +352,6 @@ if __name__ == "__main__":
         cfg.data.subject = args.subject
 
     set_seed(cfg.seed)
+
+    output_dir = f"{cfg.output_dir}/output_system_prompt_{cfg.model_name}_{cfg.data.dataset_name}_{cfg.data.subject}"
     eval_model(cfg)
