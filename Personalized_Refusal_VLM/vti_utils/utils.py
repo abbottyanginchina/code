@@ -710,6 +710,7 @@ def get_activations_inst(cfg, model, inputs_text, image, processor, system_promp
 
 def get_activations(model, inputs_text, image, processor, system_prompt=False):
     h_all = []
+    sys_prompt = "Say 'Sorry, I cannot answer that question.' if the question is NOT related to '{cfg.data.subject}'."
     with torch.no_grad():
         for example_id in tqdm(range(len(inputs_text)), desc="Getting activations", total=len(inputs_text)):
             embeddings_for_all_styles = []
