@@ -165,7 +165,7 @@ def eval_model(cfg, output_dir):
     
     
     # 生成拒绝测试集
-    answers_file = f"../output_{cfg.model_name}_{cfg.data.dataset_name}/results/sysprompt_non{cfg.data.subject}_answer_{cfg.model_name}.jsonl"
+    answers_file = f"{output_dir}/results/sysprompt_non{cfg.data.subject}_answer_{cfg.model_name}.jsonl"
     os.makedirs(os.path.dirname(answers_file), exist_ok=True)
     ans_file = open(answers_file, "w")
     for img_id in tqdm(range(len(out_test_images))):
