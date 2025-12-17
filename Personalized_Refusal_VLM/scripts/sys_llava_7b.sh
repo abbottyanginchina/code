@@ -4,6 +4,8 @@ set -e
 num_train=200
 num_test=200
 model_name="llava-1.5-7b-hf"
+model_path="../../models"
+data_path="../../data"
 
 process_subject() {
     dataset=$1
