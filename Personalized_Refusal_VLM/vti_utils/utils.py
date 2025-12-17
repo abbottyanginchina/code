@@ -706,10 +706,8 @@ def get_activations_inst(cfg, model, inputs_text, image, processor, system_promp
 
             h_all.append(tuple(embeddings_for_all_styles))
 
-
-
     return h_all
-    
+
 def get_activations(model, inputs_text, image, processor, system_prompt=False):
     h_all = []
     with torch.no_grad():
