@@ -4,9 +4,6 @@ set -e
 num_train=200
 num_test=200
 model_name="llava-1.5-7b-hf"
-inter_start_layer=15
-inter_end_layer=32
-alpha_text=2.5
 
 process_subject() {
     dataset=$1
