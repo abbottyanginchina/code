@@ -296,10 +296,10 @@ def eval_model(cfg, output_dir):
             outputs = model.generate(**inputs, max_new_tokens=200, do_sample=False)
             generated_tokens = outputs[0, inputs['input_ids'].shape[1]:]
             answer = processor.decode(generated_tokens, skip_special_tokens=True)
-        
-        assistant_content = answer.split("ASSISTANT")[-1].strip()
+        if 'instructblip-' in model_path.lower():
+            answer = answer.split("ASSISTANT")[-1].strip()
         img_save = {
-            "model_answer": assistant_content,
+            "model_answer": answer,
             "question": question
         }
         ans_file.write(json.dumps(img_save) + "\n")
