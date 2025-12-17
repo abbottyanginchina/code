@@ -13,7 +13,7 @@ process_subject() {
     
     echo "🎉 Dataset $dataset, subject $subject started!"
     echo "🚀 Step 1: Generating responses..."
-    python -m experiments.prompt_generation --model_name $model_name --num_test $num_test --num_train $num_train --dataset $dataset --subject $subject
+    python -m experiments.prompt_generation --model_name $model_name --model_path $model_path --data_path $data_path --num_test $num_test --num_train $num_train --dataset $dataset --subject $subject
 
     echo "🎉 Dataset $dataset, subject $subject completed!"
     echo ""
