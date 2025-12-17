@@ -728,7 +728,7 @@ def get_activations(model, inputs_text, image, processor, system_prompt=False):
                         "role": "system",
                         "content": [
                             {"type": "text", 
-                             "text": "Say 'I cannot answer that question.' directly if you refuse to answer."},
+                             "text": sys_prompt},
                             ],
                         },
                         {
