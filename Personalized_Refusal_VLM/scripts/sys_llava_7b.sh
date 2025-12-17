@@ -1,11 +1,9 @@
 #!/bin/bash
 set -e
 
-num_layers=33 # Example number of layers for llava-1.5-7b-hf
-step=7
 num_train=200
 num_test=200
-model_name="instructblip-vicuna-7b"
+model_name="llava-1.5-7b-hf"
 inter_start_layer=15
 inter_end_layer=32
 alpha_text=2.5
