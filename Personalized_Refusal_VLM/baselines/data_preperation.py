@@ -3,6 +3,7 @@ import base64
 import os
 import json
 import torch
+import random
 import tempfile
 from io import BytesIO
 from openai import OpenAI
@@ -115,14 +116,19 @@ def generate_answer(cfg):
     for i in tqdm(range(len(without_sys_out_train_text)), total=len(without_sys_out_train_text), desc="Generating out of data"):
         text = without_sys_out_train_text[i]
         img = out_train_images[i]
-        response = "Sorry, I cannot answer."
+        ANSWER_LIST = [
+            "Sorry, I cannot answer this question.",
+            "Unfortunately, I can't provide a response to this.",
+            "It's outside my knowledge to answer that.",
+        ]
+        response = random.choice(ANSWER_LIST)
         item = {
             "id": f"train_{i}",
             "image": f"{save_path}/images/{len(without_sys_out_train_text)+i}.jpg",  
             "conversations": [
                 {
                     "from": "human",
-                    "value": f"<image>\n{text}"
+                    "value": f"{text}"
                 },
                 {
                     "from": "assistant",
