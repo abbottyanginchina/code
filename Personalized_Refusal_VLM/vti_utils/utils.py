@@ -709,6 +709,7 @@ def get_activations_inst(cfg, model, inputs_text, image, processor, system_promp
 
 
     return h_all
+    
 def get_activations(model, inputs_text, image, processor, system_prompt=False):
     h_all = []
     with torch.no_grad():
