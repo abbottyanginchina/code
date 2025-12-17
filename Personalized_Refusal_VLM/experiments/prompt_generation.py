@@ -207,9 +207,15 @@ def eval_model(cfg):
         else:
             conversation = [
                 {
+                    "role": "system",
+                    "content": [
+                        {"type": "text", "text": f"Say 'I cannot answer' if the question is NOT related to '{cfg.data.subject}'. "},
+                    ],
+                },
+                {
                 "role": "user",
                 "content": [
-                    {"type": "text", "text": f"Say 'I cannot answer' if the question is NOT related to '{cfg.data.subject}'. " + question},
+                    {"type": "text", "text": question},
                     {"type": "image"},
                     ],
                 }, 
