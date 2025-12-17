@@ -1,4 +1,4 @@
-export CUDA_VISIBLE_DEVICES=5,6
+export CUDA_VISIBLE_DEVICES=5
 
 echo "🚀 Step 1: Generating responses for llava-1.5-7b-hf..."
 bash scripts/sys_llava_7b.sh
