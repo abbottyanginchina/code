@@ -41,7 +41,7 @@ def load_image(img_data):
     else:
         raise TypeError(f"无法识别的图片类型: {type(img_data)}")
 
-def eval_model(cfg):
+def eval_model(cfg, output_dir):
     model_path = os.path.join(cfg.model_path, cfg.model_name)
 
     if 'llava-1.5' in model_path.lower():
