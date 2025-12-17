@@ -239,7 +239,7 @@ def eval_model(cfg, output_dir):
 
 
     # 生成in-domain测试集
-    answers_file = f"../output_{cfg.model_name}_{cfg.data.dataset_name}/results/sysprompt_{cfg.data.subject}_answer_{cfg.model_name}.jsonl"
+    answers_file = f"{output_dir}/results/sysprompt_{cfg.data.subject}_answer_{cfg.model_name}.jsonl"
     os.makedirs(os.path.dirname(answers_file), exist_ok=True)
     ans_file = open(answers_file, "w")
     for img_id in tqdm(range(len(in_test_images))):
@@ -278,10 +278,9 @@ def eval_model(cfg, output_dir):
         else:
             conversation = [
                 {
-                "role": "system",
-                "content": [
-                    {"type": "text", 
-                        "text": "Say 'I cannot answer' if the question is NOT related to 'biology'. "},
+                    "role": "system",
+                    "content": [
+                        {"type": "text", "text": f"Say 'I cannot answer' if the question is NOT related to '{cfg.data.subject}'. "},
                     ],
                 },
                 {
