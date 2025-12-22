@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-# num_layers=41 
+num_layers=41 
 # num_layers=11
 step=4
 num_train=200
