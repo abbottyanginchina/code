@@ -20,8 +20,7 @@ process_subject() {
 
     echo "🧠 Step 2: Training steering vector model..."
     # python -m experiments.train_steering_vector --model_name $model_name --start_layer 12 --end_layer 14 --subject $subject --dataset $dataset
-
-    wait
+    # wait
 
     for ((layer=0; layer<num_layers; layer+=step)); do
         end_layer=$((layer + step))
