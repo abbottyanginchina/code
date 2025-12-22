@@ -2,7 +2,7 @@
 set -e
 
 num_layers=41 
-# num_layers=11
+num_layers=33
 step=4
 num_train=200
 num_test=200
