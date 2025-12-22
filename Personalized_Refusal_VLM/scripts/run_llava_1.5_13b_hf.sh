@@ -24,6 +24,7 @@ process_subject() {
     # wait
 
     # for ((layer=0; layer<num_layers; layer+=step)); do
+    for ((layer=22; layer<num_layers; layer+=step)); do
         end_layer=$((layer + step))
 
         if [ $end_layer -gt $num_layers ]; then
