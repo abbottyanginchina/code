@@ -1,7 +1,8 @@
 #!/bin/bash
 set -e
 
-num_layers=41 # Example number of layers for llava-1.5-7b-hf
+# num_layers=41 
+num_layers=11
 step=14
 num_train=200
 num_test=200
