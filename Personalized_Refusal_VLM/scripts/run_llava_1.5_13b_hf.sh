@@ -3,7 +3,7 @@ set -e
 
 # num_layers=41 
 num_layers=11
-step=4
+step=3
 num_train=200
 num_test=200
 model_name="llava-1.5-13b-hf"
