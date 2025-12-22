@@ -76,7 +76,7 @@ def inference(cfg, model, layer, output_dir):
     
 
 def main(cfg):
-    output_dir = os.path.join(cfg.output_dir, f"output_{cfg.model_name}_{cfg.data.dataset_name}_{cfg.data.subject}")
+    output_dir = os.path.join(cfg.output_dir, f"orth_{cfg.model_name}_{cfg.data.dataset_name}_{cfg.data.subject}")
     for layer in range(cfg.start_layer, cfg.end_layer): 
         bio_x, oth_x, bio_target, oth_target, steering_vec = load_activations(cfg, layer, output_dir)
 
