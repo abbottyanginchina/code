@@ -23,7 +23,7 @@ process_subject() {
     # python -m experiments.train_steering_vector --model_name $model_name --start_layer 12 --end_layer 14 --subject $subject --dataset $dataset
     # wait
 
-    for ((layer=0; layer<num_layers; layer+=step)); do
+    # for ((layer=0; layer<num_layers; layer+=step)); do
         end_layer=$((layer + step))
 
         if [ $end_layer -gt $num_layers ]; then
