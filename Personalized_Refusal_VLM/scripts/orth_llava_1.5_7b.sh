@@ -2,7 +2,7 @@
 set -e
 
 num_layers=33 # Example number of layers for llava-1.5-7b-hf
-step=17
+step=11
 num_train=200
 num_test=200
 model_name="llava-1.5-7b-hf"
