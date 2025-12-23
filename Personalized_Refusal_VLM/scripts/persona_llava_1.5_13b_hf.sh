@@ -37,7 +37,7 @@ process_subject() {
 
 dataset="MMMU"
 # subjects=("Math" "Geography" "Art_Theory") 
-subjects=("Geography" "Art_Theory") 
+subjects=("Math") 
 for subject in "${subjects[@]}"; do
     process_subject "$dataset" "$subject"
 done
