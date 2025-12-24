@@ -2,8 +2,8 @@ export CUDA_VISIBLE_DEVICES=5,6
 
 echo "🎉 Baseline Lora started!"
 
-echo "LLAVA 7B"
-bash ./scripts/lora_llava_7b.sh
+# echo "LLAVA 7B"
+# bash ./scripts/lora_llava_7b.sh
 
 echo "LLAVA 13B"
 bash ./scripts/lora_llava_13b.sh
