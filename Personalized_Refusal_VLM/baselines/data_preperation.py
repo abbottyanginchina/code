@@ -179,7 +179,6 @@ def parse_args():
     )
     parser.add_argument(
         "--dataset",
-        default='../../data',
         type=str,
         help="Name of the dataset to use",
     )
