@@ -4,8 +4,8 @@ set -e
 num_train=200
 num_test=200
 model_name="Idefics3-8B-Llama3"
-dataset="ScienceQA"
-subject="biology"
+# dataset="ScienceQA"
+# subject="biology"
 
 process() {
     dataset=$1
