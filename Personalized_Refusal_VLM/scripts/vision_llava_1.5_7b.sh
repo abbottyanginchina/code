@@ -16,7 +16,7 @@ process_subject() {
     
     echo "🎉 Dataset $dataset, subject $subject started!"
     echo "🚀 Step 1: Extracting activations..."
-    python -m experiments.orth_experiments.orth_get_activations_inst --model_name $model_name --num_test $num_test --num_train $num_train --dataset $dataset --subject $subject
+    python -m experiments.vision_experiments.vision_get_activations_inst --model_name $model_name --num_test $num_test --num_train $num_train --dataset $dataset --subject $subject
 
     # echo "🧠 Step 2: Training steering vector model..."
     # python -m experiments.train_steering_vector --model_name $model_name --start_layer 12 --end_layer 19 &
