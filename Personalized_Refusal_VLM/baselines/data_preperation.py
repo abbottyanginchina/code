@@ -162,7 +162,7 @@ def parse_args():
     parser.add_argument(
         "--model_path",
         type=str,
-        default="/root/shared-nvme",
+        default="../../models",
         help="Path to the pretrained models",
     )
     parser.add_argument(
