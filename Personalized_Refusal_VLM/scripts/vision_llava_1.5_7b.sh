@@ -33,7 +33,7 @@ process_subject() {
 
         echo "🔄 Training layers $layer → $end_layer ..."
         
-        python -m experiments.orth_experiments.orth_train_steering_vector \
+        python -m experiments.vision_experiments.vision_train_steering_vector \
             --model_name $model_name \
             --subject $subject \
             --dataset $dataset \
