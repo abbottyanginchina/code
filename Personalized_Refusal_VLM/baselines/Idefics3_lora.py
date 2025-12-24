@@ -131,8 +131,8 @@ def train(cfg):
     # -----------------------------
     # 配置
     # -----------------------------
-    model_name = f"../../models/{cfg.model_name}"
-    json_path = f"../../data/{cfg.data.dataset_name}_{cfg.data.subject}_lora/test_answer.json"           # ← 你的文件
+    model_name = f"/root/shared-nvme/{cfg.model_name}"
+    json_path = f"/root/shared-nvme/{cfg.data.dataset_name}_{cfg.data.subject}_lora/test_answer.json"           # ← 你的文件
     output_dir = f"../results/{cfg.model_name}_{cfg.data.dataset_name}_{cfg.data.subject}_lora_output"
 
     # -----------------------------
@@ -151,11 +151,12 @@ def train(cfg):
     # LoRA 配置
     # -----------------------------
     lora_config = LoraConfig(
-        r=16,
-        lora_alpha=32,
-        target_modules=["q_proj", "k_proj", "v_proj", "o_proj"],
+        r=32,
+        lora_alpha=16,
         lora_dropout=0.05,
+        bias="none",
         task_type="CAUSAL_LM",
+        target_modules=["q_proj", "v_proj"],  # Optional: specify target modules
     )
 
     model = get_peft_model(model, lora_config)
@@ -172,7 +173,7 @@ def train(cfg):
     training_args = TrainingArguments(
         output_dir=output_dir,
         per_device_train_batch_size=1,
-        gradient_accumulation_steps=4,
+        gradient_accumulation_steps=2,
         learning_rate=2e-4,
         num_train_epochs=3,
         fp16=True,
@@ -200,8 +201,9 @@ def inference(cfg):
     # -----------------------------
     # 配置
     # -----------------------------
-    model_name = f"../../models/{cfg.model_name}"
+    model_name = f"/root/shared-nvme/{cfg.model_name}"
     lora_dir = f"../results/{cfg.model_name}_{cfg.data.dataset_name}_{cfg.data.subject}_lora_output" # LoRA 权重保存的路径
+    device = "cuda" if torch.cuda.is_available() else "cpu"
     
     # -----------------------------
     # Processor & Model
@@ -317,7 +319,6 @@ def parse_args():
     parser.add_argument(
         "--model_path",
         type=str,
-        default="../../models",
         help="Path to the pretrained models",
     )
     parser.add_argument(
@@ -340,7 +341,6 @@ def parse_args():
     parser.add_argument(
         "--data_path",
         type=str,
-        default="../../data",
         help="Path to the pretrained models",
     )
     parser.add_argument(
@@ -372,5 +372,5 @@ if __name__ == "__main__":
         cfg.data.subject = args.subject
     
     train(cfg)
-    inference(cfg)
+    # inference(cfg)
 
