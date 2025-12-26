@@ -20,7 +20,7 @@ device = "cuda" if torch.cuda.is_available() else "cpu"
 
 class Idefics3Dataset(Dataset):
     # def __init__(self, json_path, processor, max_length=3144): # <-- 新增 max_length 参数
-    ValueError: Mismatch in `image` token count between text and `input_ids`. Got ids=[2567] and text=[2873]. Likely due to `truncation='max_length'`. Please disable truncation or increase `max_length`.
+    def __init__(self, json_path, processor, max_length=3144): # <-- 新增 max_length 参数
         self.data = json.load(open(json_path, "r"))
         self.processor = processor
         self.tokenizer = processor.tokenizer
