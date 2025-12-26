@@ -132,7 +132,8 @@ def train(cfg):
     # -----------------------------
     # 配置
     # -----------------------------
-    model_name = f"../../models/{cfg.model_name}"
+    # model_name = f"../../models/{cfg.model_name}"
+    model_name = "HuggingFaceM4/Idefics3-8B-Llama3"
     json_path = f"../../data/{cfg.data.dataset_name}_{cfg.data.subject}_lora/test_answer.json"           # ← 你的文件
     output_dir = f"../results/{cfg.model_name}_{cfg.data.dataset_name}_{cfg.data.subject}_lora_output"
 
