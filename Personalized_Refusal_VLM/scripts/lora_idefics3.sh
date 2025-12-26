@@ -19,8 +19,6 @@ process() {
     echo "🎉 Dataset $dataset, subject $subject completed!"
 }
 
-
-
 dataset="MMMU"
 subjects=("Math" "Geography" "Art_Theory")  # 根据需要修改这里的 subjects
 for subject in "${subjects[@]}"; do
