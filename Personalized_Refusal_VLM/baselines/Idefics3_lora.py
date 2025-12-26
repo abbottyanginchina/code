@@ -19,7 +19,7 @@ from vti_utils.utils import get_all_datasets
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
 class Idefics3Dataset(Dataset):
-    def __init__(self, json_path, processor, max_length=3144): # <-- 新增 max_length 参数
+    # def __init__(self, json_path, processor, max_length=3144): # <-- 新增 max_length 参数
         self.data = json.load(open(json_path, "r"))
         self.processor = processor
         self.tokenizer = processor.tokenizer
