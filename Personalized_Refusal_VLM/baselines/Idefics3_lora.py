@@ -139,7 +139,6 @@ def train(cfg):
     # -----------------------------
     # Processor & Model
     # -----------------------------
-    import pdb; pdb.set_trace()
     processor = AutoProcessor.from_pretrained(model_name)
 
     model = AutoModelForVision2Seq.from_pretrained(
