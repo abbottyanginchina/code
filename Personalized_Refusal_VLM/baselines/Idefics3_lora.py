@@ -139,7 +139,7 @@ def train(cfg):
     # -----------------------------
     # Processor & Model
     # -----------------------------
-    processor = AutoProcessor.from_pretrained(model_name)
+    # processor = AutoProcessor.from_pretrained(model_name)
 
     model = AutoModelForVision2Seq.from_pretrained(
             model_name,
