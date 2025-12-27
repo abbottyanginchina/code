@@ -252,7 +252,7 @@ def inference(cfg):
     ans_file = open(answers_file, "w")
     for i in range(len(out_test_text)):
         inputs = processor(
-            images=out_test_images[i].convert("RGB"), 
+            images=out_test_images[i], 
             text=f"<image>\n{out_test_text[i]}\nASSISTANT:", 
             return_tensors="pt"
         ).to(model.device, dtype=torch.float16)
