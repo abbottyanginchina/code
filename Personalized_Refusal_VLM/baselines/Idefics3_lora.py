@@ -241,7 +241,6 @@ def inference(cfg):
     # -----------------------------
     # 准备推理输入
     # -----------------------------
-    import pdb; pdb.set_trace()
     original_data = get_all_datasets(cfg)
     in_test_text = original_data["in_test_text"]
     out_test_text = original_data["out_test_text"]
