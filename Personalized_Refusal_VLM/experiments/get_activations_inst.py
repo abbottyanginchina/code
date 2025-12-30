@@ -156,9 +156,6 @@ def eval_model(cfg):
 
     print('Obtaining direction\n')
 
-    blank_text = " " * 100
-    import pdb; pdb.set_trace()
-
     with torch.no_grad():
         if 'instructblip-' in model_path.lower():
             with_sys_out_train_activations = process(get_activations_blip_inst(cfg, model, without_sys_out_train_text, out_train_images, processor, system_prompt=True))
@@ -177,19 +174,19 @@ def eval_model(cfg):
 
         # 1. 加 system prompt 的 others（对应 h_c(Image_{others} + system_prompt)）
         
-
+        blank_text = " " * 100
         with_sys_image_others_activations = process(
-            get_activations_inst(cfg, model, [""] * len(out_train_images), out_train_images, processor, system_prompt=True)
+            get_activations_inst(cfg, model, blank_text * len(out_train_images), out_train_images, processor, system_prompt=True)
         )
         # 2. 不加 system prompt 的 biology（对应 h_c(Image_{biology} + "None")）
         without_sys_image_biology_activations = process(
-            get_activations(model, [""] * len(in_train_images), in_train_images, processor, system_prompt=False)
+            get_activations(model, blank_text * len(in_train_images), in_train_images, processor, system_prompt=False)
         )
         image_in_test_activations = process(
-            get_activations(model, [""] * len(in_test_images), in_test_images, processor, system_prompt=False)
+            get_activations(model, blank_text * len(in_test_images), in_test_images, processor, system_prompt=False)
         )
         image_out_test_activations = process(
-            get_activations(model, [""] * len(out_test_images), out_test_images, processor, system_prompt=False)
+            get_activations(model, blank_text * len(out_test_images), out_test_images, processor, system_prompt=False)
         )
 
     save_path = os.path.join(cfg.output_dir, f"output_{cfg.model_name}_{cfg.data.dataset_name}_{cfg.data.subject}/activations/")
