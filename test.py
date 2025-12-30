@@ -25,5 +25,5 @@ outputs = model.generate(
 )
 generated_text = processor.batch_decode(outputs, skip_special_tokens=True)[0].strip()
 
-print("Answer:")
+print("================= Answer: =================\n")
 print(generated_text)
