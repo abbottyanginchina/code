@@ -24,4 +24,6 @@ outputs = model.generate(
         temperature=1,
 )
 generated_text = processor.batch_decode(outputs, skip_special_tokens=True)[0].strip()
+
+print("Answer:")
 print(generated_text)
