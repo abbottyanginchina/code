@@ -173,6 +173,7 @@ def eval_model(cfg):
             out_test_activations = process(get_activations(model, out_test_text, out_test_images, processor, system_prompt=False))
 
         # 1. 加 system prompt 的 others（对应 h_c(Image_{others} + system_prompt)）
+        blank_text = " " * 100
         with_sys_image_others_activations = process(
             get_activations_inst(cfg, model, [""] * len(out_train_images), out_train_images, processor, system_prompt=True)
         )
