@@ -157,7 +157,7 @@ def eval_model(cfg):
     print('Obtaining direction\n')
 
     blank_text = " " * 100
-        import pdb; pdb.set_trace()
+    import pdb; pdb.set_trace()
 
     with torch.no_grad():
         if 'instructblip-' in model_path.lower():
