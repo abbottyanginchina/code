@@ -5,7 +5,8 @@ import argparse
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
-def load_activations(cfg, layer, output_dir):
+def load_activations(cfg, layer):
+    output_dir = os.path.join(cfg.output_dir, f"vision_{cfg.model_name}_{cfg.data.dataset_name}_{cfg.data.subject}")
     image_pred_other_x = torch.load(f"{output_dir}/activations/image_pred_other_layer{layer}_{cfg.model_name}.pt", weights_only=False).to(device)
     image_pred_biology_x = torch.load(f"{output_dir}/activations/image_pred_biology_layer{layer}_{cfg.model_name}.pt", weights_only=False).to(device)
     image_in_test_x = torch.load(f"{output_dir}/activations/image_in_test_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device)
@@ -13,7 +14,7 @@ def load_activations(cfg, layer, output_dir):
     return image_pred_other_x, image_pred_biology_x, image_in_test_x, image_out_test_x
 
 def main(cfg):
-    output_dir = os.path.join(cfg.output_dir, f"vision_{cfg.model_name}_{cfg.data.dataset_name}_{cfg.data.subject}")
+    
     for layer in range(25, cfg.end_layer + 1):
         image_pred_other_x, image_pred_biology_x, image_in_test_x, image_out_test_x = load_activations(cfg, layer, output_dir)
         
