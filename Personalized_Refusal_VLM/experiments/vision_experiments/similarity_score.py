@@ -17,13 +17,10 @@ def main(cfg):
     for layer in range(cfg.start_layer, cfg.end_layer + 1):
         image_pred_other_x, image_pred_biology_x, image_in_test_x, image_out_test_x = load_activations(cfg, layer, output_dir)
         
-        steering_vec_pred_other = image_pred_other_x - image_pred_biology_x
-        steering_vec_pred_biology = image_pred_biology_x - image_pred_other_x
-        similarity_score_pred_other = torch.cosine_similarity(steering_vec_pred_other, image_in_test_x, dim=-1)
-        similarity_score_pred_biology = torch.cosine_similarity(steering_vec_pred_biology, image_out_test_x, dim=-1)
-        print(similarity_score_pred_other)
-        print(similarity_score_pred_biology)
-        
+        steering_vec_pred = image_pred_other_x - image_pred_biology_x
+        steering_vec = image_out_test_x - image_in_test_x
+        similarity_score = torch.cosine_similarity(steering_vec_pred, steering_vec, dim=-1)
+        print(f"Layer {layer} similarity score: {similarity_score.mean().item()}")
         import pdb; pdb.set_trace()
 
 def parse_args():
