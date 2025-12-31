@@ -172,8 +172,7 @@ def eval_model(cfg):
             in_test_activations = process(get_activations(model, in_test_text, in_test_images, processor, system_prompt=False))
             out_test_activations = process(get_activations(model, out_test_text, out_test_images, processor, system_prompt=False))
 
-        # blank_text = ["You are a helpful assistant. Please answer the question based on the image."]
-        blank_text = [""]
+        blank_text = ["You are a helpful assistant. Please answer the question based on the image."]
         # 1. 加 system prompt 的 others（对应 h_c(Image_{others} + system_prompt)）
         with_sys_image_others_activations = process(
             get_activations_inst(cfg, model, blank_text * len(out_train_images), out_train_images, processor, system_prompt=True)
