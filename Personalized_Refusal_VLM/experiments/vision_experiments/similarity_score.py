@@ -6,7 +6,7 @@ import argparse
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
 def load_activations(cfg, layer):
-    output_dir = os.path.join(cfg.output_dir, f"{cfg.model_name}_{cfg.data.dataset_name}_{cfg.data.subject}")
+    output_dir = os.path.join(cfg.output_dir, f"output_{cfg.model_name}_{cfg.data.dataset_name}_{cfg.data.subject}")
     image_pred_other_x = torch.load(f"{output_dir}/activations/image_pred_other_layer{layer}_{cfg.model_name}.pt", weights_only=False).to(device)
     image_pred_biology_x = torch.load(f"{output_dir}/activations/image_pred_biology_layer{layer}_{cfg.model_name}.pt", weights_only=False).to(device)
     image_in_test_x = torch.load(f"{output_dir}/activations/image_in_test_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device)
