@@ -26,31 +26,31 @@ process_subject() {
     # python -m experiments.train_steering_vector --model_name $model_name --start_layer 26 --end_layer 33 &
     # wait
 
-    # for ((layer=0; layer<num_layers; layer+=step)); do
-    #     end_layer=$((layer + step))
+    for ((layer=0; layer<num_layers; layer+=step)); do
+        end_layer=$((layer + step))
 
-    #     if [ $end_layer -gt $num_layers ]; then
-    #         end_layer=$num_layers
-    #     fi
+        if [ $end_layer -gt $num_layers ]; then
+            end_layer=$num_layers
+        fi
 
-    #     echo "🔄 Training layers $layer → $end_layer ..."
+        echo "🔄 Training layers $layer → $end_layer ..."
         
-    #     python -m experiments.vision_experiments.vision_train_steering_vector \
-    #         --model_name $model_name \
-    #         --subject $subject \
-    #         --dataset $dataset \
-    #         --start_layer $layer \
-    #         --end_layer $end_layer & # ← 并行运行
-    # done
-    # wait
+        python -m experiments.vision_experiments.vision_train_steering_vector \
+            --model_name $model_name \
+            --subject $subject \
+            --dataset $dataset \
+            --start_layer $layer \
+            --end_layer $end_layer & # ← 并行运行
+    done
+    wait
 
     echo "✅ Step 3: Inference activations with steering vectors applied..."
     python -m experiments.vision_experiments.vision_inference_activations --start_layer 0 --end_layer $num_layers --subject $subject --dataset $dataset --model_name $model_name
     echo "✅ All layer groups finished!"
 
     echo "🎯 Step 4: Generating responses with steering vectors applied..."
-    # python -m experiments.vision_experiments.vision_generation --model_name $model_name --num_test $num_test --num_train $num_train \
-    #     --inter_start_layer $inter_start_layer --inter_end_layer $inter_end_layer --alpha_text $alpha_text --dataset $dataset --subject $subject
+    python -m experiments.vision_experiments.vision_generation --model_name $model_name --num_test $num_test --num_train $num_train \
+        --inter_start_layer $inter_start_layer --inter_end_layer $inter_end_layer --alpha_text $alpha_text --dataset $dataset --subject $subject
 
     echo "🎉 Dataset $dataset, subject $subject completed!"
     echo ""
