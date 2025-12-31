@@ -1,4 +1,5 @@
 import torch
+import os
 import mmengine
 import argparse
 
@@ -10,8 +11,9 @@ def load_activations(cfg, layer, output_dir):
     return image_pred_other_x, image_pred_biology_x, image_in_test_x, image_out_test_x
 
 def main(cfg):
+    output_dir = os.path.join(cfg.output_dir, f"vision_{cfg.model_name}_{cfg.data.dataset_name}_{cfg.data.subject}")
     for layer in range(cfg.start_layer, cfg.end_layer + 1):
-        image_pred_other_x, image_pred_biology_x, image_in_test_x, image_out_test_x = load_activations(cfg, layer, cfg.output_dir)
+        image_pred_other_x, image_pred_biology_x, image_in_test_x, image_out_test_x = load_activations(cfg, layer, output_dir)
         print(image_pred_other_x.shape, image_pred_biology_x.shape, image_in_test_x.shape, image_out_test_x.shape)
         import pdb; pdb.set_trace()
         # calculate the similarity score between image_pred_other_x and image_in_test_x
