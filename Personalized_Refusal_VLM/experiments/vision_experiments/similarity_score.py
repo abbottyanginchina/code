@@ -28,43 +28,81 @@ def load_activations(cfg, layer):
             vision_image_in_test_x, 
             vision_image_out_test_x)
 
-def batch_sum_align(pred_shift, true_shift, eps=1e-8, filter_zero=True):
+def alignment_metrics(pred_shift, true_shift, eps=1e-8, filter_zero=True):
     """
     pred_shift: [N, D] (r'_i)
     true_shift: [N, D] (r_i)
-    returns scalar cos(sum r'_i, sum r_i)
+
+    Returns:
+      mean_cos: mean_i cos(r'_i, r_i)
+      std_cos:  std_i  cos(r'_i, r_i)
+      dar:      P(cos > 0)
+      q05:      5th percentile of cos (tail risk)
+      tail10:   mean of bottom 10% cos
+      n:        valid sample count
     """
     if filter_zero:
         pred_norm = pred_shift.norm(dim=-1)
         true_norm = true_shift.norm(dim=-1)
         mask = (pred_norm > 1e-6) & (true_norm > 1e-6)
-        if mask.any():
-            pred_shift = pred_shift[mask]
-            true_shift = true_shift[mask]
+        pred_shift = pred_shift[mask]
+        true_shift = true_shift[mask]
 
-    sum_pred = pred_shift.sum(dim=0)  # [D]
-    sum_true = true_shift.sum(dim=0)  # [D]
+    n = int(pred_shift.shape[0])
+    if n == 0:
+        return {
+            "mean_cos": float("nan"),
+            "std_cos": float("nan"),
+            "dar": float("nan"),
+            "q05": float("nan"),
+            "tail10": float("nan"),
+            "n": 0,
+        }
 
-    # safe cosine
-    align = F.cosine_similarity(sum_pred.unsqueeze(0), sum_true.unsqueeze(0), dim=-1, eps=eps)
-    return align.item(), int(pred_shift.shape[0])  # also return valid count
+    # safe per-sample cosine
+    pred_n = F.normalize(pred_shift, dim=-1, eps=eps)
+    true_n = F.normalize(true_shift, dim=-1, eps=eps)
+    cos = F.cosine_similarity(pred_n, true_n, dim=-1, eps=eps)  # [n]
+
+    mean_cos = cos.mean().item()
+    std_cos = cos.std(unbiased=False).item()
+    dar = (cos > 0).float().mean().item()
+    q05 = torch.quantile(cos, 0.05).item()
+
+    q10 = torch.quantile(cos, 0.10)
+    tail10 = cos[cos <= q10].mean().item()
+
+    return {
+        "mean_cos": mean_cos,
+        "std_cos": std_cos,
+        "dar": dar,
+        "q05": q05,
+        "tail10": tail10,
+        "n": n,
+    }
 
 def main(cfg):
     for layer in range(15, cfg.end_layer - 1):
         (image_pred_other_x, image_pred_biology_x, image_in_test_x, image_out_test_x,
          vision_image_pred_other_x, vision_image_pred_biology_x, vision_image_in_test_x, vision_image_out_test_x) = load_activations(cfg, layer)
 
-        # ===== w/ vision loss (your output_ directory) =====
-        pred_shift = image_pred_other_x - image_pred_biology_x      # r'_i (pred)
-        true_shift = image_out_test_x - image_in_test_x             # r_i  (gt)
-        align_w, n_w = batch_sum_align(pred_shift, true_shift)
+        # ===== w/ vision loss (output_ directory) =====
+        pred_shift_w = image_pred_other_x - image_pred_biology_x
+        true_shift_w = image_out_test_x - image_in_test_x
+        m_w = alignment_metrics(pred_shift_w, true_shift_w)
 
-        # ===== w/o vision loss (your vision_ directory) =====
+        # ===== w/o vision loss (vision_ directory) =====
         pred_shift_wo = vision_image_pred_other_x - vision_image_pred_biology_x
         true_shift_wo = vision_image_out_test_x - vision_image_in_test_x
-        align_wo, n_wo = batch_sum_align(pred_shift_wo, true_shift_wo)
+        m_wo = alignment_metrics(pred_shift_wo, true_shift_wo)
 
-        print(f"Layer {layer}: Align(w/ vision-loss)={align_w:.4f} (n={n_w}), Align(w/o vision-loss)={align_wo:.4f} (n={n_wo})")
+        print(
+            f"Layer {layer} | "
+            f"w/: mean={m_w['mean_cos']:.4f}, dar={m_w['dar']:.3f}, q05={m_w['q05']:.4f}, "
+            f"tail10={m_w['tail10']:.4f}, std={m_w['std_cos']:.4f}, n={m_w['n']} | "
+            f"w/o: mean={m_wo['mean_cos']:.4f}, dar={m_wo['dar']:.3f}, q05={m_wo['q05']:.4f}, "
+            f"tail10={m_wo['tail10']:.4f}, std={m_wo['std_cos']:.4f}, n={m_wo['n']}"
+        )
 
 # def main(cfg):
     
