@@ -16,7 +16,7 @@ def load_activations(cfg, layer):
 def main(cfg):
     
     for layer in range(25, cfg.end_layer + 1):
-        image_pred_other_x, image_pred_biology_x, image_in_test_x, image_out_test_x = load_activations(cfg, layer, output_dir)
+        image_pred_other_x, image_pred_biology_x, image_in_test_x, image_out_test_x = load_activations(cfg, layer)
         
         steering_vec_pred = image_pred_other_x - image_pred_biology_x
         steering_vec = image_out_test_x - image_in_test_x
