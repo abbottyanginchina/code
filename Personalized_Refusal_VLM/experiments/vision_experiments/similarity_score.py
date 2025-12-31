@@ -1,4 +1,5 @@
 import torch
+import mmengine
 import argparse
 
 def load_activations(cfg, layer, output_dir):
