@@ -24,15 +24,7 @@ def main(cfg):
         print(similarity_score_pred_other)
         print(similarity_score_pred_biology)
         
-        
-        
         import pdb; pdb.set_trace()
-        # calculate the similarity score between image_pred_other_x and image_in_test_x
-        similarity_score = torch.cosine_similarity(image_pred_other_x, image_in_test_x, dim=-1)
-        print(similarity_score)
-        # calculate the similarity score between image_pred_biology_x and image_out_test_x
-        similarity_score = torch.cosine_similarity(image_pred_biology_x, image_out_test_x, dim=-1)
-        print(similarity_score)
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Get Activations")
