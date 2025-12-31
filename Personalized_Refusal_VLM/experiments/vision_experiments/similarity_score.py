@@ -50,7 +50,7 @@ def batch_sum_align(pred_shift, true_shift, eps=1e-8, filter_zero=True):
     return align.item(), int(pred_shift.shape[0])  # also return valid count
 
 def main(cfg):
-    for layer in range(20, cfg.end_layer + 1):
+    for layer in range(20, cfg.end_layer - 1):
         (image_pred_other_x, image_pred_biology_x, image_in_test_x, image_out_test_x,
          vision_image_pred_other_x, vision_image_pred_biology_x, vision_image_in_test_x, vision_image_out_test_x) = load_activations(cfg, layer)
 
