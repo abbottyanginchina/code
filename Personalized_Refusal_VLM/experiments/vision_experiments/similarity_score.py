@@ -30,12 +30,19 @@ def load_activations(cfg, layer):
 def main(cfg):
     
     for layer in range(25, cfg.end_layer + 1):
-        image_pred_other_x, image_pred_biology_x, image_in_test_x, image_out_test_x = load_activations(cfg, layer)
+        image_pred_other_x, image_pred_biology_x, image_in_test_x, image_out_test_x, vision_image_pred_other_x, vision_image_pred_biology_x, vision_image_in_test_x, vision_image_out_test_x = load_activations(cfg, layer)
         
+        # calculate with vision
         steering_vec_pred = image_pred_other_x - image_pred_biology_x
         steering_vec = image_out_test_x - image_in_test_x
         similarity_score = torch.cosine_similarity(steering_vec_pred, steering_vec, dim=-1)
         print(f"Layer {layer} similarity score: {similarity_score.mean().item()}")
+
+        # calculate without vision
+        vision_steering_vec_pred = vision_image_pred_other_x - vision_image_pred_biology_x
+        vision_steering_vec = vision_image_out_test_x - vision_image_in_test_x
+        vision_similarity_score = torch.cosine_similarity(vision_steering_vec_pred, vision_steering_vec, dim=-1)
+        print(f"Layer {layer} vision similarity score: {vision_similarity_score.mean().item()}")
         import pdb; pdb.set_trace()
 
 def parse_args():
