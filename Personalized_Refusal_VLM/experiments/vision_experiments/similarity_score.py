@@ -16,7 +16,16 @@ def main(cfg):
     output_dir = os.path.join(cfg.output_dir, f"vision_{cfg.model_name}_{cfg.data.dataset_name}_{cfg.data.subject}")
     for layer in range(cfg.start_layer, cfg.end_layer + 1):
         image_pred_other_x, image_pred_biology_x, image_in_test_x, image_out_test_x = load_activations(cfg, layer, output_dir)
-        print(image_pred_other_x.shape, image_pred_biology_x.shape, image_in_test_x.shape, image_out_test_x.shape)
+        
+        steering_vec_pred_other = image_pred_other_x - image_pred_biology_x
+        steering_vec_pred_biology = image_pred_biology_x - image_pred_other_x
+        similarity_score_pred_other = torch.cosine_similarity(steering_vec_pred_other, image_in_test_x, dim=-1)
+        similarity_score_pred_biology = torch.cosine_similarity(steering_vec_pred_biology, image_out_test_x, dim=-1)
+        print(similarity_score_pred_other)
+        print(similarity_score_pred_biology)
+        
+        
+        
         import pdb; pdb.set_trace()
         # calculate the similarity score between image_pred_other_x and image_in_test_x
         similarity_score = torch.cosine_similarity(image_pred_other_x, image_in_test_x, dim=-1)
