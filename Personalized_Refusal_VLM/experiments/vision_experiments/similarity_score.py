@@ -2,6 +2,7 @@ import torch
 import os
 import mmengine
 import argparse
+import torch.nn.functional as F
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
