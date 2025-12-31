@@ -27,23 +27,61 @@ def load_activations(cfg, layer):
             vision_image_in_test_x, 
             vision_image_out_test_x)
 
-def main(cfg):
-    
-    for layer in range(20, cfg.end_layer + 1):
-        image_pred_other_x, image_pred_biology_x, image_in_test_x, image_out_test_x, vision_image_pred_other_x, vision_image_pred_biology_x, vision_image_in_test_x, vision_image_out_test_x = load_activations(cfg, layer)
-        
-        # calculate with vision
-        steering_vec_pred = image_pred_other_x - image_pred_biology_x
-        steering_vec = image_out_test_x - image_in_test_x
-        similarity_score = torch.cosine_similarity(steering_vec_pred, steering_vec, dim=-1)
-        print(f"Layer {layer} similarity score: {similarity_score.mean().item()}")
+def batch_sum_align(pred_shift, true_shift, eps=1e-8, filter_zero=True):
+    """
+    pred_shift: [N, D] (r'_i)
+    true_shift: [N, D] (r_i)
+    returns scalar cos(sum r'_i, sum r_i)
+    """
+    if filter_zero:
+        pred_norm = pred_shift.norm(dim=-1)
+        true_norm = true_shift.norm(dim=-1)
+        mask = (pred_norm > 1e-6) & (true_norm > 1e-6)
+        if mask.any():
+            pred_shift = pred_shift[mask]
+            true_shift = true_shift[mask]
 
-        # calculate without vision
-        vision_steering_vec_pred = vision_image_pred_other_x - vision_image_pred_biology_x
-        vision_steering_vec = vision_image_out_test_x - vision_image_in_test_x
-        vision_similarity_score = torch.cosine_similarity(vision_steering_vec_pred, vision_steering_vec, dim=-1)
-        print(f"Layer {layer} vision similarity score: {vision_similarity_score.mean().item()}")
-        import pdb; pdb.set_trace()
+    sum_pred = pred_shift.sum(dim=0)  # [D]
+    sum_true = true_shift.sum(dim=0)  # [D]
+
+    # safe cosine
+    align = F.cosine_similarity(sum_pred.unsqueeze(0), sum_true.unsqueeze(0), dim=-1, eps=eps)
+    return align.item(), int(pred_shift.shape[0])  # also return valid count
+
+def main(cfg):
+    for layer in range(20, cfg.end_layer + 1):
+        (image_pred_other_x, image_pred_biology_x, image_in_test_x, image_out_test_x,
+         vision_image_pred_other_x, vision_image_pred_biology_x, vision_image_in_test_x, vision_image_out_test_x) = load_activations(cfg, layer)
+
+        # ===== w/ vision loss (your output_ directory) =====
+        pred_shift = image_pred_other_x - image_pred_biology_x      # r'_i (pred)
+        true_shift = image_out_test_x - image_in_test_x             # r_i  (gt)
+        align_w, n_w = batch_sum_align(pred_shift, true_shift)
+
+        # ===== w/o vision loss (your vision_ directory) =====
+        pred_shift_wo = vision_image_pred_other_x - vision_image_pred_biology_x
+        true_shift_wo = vision_image_out_test_x - vision_image_in_test_x
+        align_wo, n_wo = batch_sum_align(pred_shift_wo, true_shift_wo)
+
+        print(f"Layer {layer}: Align(w/ vision-loss)={align_w:.4f} (n={n_w}), Align(w/o vision-loss)={align_wo:.4f} (n={n_wo})")
+
+# def main(cfg):
+    
+#     for layer in range(20, cfg.end_layer + 1):
+#         image_pred_other_x, image_pred_biology_x, image_in_test_x, image_out_test_x, vision_image_pred_other_x, vision_image_pred_biology_x, vision_image_in_test_x, vision_image_out_test_x = load_activations(cfg, layer)
+        
+#         # calculate with vision
+#         steering_vec_pred = image_pred_other_x - image_pred_biology_x
+#         steering_vec = image_out_test_x - image_in_test_x
+#         similarity_score = torch.cosine_similarity(steering_vec_pred, steering_vec, dim=-1)
+#         print(f"Layer {layer} similarity score: {similarity_score.mean().item()}")
+
+#         # calculate without vision
+#         vision_steering_vec_pred = vision_image_pred_other_x - vision_image_pred_biology_x
+#         vision_steering_vec = vision_image_out_test_x - vision_image_in_test_x
+#         vision_similarity_score = torch.cosine_similarity(vision_steering_vec_pred, vision_steering_vec, dim=-1)
+#         print(f"Layer {layer} vision similarity score: {vision_similarity_score.mean().item()}")
+#         import pdb; pdb.set_trace()
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Get Activations")
