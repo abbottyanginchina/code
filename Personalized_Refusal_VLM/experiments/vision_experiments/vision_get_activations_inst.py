@@ -182,10 +182,10 @@ def eval_model(cfg):
             get_activations(model, [""] * len(in_train_images), in_train_images, processor, system_prompt=False)
         )
         image_in_test_activations = process(
-            get_activations(model, blank_text * len(in_test_images), in_test_images, processor, system_prompt=False)
+            get_activations(model, out_test_text, in_test_images, processor, system_prompt=False)
         )
         image_out_test_activations = process(
-            get_activations(model, blank_text * len(out_test_images), out_test_images, processor, system_prompt=False)
+            get_activations(model, in_test_text, out_test_images, processor, system_prompt=False)
         )
 
     save_path = os.path.join(cfg.output_dir, f"vision_{cfg.model_name}_{cfg.data.dataset_name}_{cfg.data.subject}/activations/")
