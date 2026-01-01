@@ -175,11 +175,11 @@ def eval_model(cfg):
         blank_text = ["You are a helpful assistant. Please answer the question based on the image."]
         # 1. 加 system prompt 的 others（对应 h_c(Image_{others} + system_prompt)）
         with_sys_image_others_activations = process(
-            get_activations_inst(cfg, model, blank_text * len(out_train_images), out_train_images, processor, system_prompt=True)
+            get_activations_inst(cfg, model, [""] * len(out_train_images), out_train_images, processor, system_prompt=True)
         )
         # 2. 不加 system prompt 的 biology（对应 h_c(Image_{biology} + "None")）
         without_sys_image_biology_activations = process(
-            get_activations(model, blank_text * len(in_train_images), in_train_images, processor, system_prompt=False)
+            get_activations(model, [""] * len(in_train_images), in_train_images, processor, system_prompt=False)
         )
         image_in_test_activations = process(
             get_activations(model, blank_text * len(in_test_images), in_test_images, processor, system_prompt=False)
