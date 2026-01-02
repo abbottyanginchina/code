@@ -12,6 +12,8 @@ def load_activations(cfg, layer):
     image_pred_biology_x = torch.load(f"{output_dir}/activations/image_pred_biology_layer{layer}_{cfg.model_name}.pt", weights_only=False).to(device)
     image_in_test_x = torch.load(f"{output_dir}/activations/image_in_test_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device)
     image_out_test_x = torch.load(f"{output_dir}/activations/ground_truth_image_out_test_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device)
+    out_test_activations = torch.load(f"{output_dir}/activations/out_test_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device)
+    in_test_activations = torch.load(f"{output_dir}/activations/in_test_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device)
 
     vision_output_dir = os.path.join(cfg.output_dir, f"vision_{cfg.model_name}_{cfg.data.dataset_name}_{cfg.data.subject}")
     vision_image_pred_other_x = torch.load(f"{vision_output_dir}/activations/image_pred_other_layer{layer}_{cfg.model_name}.pt", weights_only=False).to(device)
@@ -19,8 +21,12 @@ def load_activations(cfg, layer):
     vision_image_in_test_x = torch.load(f"{vision_output_dir}/activations/image_in_test_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device)
     vision_image_out_test_x = torch.load(f"{vision_output_dir}/activations/ground_truth_image_out_test_activations_{cfg.model_name}.pt", weights_only=False)[:, layer, :].to(device)
     
-    return (image_pred_other_x, 
+    return (out_test_activations,
+            in_test_activations,
+            image_pred_other_x, 
             image_pred_biology_x, 
+            in_test_activations,
+            out_test_activations,
             image_in_test_x, 
             image_out_test_x, 
             vision_image_pred_other_x, 
