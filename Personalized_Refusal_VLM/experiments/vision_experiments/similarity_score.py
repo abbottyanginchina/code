@@ -66,7 +66,7 @@ def main(cfg):
         # ===== w/o vision loss (your vision_ directory) =====
         pred_shift_wo = vision_image_pred_other_x - vision_image_pred_biology_x
         # true_shift_wo = vision_image_out_test_x - vision_image_in_test_x
-        align_wo, n_wo = batch_sum_align(pred_shift_wo, true_shift_wo)
+        align_wo, n_wo = batch_sum_align(pred_shift_wo, true_shift)
 
         print(f"Layer {layer}: Align(w/ vision-loss)={align_w:.4f} (n={n_w}), Align(w/o vision-loss)={align_wo:.4f} (n={n_wo})")
 
