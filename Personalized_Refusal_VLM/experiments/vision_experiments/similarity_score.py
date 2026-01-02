@@ -25,8 +25,6 @@ def load_activations(cfg, layer):
             in_test_activations,
             image_pred_other_x, 
             image_pred_biology_x, 
-            in_test_activations,
-            out_test_activations,
             image_in_test_x, 
             image_out_test_x, 
             vision_image_pred_other_x, 
@@ -57,7 +55,7 @@ def batch_sum_align(pred_shift, true_shift, eps=1e-8, filter_zero=True):
 
 def main(cfg):
     for layer in range(15, cfg.end_layer - 1):
-        (image_pred_other_x, image_pred_biology_x, image_in_test_x, image_out_test_x,
+        (out_test_activations, in_test_activations, image_pred_other_x, image_pred_biology_x, image_in_test_x, image_out_test_x,
          vision_image_pred_other_x, vision_image_pred_biology_x, vision_image_in_test_x, vision_image_out_test_x) = load_activations(cfg, layer)
 
         # ===== w/ vision loss (your output_ directory) =====
