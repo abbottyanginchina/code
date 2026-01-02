@@ -184,7 +184,10 @@ def eval_model(cfg):
             get_activations(model, [""] * len(in_test_images), in_test_images, processor, system_prompt=False)
         )
         image_out_test_activations = process(
-            get_activations(, model, [""] * len(out_test_images), out_test_images, processor, system_prompt=False)
+            get_activations(model, [""] * len(out_test_images), out_test_images, processor, system_prompt=False)
+        )
+        ground_truth_image_out_test_activations = process(
+            get_activations_inst(cfg, model, [""] * len(out_test_images), out_test_images, processor, system_prompt=True)
         )
 
     save_path = os.path.join(cfg.output_dir, f"output_{cfg.model_name}_{cfg.data.dataset_name}_{cfg.data.subject}/activations/")
