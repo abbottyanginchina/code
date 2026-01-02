@@ -60,12 +60,12 @@ def main(cfg):
 
         # ===== w/ vision loss (your output_ directory) =====
         pred_shift = image_pred_other_x - image_pred_biology_x      # r'_i (pred)
-        true_shift = image_out_test_x - image_in_test_x             # r_i  (gt)
+        true_shift = out_test_activations - in_test_activations             # r_i  (gt)
         align_w, n_w = batch_sum_align(pred_shift, true_shift)
 
         # ===== w/o vision loss (your vision_ directory) =====
         pred_shift_wo = vision_image_pred_other_x - vision_image_pred_biology_x
-        true_shift_wo = vision_image_out_test_x - vision_image_in_test_x
+        # true_shift_wo = vision_image_out_test_x - vision_image_in_test_x
         align_wo, n_wo = batch_sum_align(pred_shift_wo, true_shift_wo)
 
         print(f"Layer {layer}: Align(w/ vision-loss)={align_w:.4f} (n={n_w}), Align(w/o vision-loss)={align_wo:.4f} (n={n_wo})")
