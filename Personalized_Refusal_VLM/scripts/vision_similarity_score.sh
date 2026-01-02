@@ -8,6 +8,8 @@ process_subject() {
     dataset=$1
     subject=$2
     python -m experiments.vision_experiments.similarity_score --start_layer 0 --end_layer $num_layers --subject $subject --dataset $dataset --model_name $model_name
+    echo "🎉 Dataset $dataset, subject $subject completed!"
+
 }
 
 dataset="ScienceQA"
