@@ -204,7 +204,7 @@ def eval_model(cfg):
     torch.save(without_sys_image_biology_activations, f"{save_path}/without_sys_image_biology_activations_{cfg.model_name}.pt")
     torch.save(image_in_test_activations, f"{save_path}/image_in_test_activations_{cfg.model_name}.pt")
     torch.save(image_out_test_activations, f"{save_path}/image_out_test_activations_{cfg.model_name}.pt")
-
+    torch.save(ground_truth_image_out_test_activations, f"{save_path}/ground_truth_image_out_test_activations_{cfg.model_name}.pt")
     print("Activations saved.")
 def parse_args():
     parser = argparse.ArgumentParser(description="Get Activations")
