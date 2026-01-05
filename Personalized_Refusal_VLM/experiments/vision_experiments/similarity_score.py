@@ -54,6 +54,7 @@ def batch_sum_align(pred_shift, true_shift, eps=1e-8, filter_zero=True):
     return align.item(), int(pred_shift.shape[0])  # also return valid count
 
 def main(cfg):
+    with_alignment_scores, without_alignment_scores = [], []
     for layer in range(15, cfg.end_layer - 1):
         (out_test_activations, in_test_activations, image_pred_other_x, image_pred_biology_x, image_in_test_x, image_out_test_x,
          vision_image_pred_other_x, vision_image_pred_biology_x, vision_image_in_test_x, vision_image_out_test_x) = load_activations(cfg, layer)
@@ -68,25 +69,11 @@ def main(cfg):
         # true_shift_wo = vision_image_out_test_x - vision_image_in_test_x
         align_wo, n_wo = batch_sum_align(pred_shift_wo, true_shift)
 
-        print(f"Layer {layer}: Align(w/ vision-loss)={align_w:.4f} (n={n_w}), Align(w/o vision-loss)={align_wo:.4f} (n={n_wo})")
-
-# def main(cfg):
+        # print(f"Layer {layer}: Align(w/ vision-loss)={align_w:.4f} (n={n_w}), Align(w/o vision-loss)={align_wo:.4f} (n={n_wo})")
+        without_alignment_scores.append(align_wo)
+        with_alignment_scores.append(align_w)
     
-#     for layer in range(20, cfg.end_layer + 1):
-#         image_pred_other_x, image_pred_biology_x, image_in_test_x, image_out_test_x, vision_image_pred_other_x, vision_image_pred_biology_x, vision_image_in_test_x, vision_image_out_test_x = load_activations(cfg, layer)
-        
-#         # calculate with vision
-#         steering_vec_pred = image_pred_other_x - image_pred_biology_x
-#         steering_vec = image_out_test_x - image_in_test_x
-#         similarity_score = torch.cosine_similarity(steering_vec_pred, steering_vec, dim=-1)
-#         print(f"Layer {layer} similarity score: {similarity_score.mean().item()}")
-
-#         # calculate without vision
-#         vision_steering_vec_pred = vision_image_pred_other_x - vision_image_pred_biology_x
-#         vision_steering_vec = vision_image_out_test_x - vision_image_in_test_x
-#         vision_similarity_score = torch.cosine_similarity(vision_steering_vec_pred, vision_steering_vec, dim=-1)
-#         print(f"Layer {layer} vision similarity score: {vision_similarity_score.mean().item()}")
-#         import pdb; pdb.set_trace()
+    print(f"With alignment scores: {with_alignment_scores.mean()}", f"Without alignment scores: {without_alignment_scores.mean()}")
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Get Activations")
