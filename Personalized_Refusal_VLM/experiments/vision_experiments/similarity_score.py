@@ -73,7 +73,7 @@ def main(cfg):
         without_alignment_scores.append(align_wo)
         with_alignment_scores.append(align_w)
     
-    print(f"With alignment scores: {with_alignment_scores.mean()}", f"Without alignment scores: {without_alignment_scores.mean()}")
+    print(f"With alignment scores: {np.mean(with_alignment_scores)}", f"Without alignment scores: {without_alignment_scores.mean()}")
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Get Activations")
