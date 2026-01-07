@@ -27,11 +27,11 @@ if __name__ == '__main__':
     #/home/ubuntu/jiaxi/results/output_llava-1.5-7b-hf_ScienceQA_biology/results/biology_answer_llava-1.5-7b-hf.jsonl
     method = "our_method"
     base_dir = "/home/ubuntu/jiaxi/results"
-    model_name = "llava-1.5-7b-hf"
+    model_name = "llava-1.5-13b-hf"
     files = [f"results/biology_answer_{model_name}.jsonl", f"results/nonbiology_answer_{model_name}.jsonl"]
     tasks = {
         "ScienceQA": ["biology", "physics", "geography"],
-        "MMMU": ["Math", "Art_Theory", "Geography"]
+        # "MMMU": ["Math", "Art_Theory", "Geography"]
     }
     output_log_file = f"/home/ubuntu/jiaxi/LLM_as_judge_results/{model_name}_{method}_results.txt"
     with open(output_log_file, 'a', encoding='utf-8') as log_f:
