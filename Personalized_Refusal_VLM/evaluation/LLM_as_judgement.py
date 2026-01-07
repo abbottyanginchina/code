@@ -31,7 +31,7 @@ if __name__ == '__main__':
     files = [f"results/biology_answer_{model_name}.jsonl", f"results/nonbiology_answer_{model_name}.jsonl"]
     tasks = {
         # "ScienceQA": ["biology", "physics", "geography"],
-        "ScienceQA": ["biology", "physics", "geography"],
+        "ScienceQA": ["biology"],
         # "MMMU": ["Math", "Art_Theory", "Geography"]
     }
     output_log_file = f"/home/ubuntu/jiaxi/LLM_as_judge_results/{model_name}_{method}_results.txt"
