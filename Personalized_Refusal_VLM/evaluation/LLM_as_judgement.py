@@ -30,6 +30,7 @@ if __name__ == '__main__':
     model_name = "llava-1.5-13b-hf"
     files = [f"results/biology_answer_{model_name}.jsonl", f"results/nonbiology_answer_{model_name}.jsonl"]
     tasks = {
+        # "ScienceQA": ["biology", "physics", "geography"],
         "ScienceQA": ["biology", "physics", "geography"],
         # "MMMU": ["Math", "Art_Theory", "Geography"]
     }
