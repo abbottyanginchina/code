@@ -44,9 +44,9 @@ process_subject() {
     # done
     # wait
 
-    echo "✅ Step 3: Inference activations with steering vectors applied..."
-    python -m experiments.vision_experiments.vision_inference_activations --start_layer 0 --end_layer $num_layers --subject $subject --dataset $dataset --model_name $model_name
-    echo "✅ All layer groups finished!"
+    # echo "✅ Step 3: Inference activations with steering vectors applied..."
+    # python -m experiments.vision_experiments.vision_inference_activations --start_layer 0 --end_layer $num_layers --subject $subject --dataset $dataset --model_name $model_name
+    # echo "✅ All layer groups finished!"
 
     # echo "🎯 Step 4: Generating responses with steering vectors applied..."
     # python -m experiments.vision_experiments.vision_generation --model_name $model_name --num_test $num_test --num_train $num_train \
