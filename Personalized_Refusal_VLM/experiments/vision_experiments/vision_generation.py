@@ -278,6 +278,7 @@ def eval_model(args, output_dir):
         # remove_one_layer(model, layer_idx = layer)
     ans_file.close()
 
+    
     answers_file = os.path.join(output_dir, f"results/image_biology_answer_{cfg.model_name}.jsonl")
     os.makedirs(os.path.dirname(answers_file), exist_ok=True)
     ans_file = open(answers_file, "w")
