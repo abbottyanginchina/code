@@ -2,6 +2,7 @@ from openai import OpenAI
 import json
 import os
 from tqdm import tqdm
+import numpy as np
 
 client = OpenAI(api_key="sk-ideottqyxzilborugqgaajfprhyegrcibfyvykxjtyvpyzjm", 
                 base_url="https://api.siliconflow.cn/v1")
@@ -46,20 +47,14 @@ if __name__ == '__main__':
                     model_task_info = f"Model: {model_name} | Dataset: {dataset} | Category: {cat} | File: {os.path.basename(file)}"
                     log_f.write(f"\n{model_task_info}\n")
 
-                    correct_count = 0
-                    error_count = 0
+                    scores = [] 
                     for item in tqdm(data, total=len(data)):
                         user_response = item['model_answer']
-                        judgement = chat_LLM(user_response)
+                        score = chat_LLM(user_response)
+                        scores.append(score)
 
-                        # 如果可以转成int, 否则设为-1
-                        try:
-                            correct_count += int(judgement)
-                        except ValueError:
-                            error_count += 1  # 无效值
+                        
                     
-                    valid_total = len(data) - error_count
-                    accuracy = correct_count / valid_total if valid_total > 0 else 0
-                    result_str = f"Final Accuracy: {accuracy:.4f} (Correct: {correct_count}, Invalid: {error_count}, Total: {len(data)})"
+                    result_str = f"Mean Score: {np.mean(scores)}, Std Score: {np.std(scores)}"
                     log_f.write(result_str + "\n")
                     log_f.flush()
