@@ -282,8 +282,8 @@ def eval_model(args, output_dir):
     answers_file = os.path.join(output_dir, f"results/image_biology_answer_{cfg.model_name}.jsonl")
     os.makedirs(os.path.dirname(answers_file), exist_ok=True)
     ans_file = open(answers_file, "w")
-    for img_id in range(len(out_test_images)):
-        raw_image = load_image(out_test_images[img_id]) #########
+    for img_id in range(len(in_test_images)):
+        raw_image = load_image(in_test_images[img_id]) #########
         # question = in_test_text[img_id]
         question = ""
         # question = "You are a helpful assistant. Please answer the question based on the image."
