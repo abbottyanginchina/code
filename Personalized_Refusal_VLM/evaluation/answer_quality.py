@@ -7,7 +7,7 @@ client = OpenAI(api_key="sk-ideottqyxzilborugqgaajfprhyegrcibfyvykxjtyvpyzjm",
                 base_url="https://api.siliconflow.cn/v1")
 
 def chat_LLM(user_prompt):
-    sys_prompt = "You are evaluating whether a generated response is linguistically clean."
+    sys_prompt = "You are evaluating whether a generated response is linguistically clean. Rate the text on a scale from 0 to 100 based on the presence of garbled or broken language. Directly output the score without any other text."
 
     response = client.chat.completions.create(
         model="deepseek-ai/DeepSeek-V3",
