@@ -178,6 +178,17 @@ def eval_model(args, output_dir):
     refusal_all = torch.stack(steering_list1, dim=1)
     biology_all = torch.stack(steering_list2, dim=1)
 
+    for layer in range(0, args.max_layer): # Must start from 1
+        path1 = f"{base_path}/image_pred_other_layer{layer}_{cfg.model_name}.pt"
+        path2 = f"{base_path}/image_pred_biology_layer{layer}_{cfg.model_name}.pt"
+        vec1 = torch.load(path1, weights_only=False)
+        vec2 = torch.load(path2, weights_only=False)
+        steering_list1.append(vec1)
+        steering_list2.append(vec2)
+    vision_refusal_all = torch.stack(steering_list1, dim=1)
+    vision_biology_all = torch.stack(steering_list2, dim=1)
+
+
     # layer = 25
     
     # 这里最大层数是前面减1，因为第零层不取
