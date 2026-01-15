@@ -400,9 +400,9 @@ def eval_model(args, output_dir):
     answers_file = os.path.join(output_dir, f"results/image_biology_answer_{cfg.model_name}.jsonl")
     os.makedirs(os.path.dirname(answers_file), exist_ok=True)
     ans_file = open(answers_file, "w")
-    for img_id in range(len(in_test_images)):
-        raw_image = load_image(in_test_images[img_id]) #########
-        question = out_test_text[img_id]
+    for img_id in range(len(out_test_images)):
+        raw_image = load_image(out_test_images[img_id]) #########
+        question = in_test_text[img_id]
         add_multiple_layers(model, torch.stack([biology_all[img_id]],dim=1).cuda(), alpha = [cfg.alpha_text], layer_indices = target_layers, cfg = cfg)
         # add_multiple_layers(model, torch.stack([refusal_vector],dim=1).cuda(), alpha = [cfg.alpha_text], layer_indices = target_layers, cfg=cfg)
         # 只在一层加
