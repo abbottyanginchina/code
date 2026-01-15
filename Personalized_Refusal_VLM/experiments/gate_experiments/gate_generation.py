@@ -169,8 +169,8 @@ def eval_model(args, output_dir):
     # max_layer = llava_max_layer if 'llava-1.5' in model_path.lower() else qwen_max_layer if 'qwen' in model_path.lower() else blip_max_layer
 
     for layer in range(0, args.max_layer): # Must start from 1
-        path1 = f"{base_path}/image_pred_other_layer{layer}_{cfg.model_name}.pt"
-        path2 = f"{base_path}/image_pred_biology_layer{layer}_{cfg.model_name}.pt"
+        path1 = f"{base_path}/steering_vec_nonbiology_refusal_layer{layer}_{cfg.model_name}.pt"
+        path2 = f"{base_path}/steering_vec_biology_layer{layer}_{cfg.model_name}.pt"
         vec1 = torch.load(path1, weights_only=False)
         vec2 = torch.load(path2, weights_only=False)
         steering_list1.append(vec1)
