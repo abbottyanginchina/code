@@ -159,8 +159,7 @@ def eval_model(args, output_dir):
     out_test_images = original_data["out_test_images"]
 
     base_path = f"{output_dir}/activations"
-    steering_list1 = []
-    steering_list2 = []
+    
     # llava[1, 33]  qwen[1, 29]
 
     qwen_max_layer = 29
@@ -168,6 +167,8 @@ def eval_model(args, output_dir):
     blip_max_layer = 33
     # max_layer = llava_max_layer if 'llava-1.5' in model_path.lower() else qwen_max_layer if 'qwen' in model_path.lower() else blip_max_layer
 
+    steering_list1 = []
+    steering_list2 = []
     for layer in range(0, args.max_layer): # Must start from 1
         path1 = f"{base_path}/steering_vec_nonbiology_refusal_layer{layer}_{cfg.model_name}.pt"
         path2 = f"{base_path}/steering_vec_biology_layer{layer}_{cfg.model_name}.pt"
@@ -177,6 +178,7 @@ def eval_model(args, output_dir):
         steering_list2.append(vec2)
     refusal_all = torch.stack(steering_list1, dim=1)
     biology_all = torch.stack(steering_list2, dim=1)
+
 
     for layer in range(0, args.max_layer): # Must start from 1
         path1 = f"{base_path}/image_pred_other_layer{layer}_{cfg.model_name}.pt"
