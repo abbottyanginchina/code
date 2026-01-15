@@ -185,8 +185,8 @@ def eval_model(args, output_dir):
         vec2 = torch.load(path2, weights_only=False)
         steering_list1.append(vec1)
         steering_list2.append(vec2)
-    refusal_all = torch.stack(steering_list1, dim=1)
-    biology_all = torch.stack(steering_list2, dim=1)
+    vision_refusal_all = torch.stack(steering_list1, dim=1)
+    vision_biology_all = torch.stack(steering_list2, dim=1)
 
     # layer = 25
     
