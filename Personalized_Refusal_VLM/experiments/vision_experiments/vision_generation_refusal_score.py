@@ -213,39 +213,6 @@ def eval_model(args, output_dir):
     if not os.path.exists(save_dir):
         os.makedirs(save_dir)
 
-    # 生成拒绝测试集
-    # answers_file = f"{output_dir}/results/nonbiology_answer_{cfg.model_name}.jsonl"
-    # os.makedirs(os.path.dirname(answers_file), exist_ok=True)
-    # ans_file = open(answers_file, "w")
-
-    out_refusal_scores = []
-    for img_id in tqdm(range(len(out_test_images)), desc="Generating refusal scores", total=len(out_test_images)):
-        raw_image = load_image(out_test_images[img_id])
-        question = out_test_text[img_id]
-        add_multiple_layers(model, torch.stack([refusal_all[img_id]],dim=1).cuda(), alpha = [cfg.alpha_text], layer_indices = target_layers, cfg = cfg)
-        # add_multiple_layers(model, torch.stack([refusal_vector],dim=1).cuda(), alpha = [cfg.alpha_text], layer_indices = target_layers, cfg=cfg)
-        score = get_generation_refusal_scores(cfg, model, processor, processor.tokenizer, question, raw_image)
-        out_refusal_scores.append(score)
-        remove_multiple_layers(model, layer_indices = target_layers, cfg = cfg)
-
-    # Save out_refusal_scores as a pickle file (List)
-    with open(f"{save_dir}/out_refusal_scores_{cfg.model_name}.pkl", "wb") as f:
-        pickle.dump(out_refusal_scores, f)
-
-    # In-domain测试集
-    in_refusal_scores = []
-    for img_id in tqdm(range(len(in_test_images)), desc="Generating refusal scores", total=len(in_test_images)):
-        raw_image = load_image(in_test_images[img_id])
-        question = in_test_text[img_id]
-        add_multiple_layers(model, torch.stack([biology_all[img_id]],dim=1).cuda(), alpha = [cfg.alpha_text], layer_indices = target_layers, cfg = cfg)
-        score = get_generation_refusal_scores(cfg, model, processor, processor.tokenizer, question, raw_image)
-        in_refusal_scores.append(score)
-        remove_multiple_layers(model, layer_indices = target_layers, cfg = cfg)
-    
-    # Save in_refusal_scores as a pickle file (List)
-    with open(f"{save_dir}/in_refusal_scores_{cfg.model_name}.pkl", "wb") as f:
-        pickle.dump(in_refusal_scores, f)
-
     # Vision-based testing
     vision_out_refusal_scores = []
     for img_id in tqdm(range(len(out_test_images)), desc="Generating refusal scores", total=len(out_test_images)):
