@@ -5,7 +5,7 @@ from utils.audio_generation import generation_audio
 
 if __name__ == "__main__":
     # text = "Hello, I am Xiaomi, nice to meet you."
-    data_path = "../../data/or_bench"
+    data_path = "../../data/or-bench"
     dataset = load_dataset(data_path, 'or-bench-hard-1k')['train']
 
     if not os.path.exists(os.path.join(data_path, 'audio')):
