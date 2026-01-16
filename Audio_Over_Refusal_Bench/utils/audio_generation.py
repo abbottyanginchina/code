@@ -115,7 +115,7 @@ def generation_audio(text, save_path):
         print("### ws error:", error)
 
     def on_close(ws, *args):
-        print("### ws closed ###")
+        # print("### ws closed ###")
 
     def on_open(ws):
         def run():
