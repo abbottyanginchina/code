@@ -20,11 +20,11 @@ for message in conversation:
         for ele in message["content"]:
             if ele["type"] == "audio":
                 audio_path = ele["audio_url"]
-                audios.append(
-                    librosa.load(
-                        audio_path, 
-                        sr=processor.feature_extractor.sampling_rate)[0]
+                audio, _ = librosa.load(
+                    audio_path,
+                    sr=processor.feature_extractor.sampling_rate
                 )
+                audios.append(audio)
 
 inputs = processor(text=text, audios=audios, return_tensors="pt", padding=True)
 inputs.input_ids = inputs.input_ids.to("cuda")
