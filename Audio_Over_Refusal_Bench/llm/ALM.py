@@ -9,7 +9,7 @@ model = Qwen2AudioForConditionalGeneration.from_pretrained("/gpu02home/jmy5701/g
 conversation = [
     {'role': 'system', 'content': 'You are a helpful assistant.'}, 
     {"role": "user", "content": [
-        {"type": "audio", "audio_url": "../data/or-bench/audio/0.mp3"},
+        {"type": "audio", "audio_url": "../../data/or-bench/audio/0.mp3"},
         {"type": "text", "text": "What's that sound?"},
     ]},
 ]
@@ -20,7 +20,7 @@ for message in conversation:
         for ele in message["content"]:
             if ele["type"] == "audio":
                 audio_path = ele["audio_url"]
-                audios.append(
+                audio, _ = audios.append(
                     librosa.load(
                         audio_path, 
                         sr=processor.feature_extractor.sampling_rate)[0]
