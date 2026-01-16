@@ -15,7 +15,7 @@ process_subject() {
     subject=$2
     
     echo "🎉 Dataset $dataset, subject $subject, model $model_name started!"
-    python -m experiments.vision_experiments.vision_generation_refusal_score --model_name $model_name --num_test $num_test --num_train $num_train \
+    python -m experiments.vision_experiments.vision_generate_refusal_score --model_name $model_name --num_test $num_test --num_train $num_train \
         --inter_start_layer $inter_start_layer --inter_end_layer $inter_end_layer --alpha_text $alpha_text --dataset $dataset --subject $subject
 
 }
