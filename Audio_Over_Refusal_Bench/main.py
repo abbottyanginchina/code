@@ -19,6 +19,6 @@ if __name__ == "__main__":
         # get highlighted text
         # highlighted_text = get_highlighted_text(prompt)
         print("prompt: ", prompt)
-        print("highlighted_text: ", highlighted_text)
+        # print("highlighted_text: ", highlighted_text)
         # Generate audio
         generation_audio(prompt, save_path)
