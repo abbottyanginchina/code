@@ -255,6 +255,11 @@ def eval_model(args, output_dir):
         score = get_generation_refusal_scores(cfg, model, processor, processor.tokenizer, question, raw_image)
         vision_out_refusal_scores.append(score)
         remove_multiple_layers(model, layer_indices = target_layers, cfg = cfg)
+
+    # Average vision_out_refusal_scores
+    print("Vision-based out-of-constraint refusal score: ", np.mean(vision_out_refusal_scores))
+
+
     # Save vision_out_refusal_scores as a pickle file (List)
     with open(f"{save_dir}/vision_out_refusal_scores_{cfg.model_name}.pkl", "wb") as f:
         pickle.dump(vision_out_refusal_scores, f)
