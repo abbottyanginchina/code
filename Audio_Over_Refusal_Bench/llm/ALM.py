@@ -1,3 +1,5 @@
+from io import BytesIO
+from urllib.request import urlopen
 import librosa
 from transformers import Qwen2AudioForConditionalGeneration, AutoProcessor
 
@@ -19,7 +21,7 @@ for message in conversation:
             if ele["type"] == "audio":
                 audios.append(
                     librosa.load(
-                        ele['audio_url'], 
+                        BytesIO(urlopen(ele['audio_url']).read()), 
                         sr=processor.feature_extractor.sampling_rate)[0]
                 )
 
