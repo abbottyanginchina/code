@@ -245,7 +245,33 @@ def eval_model(args, output_dir):
     # Save in_refusal_scores as a pickle file (List)
     with open(f"{save_dir}/in_refusal_scores_{cfg.model_name}.pkl", "wb") as f:
         pickle.dump(in_refusal_scores, f)
+
+    # Vision-based testing
+    vision_out_refusal_scores = []
+    for img_id in tqdm(range(len(out_test_images)), desc="Generating refusal scores", total=len(out_test_images)):
+        raw_image = load_image(out_test_images[img_id])
+        question = ""
+        add_multiple_layers(model, torch.stack([vision_refusal_all[img_id]],dim=1).cuda(), alpha = [cfg.alpha_text], layer_indices = target_layers, cfg = cfg)
+        score = get_generation_refusal_scores(cfg, model, processor, processor.tokenizer, question, raw_image)
+        vision_out_refusal_scores.append(score)
+        remove_multiple_layers(model, layer_indices = target_layers, cfg = cfg)
+
+    # Save vision_out_refusal_scores as a pickle file (List)
+    with open(f"{save_dir}/vision_out_refusal_scores_{cfg.model_name}.pkl", "wb") as f:
+        pickle.dump(vision_out_refusal_scores, f)
         
+    vision_in_refusal_scores = []
+    for img_id in tqdm(range(len(in_test_images)), desc="Generating refusal scores", total=len(in_test_images)):
+        raw_image = load_image(in_test_images[img_id])
+        question = in_test_text[img_id]
+        add_multiple_layers(model, torch.stack([vision_biology_all[img_id]],dim=1).cuda(), alpha = [cfg.alpha_text], layer_indices = target_layers, cfg = cfg)
+        score = get_generation_refusal_scores(cfg, model, processor, processor.tokenizer, question, raw_image)
+        vision_in_refusal_scores.append(score)
+        remove_multiple_layers(model, layer_indices = target_layers, cfg = cfg)
+    
+    # Save vision_in_refusal_scores as a pickle file (List)
+    with open(f"{save_dir}/vision_in_refusal_scores_{cfg.model_name}.pkl", "wb") as f:
+        pickle.dump(vision_in_refusal_scores, f)
 
 if __name__ == "__main__":
     config_path = 'configs/cfgs.yaml'
