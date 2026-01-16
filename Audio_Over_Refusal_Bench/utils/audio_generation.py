@@ -116,6 +116,7 @@ def generation_audio(text, save_path):
 
     def on_close(ws, *args):
         # print("### ws closed ###")
+        pass
 
     def on_open(ws):
         def run():
