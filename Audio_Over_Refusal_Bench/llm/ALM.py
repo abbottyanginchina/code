@@ -9,7 +9,7 @@ model = Qwen2AudioForConditionalGeneration.from_pretrained("/gpu02home/jmy5701/g
 conversation = [
     {'role': 'system', 'content': 'You are a helpful assistant.'}, 
     {"role": "user", "content": [
-        {"type": "audio", "audio_url": "/gpu02home/jmy5701/gpu//data/or-bench/audio/0.mp3"},
+        {"type": "audio", "audio_url": "/gpu02home/jmy5701/gpu/data/or-bench/audio/0.mp3"},
         {"type": "text", "text": "What's that sound?"},
     ]},
 ]
