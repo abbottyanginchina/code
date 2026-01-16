@@ -19,9 +19,10 @@ for message in conversation:
     if isinstance(message["content"], list):
         for ele in message["content"]:
             if ele["type"] == "audio":
+                audio_path = ele["audio_url"]
                 audios.append(
                     librosa.load(
-                        BytesIO(urlopen(ele['audio_url']).read()), 
+                        audio_path, 
                         sr=processor.feature_extractor.sampling_rate)[0]
                 )
 
