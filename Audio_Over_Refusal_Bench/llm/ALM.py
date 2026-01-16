@@ -12,15 +12,6 @@ conversation = [
         {"type": "audio", "audio_url": "https://qianwen-res.oss-cn-beijing.aliyuncs.com/Qwen2-Audio/audio/glass-breaking-151256.mp3"},
         {"type": "text", "text": "What's that sound?"},
     ]},
-    {"role": "assistant", "content": "It is the sound of glass shattering."},
-    {"role": "user", "content": [
-        {"type": "text", "text": "What can you do when you hear that?"},
-    ]},
-    {"role": "assistant", "content": "Stay alert and cautious, and check if anyone is hurt or if there is any damage to property."},
-    {"role": "user", "content": [
-        {"type": "audio", "audio_url": "https://qianwen-res.oss-cn-beijing.aliyuncs.com/Qwen2-Audio/audio/1272-128104-0000.flac"},
-        {"type": "text", "text": "What does the person say?"},
-    ]},
 ]
 text = processor.apply_chat_template(conversation, add_generation_prompt=True, tokenize=False)
 audios = []
