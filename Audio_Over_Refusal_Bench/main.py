@@ -20,4 +20,4 @@ if __name__ == "__main__":
         print("prompt: ", prompt)
         print("highlighted_text: ", highlighted_text)
         # Generate audio
-        generation_audio(highlighted_text, save_path)
+        generation_audio(prompt, save_path)
