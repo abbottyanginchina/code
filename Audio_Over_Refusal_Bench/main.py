@@ -12,7 +12,7 @@ if __name__ == "__main__":
     if not os.path.exists(os.path.join(data_path, 'audio')):
         os.makedirs(os.path.join(data_path, 'audio'))
 
-    for idx in tqdm(range(10), desc="Generating audio", total=len(dataset)):
+    for idx in tqdm(range(10), desc="Generating audio", total=10):
         prompt = dataset[idx]['prompt']
 
         save_path = os.path.join(data_path, 'audio', f'{idx}.mp3')
