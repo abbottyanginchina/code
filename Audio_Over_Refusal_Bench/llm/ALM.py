@@ -20,7 +20,7 @@ for message in conversation:
         for ele in message["content"]:
             if ele["type"] == "audio":
                 audio_path = ele["audio_url"]
-                audio, _ = audios.append(
+                audios.append(
                     librosa.load(
                         audio_path, 
                         sr=processor.feature_extractor.sampling_rate)[0]
