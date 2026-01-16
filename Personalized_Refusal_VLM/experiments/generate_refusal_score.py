@@ -262,7 +262,8 @@ def eval_model(args, output_dir):
     vision_in_refusal_scores = []
     for img_id in tqdm(range(len(in_test_images)), desc="Generating refusal scores", total=len(in_test_images)):
         raw_image = load_image(in_test_images[img_id])
-        question = in_test_text[img_id]
+        # question = in_test_text[img_id]
+        question = ""
         add_multiple_layers(model, torch.stack([vision_biology_all[img_id]],dim=1).cuda(), alpha = [cfg.alpha_text], layer_indices = target_layers, cfg = cfg)
         score = get_generation_refusal_scores(cfg, model, processor, processor.tokenizer, question, raw_image)
         vision_in_refusal_scores.append(score)
