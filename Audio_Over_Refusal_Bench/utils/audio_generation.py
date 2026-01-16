@@ -105,7 +105,7 @@ def generation_audio(text, save_path):
                 f.write(audio)
 
             if status == 2:
-                print("TTS finished, closing ws")
+                # print("TTS finished, closing ws")
                 ws.close()
 
         except Exception as e:
