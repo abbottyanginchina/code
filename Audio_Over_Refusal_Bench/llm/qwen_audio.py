@@ -1,4 +1,5 @@
 import os
+import json
 from io import BytesIO
 from urllib.request import urlopen
 import librosa
@@ -44,4 +45,6 @@ if __name__ == "__main__":
     for idx in range(200):
         audio_path = os.path.join("../../data/or-bench/audio", f"{idx}.mp3")
         response = qwen_audio(audio_path)
-        
+        ans_file.write(json.dumps({"idx": idx, "response": response}) + "\n")
+        ans_file.flush()
+    ans_file.close()
