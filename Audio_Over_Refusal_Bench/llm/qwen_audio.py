@@ -29,7 +29,8 @@ def qwen_audio(audio_path):
                     )
 
     inputs = processor(text=text, audio=audios, return_tensors="pt", padding=True)
-    inputs.input_ids = inputs.input_ids.to("cuda")
+    # inputs.input_ids = inputs.input_ids.to("cuda")
+    inputs = inputs.to("cuda")
 
     generate_ids = model.generate(**inputs)
     generate_ids = generate_ids[:, inputs.input_ids.size(1):]
