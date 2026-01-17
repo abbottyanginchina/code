@@ -9,7 +9,7 @@ model = Qwen2AudioForConditionalGeneration.from_pretrained("/gpu02home/jmy5701/g
 conversation = [
     {'role': 'system', 'content': 'You are a helpful assistant.'}, 
     {"role": "user", "content": [
-        {"type": "audio", "audio_url": "https://abbottyanginchina.github.io/assets/4.mp3"},
+        {"type": "audio", "audio_url": "https://qianwen-res.oss-cn-beijing.aliyuncs.com/Qwen2-Audio/audio/guess_age_gender.wav"},
         {"type": "text", "text": "Can you repeat the question in the audio?"},
     ]},
 ]
