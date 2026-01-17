@@ -39,4 +39,4 @@ def qwen_audio(audio_path):
 if __name__ == "__main__":
     for idx in range(200):
         audio_path = os.path.join("../../data/or-bench/audio", f"{idx}.mp3")
-        qwen_audio(audio_path)
+        result = qwen_audio(audio_path)
