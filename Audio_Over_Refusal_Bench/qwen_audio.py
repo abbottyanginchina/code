@@ -1,3 +1,4 @@
+import os
 from io import BytesIO
 from urllib.request import urlopen
 import librosa
@@ -34,3 +35,8 @@ def qwen_audio(audio_path):
     response = processor.batch_decode(generate_ids, skip_special_tokens=True, clean_up_tokenization_spaces=False)[0]
 
     print(response)
+
+if __name__ == "__main__":
+    for idx in range(200):
+        audio_path = os.path.join("../../data/or-bench/audio", f"{idx}.mp3")
+        qwen_audio(audio_path)
