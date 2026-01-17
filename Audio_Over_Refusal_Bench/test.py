@@ -1,45 +1,35 @@
-import os
-from openai import OpenAI
+from io import BytesIO
+from urllib.request import urlopen
+import librosa
+from transformers import Qwen2AudioForConditionalGeneration, AutoProcessor
 
-# 初始化OpenAI客户端
-client = OpenAI(
-    # 若没有配置环境变量，请用阿里云百炼API Key将下行替换为：api_key="sk-xxx",
-    # 新加坡和北京地域的API Key不同。获取API Key：https://help.aliyun.com/zh/model-studio/get-api-key
-    api_key='sk-f4aa0b20c8f44a879cf83ff5fe09bfc9',
-    # 以下是北京地域base_url，如果使用新加坡地域的模型，需要将base_url替换为：https://dashscope-intl.aliyuncs.com/compatible-mode/v1
-    base_url="https://dashscope-intl.aliyuncs.com/compatible-mode/v1",
-)
+processor = AutoProcessor.from_pretrained("Qwen/Qwen2-Audio-7B-Instruct")
+model = Qwen2AudioForConditionalGeneration.from_pretrained("Qwen/Qwen2-Audio-7B-Instruct", device_map="auto")
 
-completion = client.chat.completions.create(
-    model="qwen3-omni-flash", # 模型为Qwen3-Omni-Flash时，请在非思考模式下运行
-    messages=[
-        {
-            "role": "user",
-            "content": [
-                {
-                    "type": "input_audio",
-                    "input_audio": {
-                        "data": "https://abbottyanginchina.github.io/assets/4.mp3",
-                        "format": "mp3",
-                    },
-                },
-                {"type": "text", "text": "这段音频在说什么"},
-            ],
-        },
-    ],
-    # 设置输出数据的模态，当前支持两种：["text","audio"]、["text"]
-    modalities=["text", "audio"],
-    audio={"voice": "Cherry", "format": "wav"},
-    # stream 必须设置为 True，否则会报错
-    stream=True,
-    stream_options={"include_usage": True},
-)
+conversation = [
+    {"role": "user", "content": [
+        {"type": "audio", "audio_url": "https://qianwen-res.oss-cn-beijing.aliyuncs.com/Qwen2-Audio/audio/guess_age_gender.wav"},
+    ]},
+    {"role": "assistant", "content": "Yes, the speaker is female and in her twenties."},
+    {"role": "user", "content": [
+        {"type": "audio", "audio_url": "https://qianwen-res.oss-cn-beijing.aliyuncs.com/Qwen2-Audio/audio/translate_to_chinese.wav"},
+    ]},
+]
+text = processor.apply_chat_template(conversation, add_generation_prompt=True, tokenize=False)
+audios = []
+for message in conversation:
+    if isinstance(message["content"], list):
+        for ele in message["content"]:
+            if ele["type"] == "audio":
+                audios.append(librosa.load(
+                    BytesIO(urlopen(ele['audio_url']).read()), 
+                    sr=processor.feature_extractor.sampling_rate)[0]
+                )
 
-print(completion)
+inputs = processor(text=text, audios=audios, return_tensors="pt", padding=True)
+inputs.input_ids = inputs.input_ids.to("cuda")
 
-# for chunk in completion:
-#     print(chunk)
-    # if chunk.choices:
-    #     print(chunk.choices[0].delta)
-    # else:
-    #     print(chunk.usage)
+generate_ids = model.generate(**inputs, max_length=256)
+generate_ids = generate_ids[:, inputs.input_ids.size(1):]
+
+response = processor.batch_decode(generate_ids, skip_special_tokens=True, clean_up_tokenization_spaces=False)[0]
