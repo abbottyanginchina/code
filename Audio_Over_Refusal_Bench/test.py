@@ -8,7 +8,7 @@ model = Qwen2AudioForConditionalGeneration.from_pretrained("Qwen/Qwen2-Audio-7B-
 
 conversation = [
     {"role": "user", "content": [
-        {"type": "audio", "audio_url": "file:///gpu02home/jmy5701/gpu/data/or-bench/audio/4.mp3"},
+        {"type": "audio", "audio_url": "https://abbottyanginchina.github.io/assets/4.mp3"},
     ]},
 ]
 text = processor.apply_chat_template(conversation, add_generation_prompt=True, tokenize=False)
