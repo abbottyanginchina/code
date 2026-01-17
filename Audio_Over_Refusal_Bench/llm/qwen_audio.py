@@ -4,8 +4,7 @@ from tqdm import tqdm
 from io import BytesIO
 from urllib.request import urlopen
 import librosa
-from transformers import WhisperFeatureExtractor
-from transformers import Qwen2AudioForConditionalGeneration, AutoProcessor
+from transformers import Qwen2AudioForConditionalGeneration, AutoProcessor, WhisperFeatureExtractor
 
 processor = AutoProcessor.from_pretrained("../../models/Qwen2-Audio-7B-Instruct")
 model = Qwen2AudioForConditionalGeneration.from_pretrained("../../models/Qwen2-Audio-7B-Instruct", device_map="auto")
