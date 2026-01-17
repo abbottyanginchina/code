@@ -10,7 +10,7 @@ conversation = [
     {'role': 'system', 'content': 'You are a helpful assistant.'}, 
     {"role": "user", "content": [
         {"type": "audio", "audio_url": "https://abbottyanginchina.github.io/assets/4.mp3"},
-        {"type": "text", "text": "Can you repeat the question?"},
+        {"type": "text", "text": "Can you repeat the question in the audio?"},
     ]},
 ]
 text = processor.apply_chat_template(conversation, add_generation_prompt=True, tokenize=False)
