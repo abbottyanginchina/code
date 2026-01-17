@@ -39,11 +39,11 @@ def qwen_audio(audio_path):
     print(response)
 
 if __name__ == "__main__":
-    output_dir = "../../audio_results"
+    output_dir = "../audio_results"
     answers_file = os.path.join(output_dir, f"responses.jsonl")
     os.makedirs(os.path.dirname(answers_file), exist_ok=True)
     ans_file = open(answers_file, "w")
-    
+
     len = 200
     for idx in tqdm(range(len), desc="Generating audio", total=len):
         audio_path = os.path.join("../../data/or-bench/audio", f"{idx}.mp3")
