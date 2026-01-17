@@ -22,6 +22,7 @@ cconversation = [
         {"type": "text", "text": "What does the person say?"},
     ]},
 ]
+
 text = processor.apply_chat_template(conversation, add_generation_prompt=True, tokenize=False)
 audios = []
 for message in conversation:
