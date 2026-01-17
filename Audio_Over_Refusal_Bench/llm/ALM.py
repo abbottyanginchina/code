@@ -19,12 +19,10 @@ for message in conversation:
     if isinstance(message["content"], list):
         for ele in message["content"]:
             if ele["type"] == "audio":
-                audio_path = ele["audio_url"]
-                audio, _ = librosa.load(
-                    audio_path,
-                    sr=processor.feature_extractor.sampling_rate
+                audios.append(librosa.load(
+                    BytesIO(urlopen(ele['audio_url']).read()), 
+                    sr=processor.feature_extractor.sampling_rate)[0]
                 )
-                audios.append(audio)
 
 inputs = processor(text=text, audios=audios, return_tensors="pt", padding=True)
 inputs.input_ids = inputs.input_ids.to("cuda")
@@ -33,6 +31,3 @@ generate_ids = model.generate(**inputs, max_length=256)
 generate_ids = generate_ids[:, inputs.input_ids.size(1):]
 
 response = processor.batch_decode(generate_ids, skip_special_tokens=True, clean_up_tokenization_spaces=False)[0]
-
-print("================================================")
-print(response)
