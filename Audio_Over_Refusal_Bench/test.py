@@ -16,7 +16,7 @@ messages = [
 
 response = MultiModalConversation.call(
     # 若没有配置环境变量，请用百炼API Key将下行替换为：api_key="sk-xxx",
-    api_key=os.getenv('sk-54d824b185464fa2962a0de5c32e8644'),
+    api_key='sk-54d824b185464fa2962a0de5c32e8644',
     model="qwen-audio-turbo-latest", 
     messages=messages)
     
