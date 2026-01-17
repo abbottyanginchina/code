@@ -26,7 +26,7 @@ for message in conversation:
                     sr=processor.feature_extractor.sampling_rate)[0]
                 )
 
-inputs = processor(text=text, audios=audios, return_tensors="pt", padding=True)
+inputs = processor(text=text, audio=audios, return_tensors="pt", padding=True)
 inputs.input_ids = inputs.input_ids.to("cuda")
 
 generate_ids = model.generate(**inputs, max_length=256)
