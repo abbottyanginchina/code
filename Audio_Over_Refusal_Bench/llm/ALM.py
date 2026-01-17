@@ -6,7 +6,7 @@ from transformers import Qwen2AudioForConditionalGeneration, AutoProcessor
 processor = AutoProcessor.from_pretrained("/gpu02home/jmy5701/gpu/models/Qwen2-Audio-7B-Instruct")
 model = Qwen2AudioForConditionalGeneration.from_pretrained("/gpu02home/jmy5701/gpu/models/Qwen2-Audio-7B-Instruct", device_map="auto")
 
-cconversation = [
+conversation = [
     {'role': 'system', 'content': 'You are a helpful assistant.'}, 
     {"role": "user", "content": [
         {"type": "audio", "audio_url": "https://qianwen-res.oss-cn-beijing.aliyuncs.com/Qwen2-Audio/audio/glass-breaking-151256.mp3"},
