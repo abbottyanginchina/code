@@ -21,4 +21,5 @@ response = MultiModalConversation.call(
     messages=messages)
     
 print("输出结果为：")
+print(response)
 print(response["output"]["choices"][0]["message"].content[0]["text"])
