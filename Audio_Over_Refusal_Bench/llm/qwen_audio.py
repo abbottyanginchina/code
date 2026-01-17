@@ -38,7 +38,7 @@ def qwen_audio(audio_path):
 
 if __name__ == "__main__":
     output_dir = "../../audio_results"
-    answers_file = os.path.join(output_dir, f"response.jsonl")
+    answers_file = os.path.join(output_dir, f"responses.jsonl")
     os.makedirs(os.path.dirname(answers_file), exist_ok=True)
     ans_file = open(answers_file, "w")
     for idx in range(200):
