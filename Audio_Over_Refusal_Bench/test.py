@@ -1,10 +1,10 @@
 from dashscope import MultiModalConversation
-
+import os
 # 将 ABSOLUTE_PATH/welcome.mp3 替换为本地音频的绝对路径，
 # 本地文件的完整路径必须以 file:// 为前缀，以保证路径的合法性，例如：file:///home/images/test.mp3
 audio_file_path = "file://gpu02home/jmy5701/gpu/data/or-bench/audio/4.mp3"
 messages = [
-    {
+    {   
         "role": "system", 
         "content": [{"text": "You are a helpful assistant."}]},
     {
