@@ -1,25 +1,43 @@
-from dashscope import MultiModalConversation
 import os
-# 将 ABSOLUTE_PATH/welcome.mp3 替换为本地音频的绝对路径，
-# 本地文件的完整路径必须以 file:// 为前缀，以保证路径的合法性，例如：file:///home/images/test.mp3
-audio_file_path = "file:///gpu02home/jmy5701/gpu/data/or-bench/audio/4.mp3"
-messages = [
-    {   
-        "role": "system", 
-        "content": [{"text": "You are a helpful assistant."}]},
-    {
-        "role": "user",
-        # 在 audio 参数中传入以 file:// 为前缀的文件路径
-        "content": [{"audio": audio_file_path}, {"text": "音频里在说什么?"}],
-    }
-]
+from openai import OpenAI
 
-response = MultiModalConversation.call(
-    # 若没有配置环境变量，请用百炼API Key将下行替换为：api_key="sk-xxx",
-    api_key='sk-54d824b185464fa2962a0de5c32e8644',
-    model="qwen-audio-turbo-latest", 
-    messages=messages)
-    
-print("输出结果为：")
-print(response)
-# print(response["output"]["choices"][0]["message"].content[0]["text"])
+# 初始化OpenAI客户端
+client = OpenAI(
+    # 若没有配置环境变量，请用阿里云百炼API Key将下行替换为：api_key="sk-xxx",
+    # 新加坡和北京地域的API Key不同。获取API Key：https://help.aliyun.com/zh/model-studio/get-api-key
+    api_key=os.getenv("DASHSCOPE_API_KEY"),
+    # 以下是北京地域base_url，如果使用新加坡地域的模型，需要将base_url替换为：https://dashscope-intl.aliyuncs.com/compatible-mode/v1
+    base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
+)
+
+completion = client.chat.completions.create(
+    model="qwen3-omni-flash", # 模型为Qwen3-Omni-Flash时，请在非思考模式下运行
+    messages=[
+        {
+            "role": "user",
+            "content": [
+                {
+                    "type": "input_audio",
+                    "input_audio": {
+                        "data": "https://help-static-aliyun-doc.aliyuncs.com/file-manage-files/zh-CN/20250211/tixcef/cherry.wav",
+                        "format": "wav",
+                    },
+                },
+                {"type": "text", "text": "这段音频在说什么"},
+            ],
+        },
+    ],
+    # 设置输出数据的模态，当前支持两种：["text","audio"]、["text"]
+    modalities=["text", "audio"],
+    audio={"voice": "Cherry", "format": "wav"},
+    # stream 必须设置为 True，否则会报错
+    stream=True,
+    stream_options={"include_usage": True},
+)
+
+for chunk in completion:
+    print(chunk)
+    # if chunk.choices:
+    #     print(chunk.choices[0].delta)
+    # else:
+    #     print(chunk.usage)
