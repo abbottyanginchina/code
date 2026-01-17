@@ -6,6 +6,9 @@ from urllib.request import urlopen
 import librosa
 from transformers import Qwen2AudioForConditionalGeneration, AutoProcessor, WhisperFeatureExtractor
 
+feature_extractor = WhisperFeatureExtractor(
+    sampling_rate=16000
+)
 processor = AutoProcessor.from_pretrained("../../models/Qwen2-Audio-7B-Instruct")
 model = Qwen2AudioForConditionalGeneration.from_pretrained("../../models/Qwen2-Audio-7B-Instruct", device_map="auto")
 
