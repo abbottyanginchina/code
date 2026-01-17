@@ -19,8 +19,8 @@ completion = client.chat.completions.create(
                 {
                     "type": "input_audio",
                     "input_audio": {
-                        "data": "https://help-static-aliyun-doc.aliyuncs.com/file-manage-files/zh-CN/20250211/tixcef/cherry.wav",
-                        "format": "wav",
+                        "data": "https://abbottyanginchina.github.io/assets/4.mp3",
+                        "format": "mp3",
                     },
                 },
                 {"type": "text", "text": "这段音频在说什么"},
