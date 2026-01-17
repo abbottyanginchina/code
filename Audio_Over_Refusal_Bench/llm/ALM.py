@@ -3,8 +3,8 @@ from urllib.request import urlopen
 import librosa
 from transformers import Qwen2AudioForConditionalGeneration, AutoProcessor
 
-processor = AutoProcessor.from_pretrained("Qwen/Qwen2-Audio-7B-Instruct")
-model = Qwen2AudioForConditionalGeneration.from_pretrained("Qwen/Qwen2-Audio-7B-Instruct", device_map="auto")
+processor = AutoProcessor.from_pretrained("/gpu02home/jmy5701/gpu/models/Qwen2-Audio-7B-Instruct")
+model = Qwen2AudioForConditionalGeneration.from_pretrained("/gpu02home/jmy5701/gpu/models/Qwen2-Audio-7B-Instruct", device_map="auto")
 
 conversation = [
     {"role": "user", "content": [
@@ -33,5 +33,3 @@ generate_ids = model.generate(**inputs, max_length=256)
 generate_ids = generate_ids[:, inputs.input_ids.size(1):]
 
 response = processor.batch_decode(generate_ids, skip_special_tokens=True, clean_up_tokenization_spaces=False)[0]
-
-print(response)
