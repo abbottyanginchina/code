@@ -20,8 +20,8 @@ for message in conversation:
         for ele in message["content"]:
             if ele["type"] == "audio":
                 audios.append(librosa.load(
-                    # BytesIO(urlopen(ele['audio_url']).read()), 
-                    ele['audio_url'],
+                    BytesIO(urlopen(ele['audio_url']).read()), 
+                    # ele['audio_url'],
                     sr=processor.feature_extractor.sampling_rate)[0]
                 )
 
