@@ -49,3 +49,6 @@ generate_ids = model.generate(**inputs, max_length=256)
 generate_ids = generate_ids[:, inputs.input_ids.size(1):]
 
 response = processor.batch_decode(generate_ids, skip_special_tokens=True, clean_up_tokenization_spaces=False)
+
+print("================================================")
+print(response)
