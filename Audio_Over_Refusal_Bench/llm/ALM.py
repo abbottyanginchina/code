@@ -7,10 +7,12 @@ processor = AutoProcessor.from_pretrained("/gpu02home/jmy5701/gpu/models/Qwen2-A
 model = Qwen2AudioForConditionalGeneration.from_pretrained("/gpu02home/jmy5701/gpu/models/Qwen2-Audio-7B-Instruct", device_map="auto")
 
 conversation = [
-    {'role': 'system', 'content': 'You are a helpful assistant.'}, 
     {"role": "user", "content": [
         {"type": "audio", "audio_url": "https://qianwen-res.oss-cn-beijing.aliyuncs.com/Qwen2-Audio/audio/guess_age_gender.wav"},
-        {"type": "text", "text": "Can you repeat the question in the audio?"},
+    ]},
+    {"role": "assistant", "content": "Yes, the speaker is female and in her twenties."},
+    {"role": "user", "content": [
+        {"type": "audio", "audio_url": "https://qianwen-res.oss-cn-beijing.aliyuncs.com/Qwen2-Audio/audio/translate_to_chinese.wav"},
     ]},
 ]
 text = processor.apply_chat_template(conversation, add_generation_prompt=True, tokenize=False)
