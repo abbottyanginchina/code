@@ -35,6 +35,8 @@ completion = client.chat.completions.create(
     stream_options={"include_usage": True},
 )
 
+print(completion)
+
 # for chunk in completion:
 #     print(chunk)
     # if chunk.choices:
