@@ -12,7 +12,7 @@ conversation = [
     # ]},
     # {"role": "assistant", "content": "Yes, the speaker is female and in her twenties."},
     {"role": "user", "content": [
-        {"type": "audio", "audio_url": "https://qianwen-res.oss-cn-beijing.aliyuncs.com/Qwen2-Audio/audio/translate_to_chinese.wav"},
+        {"type": "audio", "audio_url": "https://abbottyanginchina.github.io/assets/4.mp3"},
     ]},
 ]
 text = processor.apply_chat_template(conversation, add_generation_prompt=True, tokenize=False)
