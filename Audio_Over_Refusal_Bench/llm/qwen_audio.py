@@ -37,6 +37,11 @@ def qwen_audio(audio_path):
     print(response)
 
 if __name__ == "__main__":
+    
+    answers_file = os.path.join(output_dir, f"results/image_biology_answer_{cfg.model_name}.jsonl")
+    os.makedirs(os.path.dirname(answers_file), exist_ok=True)
+    ans_file = open(answers_file, "w")
     for idx in range(200):
         audio_path = os.path.join("../../data/or-bench/audio", f"{idx}.mp3")
-        result = qwen_audio(audio_path)
+        response = qwen_audio(audio_path)
+        
