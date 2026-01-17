@@ -36,7 +36,7 @@ def qwen_audio(audio_path):
 
     response = processor.batch_decode(generate_ids, skip_special_tokens=True, clean_up_tokenization_spaces=False)[0]
 
-    print(response)
+    return response
 
 if __name__ == "__main__":
     output_dir = "../audio_results"
