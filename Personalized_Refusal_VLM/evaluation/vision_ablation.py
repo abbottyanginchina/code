@@ -28,7 +28,7 @@ def draw_vision_ablation_violin(model_name, dataset_name, subject):
         data=df, x="Type", y="Refusal Score",
         inner=None,
         linewidth=0,
-        # palette=["#6A5ACD", "#B0B0B0"],
+        palette=["#6A5ACD", "#B0B0B0"],
         cut=0
     )
 
