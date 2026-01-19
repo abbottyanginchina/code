@@ -63,8 +63,7 @@ def draw_vision_ablation(model_name, dataset_name, subject):
         name_title = model_name
 
     # 将title中subject首字母大写
-    subject = subject.capitalize()
-    plt.title(f"{name_title} on {dataset_name} ({subject})", fontsize=22, fontweight="bold")
+    plt.title(f"{name_title} on {dataset_name} ({subject.capitalize()})", fontsize=22, fontweight="bold")
     plt.xticks(fontsize=22, fontweight="bold")   # x 轴类目（Out-of-constraint / In-constraint）
     # plt.yticks(fontsize=14)   # y 轴刻度
     plt.xlabel("")
