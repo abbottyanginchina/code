@@ -69,7 +69,7 @@ def draw_vision_ablation(model_name, dataset_name, subject):
     plt.grid(axis="y", alpha=0.3)
     plt.tight_layout()
     # plt.savefig(f"{save_dir}/refusal_score_comparison_{model_name}_{dataset_name}_{subject}.pdf", dpi=160, bbox_inches="tight", facecolor='white')
-    plt.savefig(f"../../../refusal_scores_figures/vision_refusal_score_comparison_{model_name}_{dataset_name}_{subject}.pdf", dpi=160, bbox_inches="tight", facecolor='white')
+    plt.savefig(f"../../../refusal_scores_figures/vision_ablation_refusal_score_comparison_{model_name}_{dataset_name}_{subject}.pdf", dpi=160, bbox_inches="tight", facecolor='white')
 
 
 
