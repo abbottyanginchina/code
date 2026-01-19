@@ -31,7 +31,7 @@ def draw_vision_ablation_grouped_boxplots_dataset(model_name, dataset_name, subj
 
     df = pd.DataFrame(rows)
 
-    plt.figure(figsize=(10, 5.6))
+    plt.figure(figsize=(8, 5.6))
     ax = plt.gca()
 
     sns.boxplot(
