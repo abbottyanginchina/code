@@ -51,7 +51,7 @@ def draw_vision_ablation_grouped_boxplots_dataset(model_name, dataset_name, subj
     for spine in ["top", "right", "left", "bottom"]:
         # sns.despine(spine, offset=10, trim=False)
         ax.spines[spine].set_visible(True)
-        ax.spines[spine].set_linewidth(0.8)
+        ax.spines[spine].set_linewidth(0.6)
         ax.spines[spine].set_color("black")
     ax.grid(axis="y", linestyle="--", alpha=0.25)
 
