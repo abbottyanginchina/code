@@ -61,7 +61,7 @@ def draw_vision_ablation_grouped_boxplots_dataset(model_name, dataset_name, subj
     name_title = name_map.get(model_name, model_name)
 
     plt.title(f"{name_title} on {dataset_name} (Vision Loss Ablation)",
-              fontsize=18, fontweight="bold")
+              fontsize=22, fontweight="bold")
     plt.xlabel("")
     plt.ylabel("Refusal Score", fontsize=18)
     plt.xticks(fontsize=22, fontweight="bold")
