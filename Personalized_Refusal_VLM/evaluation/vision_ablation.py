@@ -14,13 +14,13 @@ def draw_vision_ablation(model_name, dataset_name, subject):
 
     # Load in_refusal_scores
     with open(f"{save_dir_vision}/vision_out_refusal_scores_{model_name}.pkl", "rb") as f:
-        in_refusal_scores = pickle.load(f)
+        vision_out_refusal_scores = pickle.load(f)
 
     # 组装 DataFrame
     df = pd.DataFrame({
-        "Refusal Score": out_refusal_scores + in_refusal_scores,
-        "Type": (["Out-of-constraint"] * len(out_refusal_scores)) +
-                (["In-constraint"] * len(in_refusal_scores))
+        "Refusal Score": out_refusal_scores + vision_out_refusal_scores,
+        "Type": (["With"] * len(out_refusal_scores)) +
+                (["Without"] * len(vision_out_refusal_scores))
     })
 
     # 绘图
