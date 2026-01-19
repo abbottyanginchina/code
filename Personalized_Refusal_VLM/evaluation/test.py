@@ -64,7 +64,7 @@ def draw_vision_ablation_grouped_boxplots_dataset(model_name, dataset_name, subj
               fontsize=18, fontweight="bold")
     plt.xlabel("")
     plt.ylabel("Refusal Score", fontsize=14)
-    plt.xticks(fontsize=13, fontweight="bold")
+    plt.xticks(fontsize=22, fontweight="bold")
 
     # Legend
     leg = ax.legend(title="", loc="upper right", frameon=True)
