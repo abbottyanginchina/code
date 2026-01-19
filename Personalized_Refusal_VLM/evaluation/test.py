@@ -69,7 +69,7 @@ def draw_vision_ablation_grouped_boxplots_dataset(model_name, dataset_name, subj
     # Legend
     leg = ax.legend(title="", loc="upper right", frameon=True)
     for t in leg.get_texts():
-        t.set_fontsize(12)
+        t.set_fontsize(18)
 
     plt.tight_layout()
 
