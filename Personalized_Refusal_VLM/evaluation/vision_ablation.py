@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 
 def draw_vision_ablation(model_name, dataset_name, subject):
-    save_dir_vision = f"../../../results/vision_{model_name}_{dataset_name}_{subject}/vision_ablation"
+    save_dir_vision = f"../../../results/vision_{model_name}_{dataset_name}_{subject}/refusal_scores"
     save_dir = f"../../../results/output_{model_name}_{dataset_name}_{subject}/refusal_scores"
 
     # Load out_refusal_scores
