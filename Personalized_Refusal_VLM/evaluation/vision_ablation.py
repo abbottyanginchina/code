@@ -4,46 +4,6 @@ import seaborn as sns
 import numpy as np
 import matplotlib.pyplot as plt
 
-def draw_vision_ablation_ci(model_name, dataset_name, subject):
-    save_dir_vision = f"../../../results/vision_{model_name}_{dataset_name}_{subject}/refusal_scores"
-    save_dir = f"../../../results/output_{model_name}_{dataset_name}_{subject}/refusal_scores"
-
-    with open(f"{save_dir}/out_refusal_scores_{model_name}.pkl", "rb") as f:
-        out_scores = np.array(pickle.load(f))
-    with open(f"{save_dir_vision}/vision_out_refusal_scores_{model_name}.pkl", "rb") as f:
-        no_vision_scores = np.array(pickle.load(f))
-
-    means = [out_scores.mean(), no_vision_scores.mean()]
-    cis = [
-        1.96 * out_scores.std() / np.sqrt(len(out_scores)),
-        1.96 * no_vision_scores.std() / np.sqrt(len(no_vision_scores))
-    ]
-
-    plt.figure(figsize=(5.5, 4))
-    ax = plt.gca()
-
-    ax.bar(
-        ["With Vision Loss", "Without Vision Loss"],
-        means,
-        yerr=cis,
-        capsize=6,
-        color=["#6A5ACD", "#B0B0B0"],
-        edgecolor="black",
-        linewidth=1
-    )
-
-    sns.despine(top=True, right=True)
-    ax.set_ylabel("Refusal Score", fontsize=14)
-    ax.set_title(f"{model_name} ({subject.capitalize()})",
-                 fontsize=16, fontweight="bold")
-    ax.grid(axis="y", linestyle="--", alpha=0.3)
-
-    plt.tight_layout()
-    plt.savefig(
-        f"../../../results/vision_ablation_figures/"
-        f"vision_ablation_ci_{model_name}_{dataset_name}_{subject}.png",
-        dpi=160, bbox_inches="tight"
-    )
 
 def draw_vision_ablation_violin(model_name, dataset_name, subject):
     save_dir_vision = f"../../../results/vision_{model_name}_{dataset_name}_{subject}/refusal_scores"
@@ -68,7 +28,7 @@ def draw_vision_ablation_violin(model_name, dataset_name, subject):
         data=df, x="Type", y="Refusal Score",
         inner=None,
         linewidth=0,
-        palette=["#6A5ACD", "#B0B0B0"],
+        # palette=["#6A5ACD", "#B0B0B0"],
         cut=0
     )
 
