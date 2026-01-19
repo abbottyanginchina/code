@@ -1,6 +1,7 @@
 import pickle
 import pandas as pd
 import seaborn as sns
+import numpy as np
 import matplotlib.pyplot as plt
 
 def draw_vision_ablation_ci(model_name, dataset_name, subject):
