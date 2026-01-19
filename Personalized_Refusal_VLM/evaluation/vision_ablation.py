@@ -48,7 +48,8 @@ def draw_vision_ablation_grouped_boxplots_dataset(model_name, dataset_name, subj
     )
 
     # Style
-    sns.despine(offset=10, trim=False)
+    for spine in ["top", "right", "left", "bottom"]:
+        sns.despine(spine, offset=10, trim=False)
     ax.grid(axis="y", linestyle="--", alpha=0.25)
 
     # Title mapping
