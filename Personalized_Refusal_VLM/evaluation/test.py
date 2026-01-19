@@ -67,7 +67,7 @@ def draw_vision_ablation_grouped_boxplots_dataset(model_name, dataset_name, subj
     plt.xticks(fontsize=22, fontweight="bold")
 
     # Legend
-    leg = ax.legend(title="", loc="lower right", frameon=True)
+    leg = ax.legend(title="", frameon=True)
     for t in leg.get_texts():
         t.set_fontsize(18)
 
