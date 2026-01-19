@@ -13,7 +13,7 @@ def draw_vision_ablation(model_name, dataset_name, subject):
         out_refusal_scores = pickle.load(f)
 
     # Load in_refusal_scores
-    with open(f"{save_dir}/vision_in_refusal_scores_{model_name}.pkl", "rb") as f:
+    with open(f"{save_dir_vision}/vision_out_refusal_scores_{model_name}.pkl", "rb") as f:
         in_refusal_scores = pickle.load(f)
 
     # 组装 DataFrame
