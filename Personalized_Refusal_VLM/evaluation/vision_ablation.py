@@ -3,6 +3,71 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 
+def draw_vision_ablation_violin(model_name, dataset_name, subject):
+    save_dir_vision = f"../../../results/vision_{model_name}_{dataset_name}_{subject}/refusal_scores"
+    save_dir = f"../../../results/output_{model_name}_{dataset_name}_{subject}/refusal_scores"
+
+    with open(f"{save_dir}/out_refusal_scores_{model_name}.pkl", "rb") as f:
+        out_refusal_scores = pickle.load(f)
+    with open(f"{save_dir_vision}/vision_out_refusal_scores_{model_name}.pkl", "rb") as f:
+        vision_out_refusal_scores = pickle.load(f)
+
+    df = pd.DataFrame({
+        "Refusal Score": out_refusal_scores + vision_out_refusal_scores,
+        "Type": (["With Vision Loss"] * len(out_refusal_scores)) +
+                (["Without Vision Loss"] * len(vision_out_refusal_scores))
+    })
+
+    plt.figure(figsize=(7, 5))
+    ax = plt.gca()
+
+    # Violin：分布形态
+    sns.violinplot(
+        data=df, x="Type", y="Refusal Score",
+        inner=None,
+        linewidth=0,
+        palette=["#6A5ACD", "#B0B0B0"],
+        cut=0
+    )
+
+    # Box：中位数 + IQR
+    sns.boxplot(
+        data=df, x="Type", y="Refusal Score",
+        width=0.18,
+        showcaps=True,
+        showfliers=False,
+        boxprops={"facecolor": "white", "zorder": 3},
+        medianprops={"color": "black", "linewidth": 2},
+        whiskerprops={"linewidth": 1},
+        ax=ax
+    )
+
+    # 坐标轴样式
+    sns.despine(top=True, right=True)
+    ax.spines["left"].set_linewidth(1)
+    ax.spines["bottom"].set_linewidth(1)
+
+    name_map = {
+        "instructblip-vicuna-7b": "InstructBLIP",
+        "Idefics3-8B-Llama3": "Idefics",
+        "llava-1.5-13b-hf": "LLaVA-1.5-13B",
+        "llava-1.5-7b-hf": "LLaVA-1.5-7B"
+    }
+    name_title = name_map.get(model_name, model_name)
+
+    plt.title(f"{name_title} on {dataset_name} ({subject.capitalize()})",
+              fontsize=20, fontweight="bold")
+    plt.xlabel("")
+    plt.ylabel("Refusal Score", fontsize=16)
+    plt.xticks(fontsize=15, fontweight="bold")
+    plt.grid(axis="y", linestyle="--", alpha=0.3)
+
+    plt.tight_layout()
+    plt.savefig(
+        f"../../../results/vision_ablation_figures/"
+        f"vision_ablation_violin_{model_name}_{dataset_name}_{subject}.png",
+        dpi=160, bbox_inches="tight"
+    )
 
 def draw_vision_ablation(model_name, dataset_name, subject):
     save_dir_vision = f"../../../results/vision_{model_name}_{dataset_name}_{subject}/refusal_scores"
