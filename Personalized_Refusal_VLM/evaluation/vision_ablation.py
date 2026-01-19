@@ -79,7 +79,7 @@ def draw_vision_ablation_grouped_boxplots_dataset(model_name, dataset_name, subj
 
     out_path = (
         f"../../../results/vision_ablation_figures/"
-        f"vision_ablation_grouped_box_{model_name}_{dataset_name}.png"
+        f"vision_ablation_grouped_box_{model_name}_{dataset_name}.pdf"
     )
     os.makedirs(os.path.dirname(out_path), exist_ok=True)
     plt.savefig(out_path, dpi=200, bbox_inches="tight", facecolor="white")
