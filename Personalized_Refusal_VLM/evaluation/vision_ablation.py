@@ -148,4 +148,4 @@ if __name__ == "__main__":
 
         dataset_name = "MMMU"
         for subject in ["Math", "Art_Theory", "Geography"]:
-            draw_vision_ablation(model_name, dataset_name, subject)
+            draw_vision_ablation_violin(model_name, dataset_name, subject)
