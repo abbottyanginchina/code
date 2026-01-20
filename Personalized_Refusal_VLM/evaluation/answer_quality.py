@@ -28,7 +28,7 @@ if __name__ == '__main__':
     #/home/ubuntu/jiaxi/results/output_llava-1.5-7b-hf_ScienceQA_biology/results/biology_answer_llava-1.5-7b-hf.jsonl
     base_dir = "/home/ubuntu/jiaxi/results"
     model_name = "llava-1.5-7b-hf"
-    files = [f"results/biology_answer_{model_name}.jsonl", f"results/nonbiology_answer_{model_name}.jsonl"]
+    
     tasks = {
         # "ScienceQA": ["biology", "physics", "geography"],
         "ScienceQA": ["biology"],
@@ -36,7 +36,7 @@ if __name__ == '__main__':
     }
     for dataset, categories in tasks.items():
             for cat in categories:
-
+                  files = [f"results/biology_answer_{model_name}.jsonl", f"results/nonbiology_answer_{model_name}.jsonl"]
     #             method = "our_method"
     #             output_log_folder = f"/home/ubuntu/jiaxi/LLM_as_judge_results/{dataset}_{cat}"
     #             output_log_file = os.path.join(output_log_folder, f"{model_name}_{method}_answer_quality_results.txt")
