@@ -91,8 +91,14 @@ if __name__ == '__main__':
                         for item in tqdm(data, total=len(data)):
                             user_response = item['model_answer']
                             score = chat_LLM(user_response)
-                            print("score: ", score)
-                            scores.append(score)
+
+                            try:
+                                score = float(score)
+                            except ValueError:
+                                score = None
+
+                            if score is not None:
+                                scores.append(score)
                         
                         result_str = f"Mean Score: {np.mean(np.array(scores))}, Std Score: {np.std(np.array(scores))}"
                         log_f.write(result_str + "\n")
