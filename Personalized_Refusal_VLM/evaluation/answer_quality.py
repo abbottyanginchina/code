@@ -56,9 +56,16 @@ if __name__ == '__main__':
                         for item in tqdm(data, total=len(data)):
                             user_response = item['model_answer']
                             score = chat_LLM(user_response)
-                            import pdb; pdb.set_trace()
-                            print("score: ", score)
-                            scores.append(score)
+
+                            # Score是否可以转变成float
+                            try:
+                                score = float(score)
+                            except ValueError:
+                                score = None
+
+                            if score is not None:
+                                print("score: ", score)
+                                scores.append(score)
                         
                         result_str = f"Mean Score: {np.mean(np.array(scores))}, Std Score: {np.std(np.array(scores))}"
                         log_f.write(result_str + "\n")
