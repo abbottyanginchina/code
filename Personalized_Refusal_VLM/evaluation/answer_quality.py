@@ -35,7 +35,7 @@ if __name__ == '__main__':
         "ScienceQA": ["biology"],
         # "MMMU": ["Math", "Art_Theory", "Geography"]
     }
-    output_log_file = f"/home/ubuntu/jiaxi/LLM_as_judge_results/{model_name}_{method}_results.txt"
+    output_log_file = f"/home/ubuntu/jiaxi/LLM_as_judge_results/{model_name}_{method}_results.jsonl"
     with open(output_log_file, 'a', encoding='utf-8') as log_f:
         for dataset, categories in tasks.items():
             for cat in categories:
@@ -57,3 +57,5 @@ if __name__ == '__main__':
                     result_str = f"Mean Score: {np.mean(scores)}, Std Score: {np.std(scores)}"
                     log_f.write(result_str + "\n")
                     log_f.flush()
+
+    
