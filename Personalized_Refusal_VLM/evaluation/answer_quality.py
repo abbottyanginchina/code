@@ -30,8 +30,8 @@ if __name__ == '__main__':
     model_name = "llava-1.5-7b-hf"
     
     tasks = {
-        # "ScienceQA": ["biology", "physics", "geography"],
-        "ScienceQA": ["biology"],
+        "ScienceQA": ["biology", "physics", "geography"],
+        # "ScienceQA": ["biology"],
         # "MMMU": ["Math", "Art_Theory", "Geography"]
     }
     for dataset, categories in tasks.items():
