@@ -34,8 +34,8 @@ if __name__ == '__main__':
         "ScienceQA": ["biology"],
         # "MMMU": ["Math", "Art_Theory", "Geography"]
     }
-    # for dataset, categories in tasks.items():
-    #         for cat in categories:
+    for dataset, categories in tasks.items():
+            for cat in categories:
 
     #             method = "our_method"
     #             output_log_folder = f"/home/ubuntu/jiaxi/LLM_as_judge_results/{dataset}_{cat}"
