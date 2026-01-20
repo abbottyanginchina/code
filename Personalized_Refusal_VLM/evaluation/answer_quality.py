@@ -78,7 +78,7 @@ if __name__ == '__main__':
                             print("score: ", score)
                             scores.append(score)
                         
-                        result_str = f"Mean Score: {np.mean(scores)}, Std Score: {np.std(scores)}"
+                        result_str = f"Mean Score: {np.mean(np.array(scores))}, Std Score: {np.std(np.array(scores))}"
                         log_f.write(result_str + "\n")
                         log_f.flush()
 
