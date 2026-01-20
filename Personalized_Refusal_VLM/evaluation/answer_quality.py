@@ -45,7 +45,7 @@ if __name__ == '__main__':
                         with open(data_path, 'r') as f:
                             data_lines = f.readlines()
                         data = [json.loads(line) for line in data_lines]
-                        model_task_info = f"Model: {model_name} | Dataset: {dataset} | Category: {cat} | File: {os.path.basename(file)}"
+                        # model_task_info = f"Model: {model_name} | Dataset: {dataset} | Category: {cat} | File: {os.path.basename(file)}"
                         # log_f.write(f"\n{model_task_info}\n")
 
                         scores = [] 
