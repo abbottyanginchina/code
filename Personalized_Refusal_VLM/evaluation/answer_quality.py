@@ -32,7 +32,7 @@ if __name__ == '__main__':
     tasks = {
         "ScienceQA": ["biology", "physics", "geography"],
         # "ScienceQA": ["biology"],
-        # "MMMU": ["Math", "Art_Theory", "Geography"]
+        "MMMU": ["Math", "Art_Theory", "Geography"]
     }
     for dataset, categories in tasks.items():
             for cat in categories:
