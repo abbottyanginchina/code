@@ -58,5 +58,28 @@ if __name__ == '__main__':
                         result_str = f"Mean Score: {np.mean(scores)}, Std Score: {np.std(scores)}"
                         log_f.write(result_str + "\n")
                         log_f.flush()
+                
+                # Baseline method
+                method = "our_method"
+                output_log_file = f"/home/ubuntu/jiaxi/LLM_as_judge_results/{model_name}_{method}_answer_quality_results.jsonl"
+                with open(output_log_file, 'a', encoding='utf-8') as log_f:
+                    for file in files:
+                        data_path = os.path.join(base_dir, f"output_{model_name}_{dataset}_{cat}", file)
+                        with open(data_path, 'r') as f:
+                            data_lines = f.readlines()
+                        data = [json.loads(line) for line in data_lines]
+                        model_task_info = f"Model: {model_name} | Dataset: {dataset} | Category: {cat} | File: {os.path.basename(file)}"
+                        log_f.write(f"\n{model_task_info}\n")
+
+                        scores = [] 
+                        for item in tqdm(data, total=len(data)):
+                            user_response = item['model_answer']
+                            score = chat_LLM(user_response)
+                            print("score: ", score)
+                            scores.append(score)
+                        
+                        result_str = f"Mean Score: {np.mean(scores)}, Std Score: {np.std(scores)}"
+                        log_f.write(result_str + "\n")
+                        log_f.flush()
 
     
