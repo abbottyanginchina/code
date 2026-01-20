@@ -72,8 +72,6 @@ if __name__ == '__main__':
                         log_f.flush()
                 
                 # Baseline method
-
-                # Sys Prompt method
                 method = "sys_prompt"
                 files = [f"results/sysprompt_biology_answer_{model_name}.jsonl", f"results/sysprompt_nonbiology_answer_{model_name}.jsonl"]
                 output_log_folder = f"/home/ubuntu/jiaxi/LLM_as_judge_results/{dataset}_{cat}"
