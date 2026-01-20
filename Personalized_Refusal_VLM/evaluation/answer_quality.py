@@ -34,42 +34,42 @@ if __name__ == '__main__':
         "ScienceQA": ["biology"],
         # "MMMU": ["Math", "Art_Theory", "Geography"]
     }
-    for dataset, categories in tasks.items():
-            for cat in categories:
+    # for dataset, categories in tasks.items():
+    #         for cat in categories:
 
-                method = "our_method"
-                output_log_folder = f"/home/ubuntu/jiaxi/LLM_as_judge_results/{dataset}_{cat}"
-                output_log_file = os.path.join(output_log_folder, f"{model_name}_{method}_answer_quality_results.txt")
-                if not os.path.exists(output_log_folder):
-                    os.makedirs(output_log_folder)
+    #             method = "our_method"
+    #             output_log_folder = f"/home/ubuntu/jiaxi/LLM_as_judge_results/{dataset}_{cat}"
+    #             output_log_file = os.path.join(output_log_folder, f"{model_name}_{method}_answer_quality_results.txt")
+    #             if not os.path.exists(output_log_folder):
+    #                 os.makedirs(output_log_folder)
 
-                with open(output_log_file, 'a', encoding='utf-8') as log_f:
-                    for file in files:
-                        data_path = os.path.join(base_dir, f"output_{model_name}_{dataset}_{cat}", file)
-                        with open(data_path, 'r') as f:
-                            data_lines = f.readlines()
-                        data = [json.loads(line) for line in data_lines]
-                        model_task_info = f"Model: {model_name} | Dataset: {dataset} | Category: {cat} | File: {os.path.basename(file)}"
-                        log_f.write(f"\n{model_task_info}\n")
+    #             with open(output_log_file, 'a', encoding='utf-8') as log_f:
+    #                 for file in files:
+    #                     data_path = os.path.join(base_dir, f"output_{model_name}_{dataset}_{cat}", file)
+    #                     with open(data_path, 'r') as f:
+    #                         data_lines = f.readlines()
+    #                     data = [json.loads(line) for line in data_lines]
+    #                     model_task_info = f"Model: {model_name} | Dataset: {dataset} | Category: {cat} | File: {os.path.basename(file)}"
+    #                     log_f.write(f"\n{model_task_info}\n")
 
-                        scores = [] 
-                        for item in tqdm(data, total=len(data)):
-                            user_response = item['model_answer']
-                            score = chat_LLM(user_response)
+    #                     scores = [] 
+    #                     for item in tqdm(data, total=len(data)):
+    #                         user_response = item['model_answer']
+    #                         score = chat_LLM(user_response)
 
-                            # Score是否可以转变成float
-                            try:
-                                score = float(score)
-                            except ValueError:
-                                score = None
+    #                         # Score是否可以转变成float
+    #                         try:
+    #                             score = float(score)
+    #                         except ValueError:
+    #                             score = None
 
-                            if score is not None:
-                                print("score: ", score)
-                                scores.append(score)
+    #                         if score is not None:
+    #                             print("score: ", score)
+    #                             scores.append(score)
                         
-                        result_str = f"Mean Score: {np.mean(np.array(scores))}, Std Score: {np.std(np.array(scores))}"
-                        log_f.write(result_str + "\n")
-                        log_f.flush()
+    #                     result_str = f"Mean Score: {np.mean(np.array(scores))}, Std Score: {np.std(np.array(scores))}"
+    #                     log_f.write(result_str + "\n")
+    #                     log_f.flush()
                 
                 # Baseline method
                 method = "sys_prompt"
