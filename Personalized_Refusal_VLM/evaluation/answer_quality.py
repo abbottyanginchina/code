@@ -38,7 +38,7 @@ if __name__ == '__main__':
             for cat in categories:
 
                 method = "our_method"
-                output_log_file = f"/home/ubuntu/jiaxi/LLM_as_judge_results/{model_name}_{method}_answer_quality_results.txt"
+                output_log_file = f"/home/ubuntu/jiaxi/LLM_as_judge_results/{dataset}_{cat}/{model_name}_{method}_answer_quality_results.txt"
                 with open(output_log_file, 'a', encoding='utf-8') as log_f:
                     for file in files:
                         data_path = os.path.join(base_dir, f"output_{model_name}_{dataset}_{cat}", file)
