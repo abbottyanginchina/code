@@ -56,6 +56,7 @@ if __name__ == '__main__':
                         for item in tqdm(data, total=len(data)):
                             user_response = item['model_answer']
                             score = chat_LLM(user_response)
+                            import pdb; pdb.set_trace()
                             print("score: ", score)
                             scores.append(score)
                         
