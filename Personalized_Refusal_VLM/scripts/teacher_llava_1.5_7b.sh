@@ -43,11 +43,11 @@ process_subject() {
     wait
 
     echo "✅ Step 3: Inference activations with steering vectors applied..."
-    python -m experiments.gate_experiments.gate_inference_activations --start_layer 0 --end_layer $num_layers --subject $subject --dataset $dataset --model_name $model_name
+    python -m experiments.teacher_experiments.teacher_inference_activations --start_layer 0 --end_layer $num_layers --subject $subject --dataset $dataset --model_name $model_name
     echo "✅ All layer groups finished!"
 
     echo "🎯 Step 4: Generating responses with steering vectors applied..."
-    python -m experiments.gate_experiments.gate_generation --model_name $model_name --num_test $num_test --num_train $num_train \
+    python -m experiments.teacher_experiments.teacher_generation --model_name $model_name --num_test $num_test --num_train $num_train \
         --inter_start_layer $inter_start_layer --inter_end_layer $inter_end_layer --alpha_text $alpha_text --dataset $dataset --subject $subject
 
     echo "🎉 Dataset $dataset, subject $subject completed!"
