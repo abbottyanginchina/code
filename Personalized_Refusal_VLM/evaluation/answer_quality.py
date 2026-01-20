@@ -36,7 +36,7 @@ if __name__ == '__main__':
     }
     for dataset, categories in tasks.items():
             for cat in categories:
-                  files = [f"results/biology_answer_{model_name}.jsonl", f"results/nonbiology_answer_{model_name}.jsonl"]
+                files = [f"results/biology_answer_{model_name}.jsonl", f"results/nonbiology_answer_{model_name}.jsonl"]
                 method = "our_method"
                 output_log_folder = f"/home/ubuntu/jiaxi/LLM_as_judge_results/{dataset}_{cat}"
                 output_log_file = os.path.join(output_log_folder, f"{model_name}_{method}_answer_quality_results.txt")
