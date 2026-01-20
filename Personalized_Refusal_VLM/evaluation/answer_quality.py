@@ -55,13 +55,13 @@ if __name__ == '__main__':
                             print("score: ", score)
                             scores.append(score)
                         
-                        result_str = f"Mean Score: {np.mean(scores)}, Std Score: {np.std(scores)}"
+                        result_str = f"Mean Score: {np.mean(np.array(scores))}, Std Score: {np.std(np.array(scores))}"
                         log_f.write(result_str + "\n")
                         log_f.flush()
                 
                 # Baseline method
                 method = "sys_prompt"
-                output_log_file = f"/home/ubuntu/jiaxi/LLM_as_judge_results/{model_name}_{method}_answer_quality_results.txt"
+                output_log_file = f"/home/ubuntu/jiaxi/LLM_as_judge_results/{dataset}_{cat}/{model_name}_{method}_answer_quality_results.txt"
                 with open(output_log_file, 'a', encoding='utf-8') as log_f:
                     for file in files:
                         data_path = os.path.join(base_dir, f"output_sys_prompt_{model_name}_{dataset}_{cat}", file)
