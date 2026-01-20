@@ -42,7 +42,7 @@ if __name__ == '__main__':
                 output_log_file = os.path.join(output_log_folder, f"{model_name}_{method}_answer_quality_results.txt")
                 if not os.path.exists(output_log_folder):
                     os.makedirs(output_log_folder)
-                    
+
                 with open(output_log_file, 'a', encoding='utf-8') as log_f:
                     for file in files:
                         data_path = os.path.join(base_dir, f"output_{model_name}_{dataset}_{cat}", file)
@@ -65,7 +65,11 @@ if __name__ == '__main__':
                 
                 # Baseline method
                 method = "sys_prompt"
-                output_log_file = f"/home/ubuntu/jiaxi/LLM_as_judge_results/{dataset}_{cat}/{model_name}_{method}_answer_quality_results.txt"
+                output_log_folder = f"/home/ubuntu/jiaxi/LLM_as_judge_results/{dataset}_{cat}"
+                output_log_file = os.path.join(output_log_folder, f"{model_name}_{method}_answer_quality_results.txt")
+                if not os.path.exists(output_log_folder):
+                    os.makedirs(output_log_folder)
+
                 with open(output_log_file, 'a', encoding='utf-8') as log_f:
                     for file in files:
                         data_path = os.path.join(base_dir, f"output_sys_prompt_{model_name}_{dataset}_{cat}", file)
