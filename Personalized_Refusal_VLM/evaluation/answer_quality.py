@@ -27,7 +27,7 @@ if __name__ == '__main__':
     # read .jsonl file
     #/home/ubuntu/jiaxi/results/output_llava-1.5-7b-hf_ScienceQA_biology/results/biology_answer_llava-1.5-7b-hf.jsonl
     base_dir = "/home/ubuntu/jiaxi/results_gpu01"
-    model_name = "llava-1.5-13b-hf"
+    model_name = "llava-1.5-7b-hf"
     files = [f"results/biology_answer_{model_name}.jsonl", f"results/nonbiology_answer_{model_name}.jsonl"]
     tasks = {
         # "ScienceQA": ["biology", "physics", "geography"],
