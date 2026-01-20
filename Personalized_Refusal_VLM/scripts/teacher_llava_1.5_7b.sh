@@ -54,7 +54,6 @@ process_subject() {
     echo ""
 }
 
-
 dataset="ScienceQA"
 subjects=("biology" "geography" "physics")  
 for subject in "${subjects[@]}"; do
