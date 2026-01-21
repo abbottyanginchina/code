@@ -3,7 +3,7 @@ import json
 import os
 from tqdm import tqdm
 
-client = OpenAI(api_key="sk-ideottqyxzilborugqgaajfprhyegrcibfyvykxjtyvpyzjm", 
+client = OpenAI(api_key="sk-nfhyuxsljywfobbadksxysgbdvpnqfnteokzzdbkpmwohnip", 
                 base_url="https://api.siliconflow.cn/v1")
 
 def chat_LLM(user_prompt):
