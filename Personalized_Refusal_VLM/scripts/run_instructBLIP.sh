@@ -1,6 +1,5 @@
 #!/bin/bash
 set -e
-export CUDA_VISIBLE_DEVICES=7
 
 num_layers=33 
 step=11
