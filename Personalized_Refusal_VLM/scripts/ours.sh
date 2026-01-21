@@ -1,4 +1,4 @@
-export CUDA_VISIBLE_DEVICES=6
+# export CUDA_VISIBLE_DEVICES=6
 
 echo "Running InstructBLIP..."
 bash scripts/run_instructBLIP.sh
