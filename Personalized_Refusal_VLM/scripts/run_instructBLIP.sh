@@ -9,9 +9,7 @@ num_test=100
 model_name="instructblip-vicuna-7b"
 inter_start_layer=18
 inter_end_layer=32
-alpha_text=1.0
-dataset="ScienceQA"
-subject="biology"
+alpha_text=1.7
 
 process_subject() {
     dataset=$1
