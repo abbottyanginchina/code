@@ -186,7 +186,7 @@ def train(cfg, start_layer, end_layer, output_dir):
 
                 
 
-                loss = loss_pos + 0 * loss_neg + loss_ortho + 0 * loss_gate
+                loss = loss_pos + 0 * loss_neg + loss_ortho
 
                 opt.zero_grad()
                 loss.backward()
