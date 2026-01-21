@@ -18,7 +18,7 @@ def chat_LLM(user_prompt):
             'content': sys_prompt}
         ]
     )
-    print("user_prompt: ", user_prompt)
+    # print("user_prompt: ", user_prompt)
 
     return response.choices[0].message.content
 
