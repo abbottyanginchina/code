@@ -163,6 +163,15 @@ def train(cfg, start_layer, end_layer, output_dir):
                 else:
                     loss_neg = torch.tensor(0.0, device=device)
 
+                # gate 监督
+                loss_gate = torch.tensor(0.0, device=device)
+                if pos_mask.any():
+                    loss_gate += F.binary_cross_entropy_with_logits(logits[pos_mask], torch.ones_like(p[pos_mask]))
+                if neg_mask.any():
+                    loss_gate += F.binary_cross_entropy_with_logits(logits[neg_mask], torch.zeros_like(p[neg_mask]))
+
+                loss_neg = loss_neg + loss_gate
+
                 # --- 可选：biology/others 平均方向正交，防塌缩 ---
                 delta_bio = delta[pos_mask]
                 delta_oth = delta[neg_mask]
@@ -175,12 +184,7 @@ def train(cfg, start_layer, end_layer, output_dir):
                 else:
                     loss_ortho = torch.tensor(0.0, device=device)
 
-                # gate 监督
-                loss_gate = torch.tensor(0.0, device=device)
-                if pos_mask.any():
-                    loss_gate += F.binary_cross_entropy_with_logits(logits[pos_mask], torch.ones_like(p[pos_mask]))
-                if neg_mask.any():
-                    loss_gate += F.binary_cross_entropy_with_logits(logits[neg_mask], torch.zeros_like(p[neg_mask]))
+                
 
                 loss = loss_pos + 0 * loss_neg + loss_ortho + 0 * loss_gate
 
