@@ -41,4 +41,9 @@ wavs, sr = model.generate_voice_design(
 
 # 合并 wavs[0] 和 wavs[1] (concatenate - play one after another)
 merged_wav = np.concatenate([wavs[0], wavs[1]])
-sf.write(os.path.join(root_dir, "audio_results", "output_voice_design_merged.wav"), merged_wav, sr)
+
+# Create output directory if it doesn't exist
+output_dir = os.path.join(root_dir, "audio_results")
+os.makedirs(output_dir, exist_ok=True)
+
+sf.write(os.path.join(output_dir, "output_voice_design_merged.wav"), merged_wav, sr)
