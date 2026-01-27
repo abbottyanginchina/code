@@ -37,3 +37,7 @@ wavs, sr = model.generate_voice_design(
 # sf.write(os.path.join(root_dir, "audio_results", "output_voice_design_merged.wav"), merged_wav, sr)
 sf.write(os.path.join(root_dir, "audio_results", "output_voice_design_1.wav"), wavs[0], sr)
 sf.write(os.path.join(root_dir, "audio_results", "output_voice_design_2.wav"), wavs[1], sr)
+
+# 合并 wavs[0] 和 wavs[1]
+merged_wav = wavs[0] + wavs[1]
+sf.write(os.path.join(root_dir, "audio_results", "output_voice_design_merged.wav"), merged_wav, sr)
