@@ -22,10 +22,7 @@ def generate_audio(conversation, instruct):
         "It's in the top drawer... wait, it's empty? No way, that's impossible! I'm sure I put it there!"
         ],
         language=["English"]*len(conversation),
-        instruct=[
-        "体现撒娇稚嫩的萝莉女声，音调偏高且起伏明显，营造出黏人、做作又刻意卖萌的听觉效果。",
-        "Speak in an incredulous tone, but with a hint of panic beginning to creep into your voice."
-        ]
+        instruct=instruct
     )
 
     # 合并 wavs[0] 和 wavs[1] (concatenate - play one after another)
