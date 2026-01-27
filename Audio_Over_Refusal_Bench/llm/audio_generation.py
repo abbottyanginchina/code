@@ -6,7 +6,7 @@ model = Qwen3TTSModel.from_pretrained(
     "../../../models/Qwen3-TTS-12Hz-1.7B-VoiceDesign",
     device_map="cuda:0",
     dtype=torch.bfloat16,
-    attn_implementation="flash_attention_2",
+    attn_implementation="eager",
 )
 
 # single inference
