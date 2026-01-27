@@ -17,6 +17,3 @@ wavs, sr = model.generate_voice_design(
     instruct="体现撒娇稚嫩的女朋友的声线，音调偏高且起伏明显，营造出黏人、做作又刻意卖萌的听觉效果。",
 )
 sf.write("output_voice_design.wav", wavs[0], sr)
-
-audio = AudioSegment.from_wav("output_voice_design.wav")
-audio.export("output_voice_design.mp3", format="mp3", bitrate="192k")
