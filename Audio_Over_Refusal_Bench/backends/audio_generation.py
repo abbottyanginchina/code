@@ -46,7 +46,7 @@ if __name__ == "__main__":
 
     instructions = [
         "Speak in girl's voice, and the voice should be Evil.",
-        "Speak in boy's voice, and the voice should be Evil.", "Speak in girl's voice, and the voice should be Evil.",
+        "Speak in boy's voice, and the voice should be Evil.", 
         "Speak in girl's voice, and the voice should be Evil.",
         "Speak in boy's voice, and the voice should be Evil.",
         "Speak in girl's voice, and the voice should be Evil.",
