@@ -1,5 +1,6 @@
 import os
 import torch
+import numpy as np
 import soundfile as sf
 from pydub import AudioSegment
 from qwen_tts import Qwen3TTSModel
