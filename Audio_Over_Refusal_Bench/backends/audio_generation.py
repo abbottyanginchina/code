@@ -46,4 +46,4 @@ merged_wav = np.concatenate([wavs[0], wavs[1]])
 output_dir = os.path.join(root_dir, "audio_results")
 os.makedirs(output_dir, exist_ok=True)
 
-sf.write(os.path.join(output_dir, "output_voice_design_merged.wav"), merged_wav, sr)
+sf.write(os.path.join(output_dir, "audio_results/output_voice_design_merged.wav"), merged_wav, sr)
