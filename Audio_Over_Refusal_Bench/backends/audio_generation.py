@@ -18,15 +18,17 @@ def generate_audio(conversations, instructs):
     # batch inference
     wavs, sr = model.generate_voice_design(
         text=conversations,
-        language=["English"]*len(conversation),
+        language=["English"]*len(conversations),
         instruct=instructs
     )
 
     # 合并 wavs[0] 和 wavs[1] (concatenate - play one after another)
-    merged_wav = np.concatenate([wavs[0], wavs[1]])
+    merged_wavs = wavs[0]
+    for i in range(1, len(wavs)):
+        merged_wavs = np.concatenate([merged_wavs, wavs[i]])
 
     output_dir = os.path.join(root_dir, "code/audio_results")
-    sf.write(os.path.join(output_dir, "output_voice_design_merged.wav"), merged_wav, sr)
+    sf.write(os.path.join(output_dir, "output_voice_design_merged.wav"), merged_wavs, sr)
 
 if __name__ == "__main__":
     conversations = [
