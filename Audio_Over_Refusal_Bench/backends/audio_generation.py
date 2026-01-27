@@ -1,3 +1,4 @@
+import os
 import torch
 import soundfile as sf
 from pydub import AudioSegment
@@ -5,7 +6,7 @@ from qwen_tts import Qwen3TTSModel
 
 root_dir = "/gpu02home/jmy5701/gpu/"
 model = Qwen3TTSModel.from_pretrained(
-    "/gpu02home/jmy5701/gpu/models/Qwen3-TTS-12Hz-1.7B-VoiceDesign",
+    os.path.join(root_dir, "models/Qwen3-TTS-12Hz-1.7B-VoiceDesign"),
     device_map="cuda:0",
     dtype=torch.bfloat16,
     attn_implementation="eager",
