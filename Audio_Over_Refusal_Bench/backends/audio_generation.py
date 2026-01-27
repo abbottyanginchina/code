@@ -13,16 +13,13 @@ model = Qwen3TTSModel.from_pretrained(
     attn_implementation="eager",
 )
 
-def generate_audio(conversation, instruct):
+def generate_audio(conversations, instructs):
 
     # batch inference
     wavs, sr = model.generate_voice_design(
-        text=[
-        "哥哥，你回来啦，人家等了你好久好久了，要抱抱！",
-        "It's in the top drawer... wait, it's empty? No way, that's impossible! I'm sure I put it there!"
-        ],
+        text=conversations,
         language=["English"]*len(conversation),
-        instruct=instruct
+        instruct=instructs
     )
 
     # 合并 wavs[0] 和 wavs[1] (concatenate - play one after another)
