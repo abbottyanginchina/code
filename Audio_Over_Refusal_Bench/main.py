@@ -5,6 +5,7 @@ from utils.audio_generation import generation_audio
 from tqdm import tqdm
 import random
 from omegaconf import OmegaConf
+from backends.audio_generation import generate_qwen3_tts_audio
 
 if __name__ == "__main__":
     cfg = OmegaConf.load("configs/cfgs.yaml")
