@@ -31,6 +31,5 @@ if __name__ == "__main__":
         # highlighted_text = get_highlighted_text(prompt)
         # print("highlighted_text: ", highlighted_text)
         instruct = " "
-        import pdb; pdb.set_trace()
         # Generate audio
         generate_qwen3_tts_audio(prompt, instruct, save_path)
