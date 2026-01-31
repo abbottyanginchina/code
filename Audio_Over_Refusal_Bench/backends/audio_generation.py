@@ -13,7 +13,7 @@ model = Qwen3TTSModel.from_pretrained(
     attn_implementation="eager",
 )
 
-def generate_audio(text, instruct, save_path):
+def generate_qwen3_tts_audio(text, instruct, save_path):
     wavs, sr = model.generate_voice_design(
         text=text,
         language="English",
