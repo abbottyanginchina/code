@@ -23,8 +23,15 @@ if __name__ == "__main__":
     num_samples = 200
     dataset = dataset.shuffle(seed=cfg.seed).select(range(num_samples))
 
+    batch_size = 8
     instruct = " "
     for idx in tqdm(range(len(dataset)), desc="Generating audio", total=len(dataset)):
+
+        prompts = []
+
+        for i in range(batch_size):
+            prompts.append(dataset[idx]['prompt'])
+
         prompt = dataset[idx]['prompt']
 
         output_dir = os.path.join(cfg.path.output_path, 'vanilla_audio')
@@ -37,3 +44,5 @@ if __name__ == "__main__":
         
         # Generate audio
         # generate_qwen3_tts_audio(prompt, instruct, save_path)
+
+        # Generate batch audio
