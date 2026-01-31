@@ -1,6 +1,6 @@
 from omegaconf import OmegaConf
-from llm.prompts import PROMPTS
-from llm.LLM_backend import chat_LLM
+from backends.prompts import PROMPTS
+from backends.LLM_backend import chat_LLM
 
 
 def extract_key_words(text):
