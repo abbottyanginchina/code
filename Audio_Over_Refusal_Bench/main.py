@@ -19,7 +19,8 @@ if __name__ == "__main__":
     # Fix random seed
     random.seed(cfg.seed)
     # Sample 200 samples
-    dataset = dataset.shuffle(seed=cfg.seed).select(range(200))
+    num_samples = 200
+    dataset = dataset.shuffle(seed=cfg.seed).select(range(num_samples))
 
     for idx in tqdm(range(len(dataset)), desc="Generating audio", total=len(dataset)):
         import pdb; pdb.set_trace()
