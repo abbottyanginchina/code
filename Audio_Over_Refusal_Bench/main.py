@@ -4,8 +4,11 @@ from utils.extract_words import get_highlighted_text
 from utils.audio_generation import generation_audio 
 from tqdm import tqdm
 import random
+from omegaconf import OmegaConf
 
 if __name__ == "__main__":
+    cfg = OmegaConf.load("configs/cfgs.yaml")
+
     # text = "Hello, I am Xiaomi, nice to meet you."
     data_path = "../../data/or-bench"
     dataset = load_dataset(data_path, 'or-bench-hard-1k')['train']
