@@ -2,7 +2,7 @@ seed: 42
 
 path: 
   data_path: "../../data/or-bench"
-  output_path: "../../data/or-bench/audio"
+  output_path: "../audio_results/"
 
 llm:
   api_key: "sk-eschhnimxaddoawncbbygmkzqttylohzxwzweowerelgivca"
