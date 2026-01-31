@@ -1,10 +1,11 @@
 import os
 from datasets import load_dataset
-from utils.extract_words import get_highlighted_text
-from utils.audio_generation import generation_audio 
 from tqdm import tqdm
 import random
 from omegaconf import OmegaConf
+
+from utils.extract_words import get_highlighted_text
+from utils.audio_generation import generation_audio 
 from backends.audio_generation import generate_qwen3_tts_audio
 
 if __name__ == "__main__":
