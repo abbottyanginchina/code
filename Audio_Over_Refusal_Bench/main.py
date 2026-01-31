@@ -27,7 +27,10 @@ if __name__ == "__main__":
     for idx in tqdm(range(len(dataset)), desc="Generating audio", total=len(dataset)):
         prompt = dataset[idx]['prompt']
 
-        save_path = os.path.join(cfg.path.output_path, 'vanilla_audio', f'{idx}.mp3')
+        output_dir = os.path.join(cfg.path.output_path, 'vanilla_audio')
+        if not os.path.exists(output_dir):
+            os.makedirs(output_dir)
+        save_path = os.path.join(output_dir, f'{idx}.mp3')
         # get highlighted text
         # highlighted_text = get_highlighted_text(prompt)
         # print("highlighted_text: ", highlighted_text)
