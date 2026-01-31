@@ -21,6 +21,16 @@ def generate_qwen3_tts_audio(text, instruct, save_path):
     )
     sf.write(save_path, wavs[0], sr)
 
+def generate_qwen3_tts_audio_batch(texts, instructs, save_paths):
+    # batch inference
+    wavs, sr = model.generate_voice_design(
+        text=conversations,
+        language=["English"]*len(conversations),
+        instruct=instructs
+    )
+
+    for i in range(len(wavs)):
+        sf.write(save_paths[i], wavs[i], sr)
 
 def generate_qwen3_tts_merged_audio(conversations, instructs):
 
