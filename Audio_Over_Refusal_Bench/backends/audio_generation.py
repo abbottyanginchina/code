@@ -19,7 +19,7 @@ def generate_audio(text, instruct, save_path):
         language="English",
         instruct=instruct,
     )
-    sf.write("output_voice_design.wav", wavs[0], sr)
+    sf.write(save_path, wavs[0], sr)
 
 
 def generate_batch_audio(conversations, instructs):
