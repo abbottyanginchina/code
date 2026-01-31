@@ -23,6 +23,7 @@ if __name__ == "__main__":
     num_samples = 200
     dataset = dataset.shuffle(seed=cfg.seed).select(range(num_samples))
 
+    instruct = " "
     for idx in tqdm(range(len(dataset)), desc="Generating audio", total=len(dataset)):
         prompt = dataset[idx]['prompt']
 
@@ -30,6 +31,6 @@ if __name__ == "__main__":
         # get highlighted text
         # highlighted_text = get_highlighted_text(prompt)
         # print("highlighted_text: ", highlighted_text)
-        instruct = " "
+        
         # Generate audio
         generate_qwen3_tts_audio(prompt, instruct, save_path)
