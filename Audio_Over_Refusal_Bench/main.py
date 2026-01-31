@@ -25,7 +25,6 @@ if __name__ == "__main__":
     dataset = dataset.shuffle(seed=cfg.seed).select(range(num_samples))
 
     for idx in tqdm(range(len(dataset)), desc="Generating audio", total=len(dataset)):
-        import pdb; pdb.set_trace()
         prompt = dataset[idx]['prompt']
 
         save_path = os.path.join(data_path, 'audio', f'{idx}.mp3')
