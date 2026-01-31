@@ -1,5 +1,9 @@
 seed: 42
 
+path: 
+  data_path: "../../data/or-bench"
+  output_path: "../../data/or-bench/audio"
+
 llm:
   api_key: "sk-eschhnimxaddoawncbbygmkzqttylohzxwzweowerelgivca"
   base_url: "https://api.siliconflow.cn/v1"
