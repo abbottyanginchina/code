@@ -32,4 +32,4 @@ if __name__ == "__main__":
         # highlighted_text = get_highlighted_text(prompt)
         # print("highlighted_text: ", highlighted_text)
         # Generate audio
-        generation_audio(prompt, save_path)
+        generate_qwen3_tts_audio(prompt, save_path)
