@@ -24,8 +24,8 @@ if __name__ == "__main__":
     dataset = dataset.shuffle(seed=cfg.seed).select(range(num_samples))
 
     output_dir = os.path.join(cfg.path.output_path, 'vanilla_audio')
-        if not os.path.exists(output_dir):
-            os.makedirs(output_dir)
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
 
     batch_size = 8
     instruct = " "
