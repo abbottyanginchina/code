@@ -23,6 +23,10 @@ if __name__ == "__main__":
     num_samples = 200
     dataset = dataset.shuffle(seed=cfg.seed).select(range(num_samples))
 
+    output_dir = os.path.join(cfg.path.output_path, 'vanilla_audio')
+        if not os.path.exists(output_dir):
+            os.makedirs(output_dir)
+
     batch_size = 8
     instruct = " "
     for idx in tqdm(range(len(dataset)), desc="Generating audio", total=len(dataset)):
@@ -35,9 +39,7 @@ if __name__ == "__main__":
 
         # prompt = dataset[idx]['prompt']
 
-        output_dir = os.path.join(cfg.path.output_path, 'vanilla_audio')
-        if not os.path.exists(output_dir):
-            os.makedirs(output_dir)
+        
         save_path = os.path.join(output_dir, f'{idx}.mp3')
         # get highlighted text
         # highlighted_text = get_highlighted_text(prompt)
