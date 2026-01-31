@@ -29,6 +29,8 @@ if __name__ == "__main__":
 
     batch_size = 8
     instruct = " "
+
+    # Generate audio using batch inference
     for idx in tqdm(range(len(dataset)), desc="Generating audio", total=len(dataset)):
 
         # prompts = []
