@@ -22,7 +22,7 @@ def generate_qwen3_tts_audio(text, instruct, save_path):
     sf.write(save_path, wavs[0], sr)
 
 
-def generate_qwen3_tts_batch_audio(conversations, instructs):
+def generate_qwen3_tts_merged_audio(conversations, instructs):
 
     # batch inference
     wavs, sr = model.generate_voice_design(
