@@ -31,11 +31,11 @@ if __name__ == "__main__":
     instruct = " "
     for idx in tqdm(range(len(dataset)), desc="Generating audio", total=len(dataset)):
 
-        prompts = []
-        save_paths = []
-        for i in range(batch_size):
-            prompts.append(dataset[idx]['prompt'])
-            save_paths.append(os.path.join(output_dir, f'{idx}_{i}.mp3'))
+        # prompts = []
+        # save_paths = []
+        # for i in range(batch_size):
+        #     prompts.append(dataset[idx]['prompt'])
+        #     save_paths.append(os.path.join(output_dir, f'{idx}_{i}.mp3'))
 
         # prompt = dataset[idx]['prompt']
 
