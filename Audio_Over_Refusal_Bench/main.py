@@ -12,11 +12,10 @@ if __name__ == "__main__":
     cfg = OmegaConf.load("configs/cfgs.yaml")
 
     # text = "Hello, I am Xiaomi, nice to meet you."
-    data_path = "../../data/or-bench"
-    dataset = load_dataset(data_path, 'or-bench-hard-1k')['train']
+    dataset = load_dataset(cfg.path.data_path, 'or-bench-hard-1k')['train']
 
-    if not os.path.exists(os.path.join(data_path, 'audio')):
-        os.makedirs(os.path.join(data_path, 'audio'))
+    if not os.path.exists(os.path.join(cfg.path.output_path, 'audio')):
+        os.makedirs(os.path.join(cfg.path.output_path, 'audio'))
 
     # Fix random seed
     random.seed(cfg.seed)
@@ -27,7 +26,7 @@ if __name__ == "__main__":
     for idx in tqdm(range(len(dataset)), desc="Generating audio", total=len(dataset)):
         prompt = dataset[idx]['prompt']
 
-        save_path = os.path.join(data_path, 'audio', f'{idx}.mp3')
+        save_path = os.path.join(cfg.path.output_path, 'audio', f'{idx}.mp3')
         # get highlighted text
         # highlighted_text = get_highlighted_text(prompt)
         # print("highlighted_text: ", highlighted_text)
