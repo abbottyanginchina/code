@@ -40,7 +40,7 @@ if __name__ == "__main__":
         # prompt = dataset[idx]['prompt']
 
         
-        save_path = os.path.join(output_dir, f'{idx}.mp3')
+        # save_path = os.path.join(output_dir, f'{idx}.mp3')
         # get highlighted text
         # highlighted_text = get_highlighted_text(prompt)
         # print("highlighted_text: ", highlighted_text)
