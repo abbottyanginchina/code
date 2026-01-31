@@ -13,11 +13,11 @@ model = Qwen3TTSModel.from_pretrained(
     attn_implementation="eager",
 )
 
-def generate_audio(text, save_path):
+def generate_audio(text, instruct, save_path):
     wavs, sr = model.generate_voice_design(
-        text="哥哥，你回来啦，人家等了你好久好久了，要抱抱！",
-        language="Chinese",
-        instruct="体现撒娇稚嫩的萝莉女声，音调偏高且起伏明显，营造出黏人、做作又刻意卖萌的听觉效果。",
+        text=text,
+        language="English",
+        instruct=instruct,
     )
     sf.write("output_voice_design.wav", wavs[0], sr)
 
