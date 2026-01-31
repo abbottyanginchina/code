@@ -33,6 +33,12 @@ if __name__ == "__main__":
     # Generate audio using batch inference
     for idx in tqdm(range(len(dataset)), desc="Generating audio", total=len(dataset)):
 
+        # 累积到batch_size后，再生成音频
+        prompts = []
+        save_paths = []
+        for i in range(batch_size):
+            prompts.append(dataset[idx]['prompt'])
+            save_paths.append(os.path.join(output_dir, f'{idx}_{i}.mp3'))
         # prompts = []
         # save_paths = []
         # for i in range(batch_size):
